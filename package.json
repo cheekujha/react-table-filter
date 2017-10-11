@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/webpack",
+    "build": "./node_modules/.bin/webpack -p",
     "watch": "./node_modules/.bin/webpack --watch",
     "start:dev": "webpack-dev-server --content-base ./docs --inline --hot",
     "build-example": "cd examples; ./node_modules/.bin/webpack",
