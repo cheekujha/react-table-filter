@@ -1,0 +1,53 @@
+body{
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	color: #222;
+}
+
+.nav-bar{
+	background-color: #f8f8f8;
+	border: 1px solid #e7e7e7;
+	height: 50px;
+	border-radius: 4px;
+	.container{
+		padding-right: 15px;
+		padding-left: 15px;
+		margin-right: auto;
+		margin-left: auto;
+		line-height: 50px;
+		color: #777;
+	}
+	&:before{
+		display: table;
+		content: "";
+	}
+}
+
+.examples{
+	padding: 10px;
+	box-sizing: border-box;
+	position: relative;
+	.basic{
+		position: relative;
+		border: 1px solid rgb(214, 214, 214);
+		padding-bottom: 10px;
+	}
+}
+
+.header{
+	position: relative;
+	text-align: center;
+}
+
+.basic-table{
+	position: relative;
+	margin: auto;
+	border: 1px solid black;
+	border-collapse: collapse;
+	width: 50%;
+	
+	.cell{
+		position: relative;
+		border: 1px solid black;
+		padding: 3px;
+	}
+}

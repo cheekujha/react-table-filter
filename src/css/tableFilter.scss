@@ -1,0 +1,224 @@
+$list-item-odd-color: #F7F6F6;
+$list-item-even-color: white;
+$checkbox-border-color: #8F8F8F;
+$checkbox-selected-border-color: black;
+$checkbox-selected-background-color: black;
+$list-border-color: #8E9193;
+
+@mixin transform($value) {
+  -webkit-transform: #{$value};
+     -moz-transform: #{$value};
+      -ms-tranfsorm: #{$value};
+       -o-transform: #{$value};
+          transform: #{$value};
+}
+@mixin transition($value...) {
+  -webkit-transition: #{$value};
+     -moz-transition: #{$value};
+      -ms-transition: #{$value};
+       -o-transition: #{$value};
+          transition: #{$value};
+}
+
+.table-filter-row{
+	position: relative;
+}
+.filter-list{
+	position: absolute;
+	max-height: 250px;
+	overflow: auto;
+	max-width: 220px;
+	min-width: 170px;
+	left: 0;
+	top: 100%;
+	border: 2px solid $list-border-color;
+	&.align-left{
+		left: auto;
+		right: 0;
+	}
+	// color: black;
+}
+
+.filter-list-item{
+	// color: black;
+	position: relative;
+	padding-left: 30px;
+	height: 35px;
+	line-height: 35px;
+	font-size: 14px;
+	text-align: left;
+	&:nth-child(odd){
+		background-color: $list-item-odd-color;
+	}
+	&:nth-child(even){
+		background-color: $list-item-even-color;
+	}
+}
+
+.filter-check-box{
+	position: absolute;
+	width: 14px;
+	height: 14px;
+	left: 8px;
+	top: 50%;
+	margin-top: -7px;
+	box-sizing: border-box;
+	overflow: hidden;
+	border-radius: 2px;
+	border: 1px solid $checkbox-border-color;
+	&.selected{
+		border-color: $checkbox-selected-border-color;
+		background-color: $checkbox-selected-background-color;
+		&:after{
+			content: '';
+			position: absolute;
+			width: 8px;
+			height: 5px;
+			box-sizing: border-box;
+			border-left: 2px solid white;
+			border-bottom: 2px solid white;
+			top: 50%;
+			margin-top: -4px;
+			left: 2px;
+			@include transform(rotate(-45deg));
+  		}
+	}
+}
+
+.filter-label{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    font-weight: normal;
+    &.select-all-label{
+    	font-weight: 600;
+    }
+}
+
+.apply-filter{
+	position: relative;
+	padding-right: 40px;
+}
+
+.table-filter-parent{
+	position: absolute;
+	right: 3px;
+	top: 50%;
+	margin-top: -8px;
+	z-index: 10;
+}
+
+.table-filter-icon{
+	position: relative;
+    border-top: 8px solid gray;
+    box-sizing: border-box;
+    border-right: 6px solid transparent;
+    border-left: 6px solid transparent;
+    width: 0px;
+    height: 0px;
+    box-shadow: inset 0 4px gray;
+    padding: 2px;
+    &.selected{
+    	border-top-color: black;
+    	box-shadow: inset 0 4px black;
+    }
+}
+
+.ripple {
+	position: relative;
+	overflow: hidden;
+	@include transform(translate3d(0, 0, 0));
+}
+
+.ripple:after {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	background-image: radial-gradient(circle, #000 10%, transparent 10.01%);
+	background-repeat: no-repeat;
+	background-position: 50%;
+	@include transform(scale(10, 10));
+	opacity: 0;
+	@include transition(transform .5s, opacity 1s);
+}
+
+.ripple:active:after {
+	@include transform(scale(0, 0));
+	opacity: .2;
+	@include transition(0s);
+}
+
+.sort-parent{
+	position: absolute;
+	background: #F0EEEE;
+	z-index: 1;
+	right: 6px;
+	top: 6px;
+	border-radius: 4px;
+	border: 1px solid #E1DDDD;
+	text-align: center;
+	padding: 5px 15px;
+	cursor: pointer;
+	&.asc{
+		.table-filter-arrow{
+			&.asc{
+				background: black;
+				&:after{
+					border-top-color: black;
+				}
+			}
+		}
+	}
+	&.dsc{
+		.table-filter-arrow{
+			&.dsc{
+				background: black;
+				&:after{
+					border-bottom-color: black;
+				}
+			}
+		}
+	}
+}
+
+.clear-fix:after{
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.table-filter-arrow{
+	position: relative;
+	float: left;
+	width: 2px;
+	height: 12px;
+	background: gray;
+	&.asc{
+		margin-left: 7px;
+		&:after{
+			content: "";
+			position: absolute;
+			border-top: 5px solid gray;
+			bottom: -1px;
+			border-left: 5px solid transparent;
+			border-right: 5px solid transparent;
+			left: -4px;
+		}
+	}
+
+	&.dsc:after{
+		content: "";
+		position: absolute;
+		border-bottom: 5px solid gray;
+		top: -1px;
+		border-left: 5px solid transparent;
+		border-right: 5px solid transparent;
+		left: -4px;
+	}
+}
