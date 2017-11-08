@@ -1,16 +1,92 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" charset="utf-8">
-    <title>hr dashboard</title>
-  	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
-<link href="styles.css" rel="stylesheet"></head>
-
-<body>
-    <div id="mainContainer"></div>
-
-    <!-- app -->
-<script type="text/javascript" src="bundle.js"></script></body>
-
-</html>
+Html Webpack Plugin:
+<pre>
+  TypeError: Cannot read property '0' of undefined
+  
+  - ExternalModuleFactoryPlugin.js:19 
+    [react-table-filter]/[webpack]/lib/ExternalModuleFactoryPlugin.js:19:40
+  
+  - NormalModuleFactory.js:159 
+    [lib]/[webpack]/lib/NormalModuleFactory.js:159:3
+  
+  - Tapable.js:75 NormalModuleFactory.applyPluginsAsyncWaterfall
+    [lib]/[webpack]/[tapable]/lib/Tapable.js:75:69
+  
+  - NormalModuleFactory.js:144 NormalModuleFactory.create
+    [lib]/[webpack]/lib/NormalModuleFactory.js:144:8
+  
+  - Compilation.js:356 Compilation.process [as _addModuleChain]
+    [lib]/[webpack]/lib/Compilation.js:356:16
+  
+  - Compilation.js:424 Compilation.process [as addEntry]
+    [lib]/[webpack]/lib/Compilation.js:424:7
+  
+  - SingleEntryPlugin.js:24 Compiler.compiler.plugin
+    [react-table-filter]/[webpack]/lib/SingleEntryPlugin.js:24:16
+  
+  - Tapable.js:107 Compiler.applyPluginsParallel
+    [lib]/[webpack]/[tapable]/lib/Tapable.js:107:14
+  
+  - Compiler.js:394 Compiler.compile
+    [lib]/[webpack]/lib/Compiler.js:394:7
+  
+  - Compiler.js:203 Compiler.runAsChild
+    [lib]/[webpack]/lib/Compiler.js:203:7
+  
+  - compiler.js:70 
+    [react-table-filter]/[html-webpack-plugin]/lib/compiler.js:70:19
+  
+  - debuggability.js:303 Promise._execute
+    [react-table-filter]/[bluebird]/js/release/debuggability.js:303:9
+  
+  - promise.js:483 Promise._resolveFromExecutor
+    [react-table-filter]/[bluebird]/js/release/promise.js:483:18
+  
+  - promise.js:79 new Promise
+    [react-table-filter]/[bluebird]/js/release/promise.js:79:10
+  
+  - compiler.js:69 Object.compileTemplate
+    [react-table-filter]/[html-webpack-plugin]/lib/compiler.js:69:10
+  
+  - index.js:47 Compiler.<anonymous>
+    [react-table-filter]/[html-webpack-plugin]/index.js:47:40
+  
+  - Tapable.js:107 Compiler.applyPluginsParallel
+    [lib]/[webpack]/[tapable]/lib/Tapable.js:107:14
+  
+  - Compiler.js:394 Compiler.compile
+    [lib]/[webpack]/lib/Compiler.js:394:7
+  
+  - Compiler.js:173 Compiler.<anonymous>
+    [lib]/[webpack]/lib/Compiler.js:173:9
+  
+  - Compiler.js:302 Compiler.readRecords
+    [lib]/[webpack]/lib/Compiler.js:302:10
+  
+  - Compiler.js:170 Compiler.<anonymous>
+    [lib]/[webpack]/lib/Compiler.js:170:8
+  
+  - Tapable.js:67 Compiler.next
+    [lib]/[webpack]/[tapable]/lib/Tapable.js:67:11
+  
+  - NodeEnvironmentPlugin.js:23 Compiler.<anonymous>
+    [lib]/[webpack]/lib/node/NodeEnvironmentPlugin.js:23:3
+  
+  - Tapable.js:69 Compiler.next
+    [lib]/[webpack]/[tapable]/lib/Tapable.js:69:14
+  
+  - CachePlugin.js:22 Compiler.<anonymous>
+    [lib]/[webpack]/lib/CachePlugin.js:22:58
+  
+  - Tapable.js:71 Compiler.applyPluginsAsync
+    [lib]/[webpack]/[tapable]/lib/Tapable.js:71:13
+  
+  - Compiler.js:167 Compiler.run
+    [lib]/[webpack]/lib/Compiler.js:167:7
+  
+  - webpack.js:188 processOptions
+    [lib]/[webpack]/bin/webpack.js:188:12
+  
+  - webpack.js:192 Object.<anonymous>
+    [lib]/[webpack]/bin/webpack.js:192:1
+  
+</pre>

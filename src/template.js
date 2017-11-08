@@ -57,8 +57,10 @@ const render = function(){
 				const clonedChild = React.cloneElement(child, newProps, [...childChildren])
 				finalChildren.push(clonedChild);
 			}else{
-				const clonedChild = React.cloneElement(child)
-				finalChildren.push(clonedChild);
+				if(!isUndefined(child)){
+					const clonedChild = React.cloneElement(child)
+					finalChildren.push(clonedChild);
+				}
 			}
 		});
 	}else{
