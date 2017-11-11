@@ -52,29 +52,21 @@ Required Props on TableFilter
 
 rows - Initial Array of Items
 
-onFilterUpdate - Function called with updated filtered data when filters are added/removed. This function is used to show updated data by your application
+onFilterUpdate - Function called with updated filtered data when filters are added/removed. This function is used to show updated data by your application. Ex:
+
+```
+filterUpdated = (newData) => {
+		this.setState({
+			"upddatedData": newData
+		});
+	}
+```
 
 Requied Props on th/td (Header columns)
 
 filterkey - The key by which that column is to be filtered(key as present in rows data)
 
-Only the Columns with "filterkey" present will be considered for filtering.
-## API
-
-```js
-var reactTableFilter = require('react-table-filter')
-```
-
-See [api_formatting.md](api_formatting.md) for tips.
-
-## Acknowledgments
-
-react-table-filter was inspired by..
-
-## See Also
-
-- [`noffle/common-readme`](https://github.com/noffle/common-readme)
-- ...
+Only the Columns with "filterkey" prop present will be considered for filtering.
 
 ## License
 
