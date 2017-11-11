@@ -1,9 +1,18 @@
 # react-table-filter
 
-> one-liner description of the module
+> Module creates Excel like Column Filters for Table. The filter list contains all the unique items present in every column
 
-background details relevant to understanding what this module does
+## Install
+You need to have react and react-dom as dependencies in your project.
+1. With [npm](https://npmjs.org/) installed, run
 
+```
+$ npm install react-table-filter
+```
+2. 
+```
+import TableFilter from '../src/index.js';
+```
 ## Usage
 
 ```js
@@ -25,14 +34,6 @@ var reactTableFilter = require('react-table-filter')
 ```
 
 See [api_formatting.md](api_formatting.md) for tips.
-
-## Install
-
-With [npm](https://npmjs.org/) installed, run
-
-```
-$ npm install react-table-filter
-```
 
 ## Acknowledgments
 
