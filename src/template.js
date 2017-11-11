@@ -6,6 +6,9 @@ import {
 } from './lib/util';
 import styles from './css/tableFilter.scss';
 
+/**
+ * [render Main render function of the TableFilter]
+ */
 const render = function(){
 	const children = this.props.children;
 	const finalChildren = [];	
@@ -37,7 +40,8 @@ const render = function(){
 									filterRows={this._filterRows}
 									resetRows={this._resetRows}
 									sortRows={this._sortRows}
-									sortKey={this.state.sortKey}/>);
+									sortKey={this.state.sortKey}
+									sortType={this.state.sortType}/>);
 				}else{
 					childChildren[childChildren.length - 1] = (<FilterList 
 									{...child.props}
@@ -46,7 +50,8 @@ const render = function(){
 									filterRows={this._filterRows}
 									resetRows={this._resetRows}
 									sortRows={this._sortRows}
-									sortKey={this.state.sortKey}/>);
+									sortKey={this.state.sortKey}
+									sortType={this.state.sortType}/>);
 				}
 				
 				let newProps = {

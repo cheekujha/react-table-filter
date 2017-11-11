@@ -5,7 +5,9 @@ module.exports = {
 	entry: './src/index.js',
 	output: {
 		filename: 'bundle.js',
-		path: path.resolve(__dirname, 'lib')
+		path: path.resolve(__dirname, 'lib'),
+		library: 'tableFilter',
+		libraryTarget: 'umd'
 	},
 	module: {
 		rules: [
@@ -30,6 +32,10 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new ExtractTextPlugin({filename: 'styles.css', disable: false, allChunks: true})
+		new ExtractTextPlugin({
+			filename: 'styles.css', 
+			disable: false, 
+			allChunks: true
+		})
 	]
 };

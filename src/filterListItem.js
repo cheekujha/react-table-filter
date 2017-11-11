@@ -1,5 +1,6 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 
 const FilterListItem = createReactClass({
 	getInitialState(){
@@ -28,8 +29,11 @@ const FilterListItem = createReactClass({
 	}
 });
 
-// TODO - Write Proptypes Definition
-// FilterListItem.propTypes = {
-// }
+FilterListItem.propTypes = {
+	filterClicked: PropTypes.func.isRequired,
+	index: PropTypes.number.isRequired,
+	label: PropTypes.any.isRequired,
+	selected: PropTypes.bool.isRequired,
+}
 
 export default FilterListItem

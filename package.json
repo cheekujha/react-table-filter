@@ -1,29 +1,35 @@
 {
   "name": "react-table-filter",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "",
-  "main": "index.js",
+  "main": "lib/bundle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/webpack -p",
+    "build": "./node_modules/.bin/webpack",
     "watch": "./node_modules/.bin/webpack --watch",
     "start:dev": "webpack-dev-server --content-base ./docs --inline --hot",
-    "build-example": "cd examples; ./node_modules/.bin/webpack",
+    "build-example": "cd examples; ../node_modules/.bin/webpack",
     "run-example": "cd examples; ../node_modules/.bin/webpack-dev-server --content-base ../docs --inline --hot --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cheekujha/react-table-filter.git"
   },
   "author": "cheekujha@gmail.com",
   "license": "ISC",
   "dependencies": {
     "create-react-class": "^15.6.2",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "prop-types": "^15.6.0"
   },
   "peerDependencies": {
     "react": "*",
     "react-dom": "*"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
+    "babel-loader": "6.2.5",
     "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",

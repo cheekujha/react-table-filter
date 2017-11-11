@@ -1,19 +1,63 @@
+body {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  color: #222; }
+
+.nav-bar {
+  background-color: #f8f8f8;
+  border: 1px solid #e7e7e7;
+  height: 50px;
+  border-radius: 4px; }
+  .nav-bar .container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    line-height: 50px;
+    color: #777; }
+  .nav-bar:before {
+    display: table;
+    content: ""; }
+
+.examples {
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative; }
+  .examples .basic {
+    position: relative;
+    border: 1px solid #d6d6d6;
+    padding-bottom: 10px; }
+
+.header {
+  position: relative;
+  text-align: center; }
+
+.basic-table {
+  position: relative;
+  margin: auto;
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 50%; }
+  .basic-table .cell {
+    position: relative;
+    border: 1px solid black;
+    padding: 3px; }
 .table-filter-row {
   position: relative; }
 
 .filter-list {
   position: absolute;
-  max-height: 220px;
+  max-height: 250px;
   overflow: auto;
   max-width: 220px;
   min-width: 170px;
   left: 0;
   top: 100%;
-  border: 2px solid #8E9193;
-  color: black; }
+  border: 2px solid #8E9193; }
+  .filter-list.align-left {
+    left: auto;
+    right: 0; }
 
 .filter-list-item {
-  color: black;
   position: relative;
   padding-left: 30px;
   height: 35px;
@@ -60,9 +104,10 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  position: relative; }
+  position: relative;
+  font-weight: normal; }
   .filter-label.select-all-label {
-    font-weight: 500; }
+    font-weight: 600; }
 
 .apply-filter {
   position: relative;

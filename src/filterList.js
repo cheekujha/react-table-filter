@@ -18,13 +18,13 @@ import {
 } from './lib/constants';
 import SortIcon from './sortIcon';
 import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 
 const FilterList = createReactClass({
 	getInitialState(){
 		this.unselectedFilters = 0;
 		const { filterList, selectState } = this._calculateFilterState(this.props);
-		// this._handleOutsideClick = this._handleOutsideClick.bind(this);
-
+		// this._sortClicked = this._sortClicked.bind(this);
 		return {
 			filterList: filterList,
 			showFilter: false,
@@ -54,7 +54,7 @@ const FilterList = createReactClass({
 	componentWillReceiveProps(nextProps){
 		const { filterList, selectState } = this._calculateFilterState(nextProps);
 
-		const sortTypeState = (!isUndefined(nextProps.sortKey) && (nextProps.sortKey === this.props.filterkey) ) ? this.state.sortType : undefined;
+		const sortTypeState = (!isUndefined(nextProps.sortKey) && (nextProps.sortKey === this.props.filterkey) ) ? nextProps.sortType : undefined;
 
 		this.setState({
 			filterList: filterList,
@@ -231,17 +231,21 @@ const FilterList = createReactClass({
 			newSortType = DSC_VALUE;
 		}
 
-		this.setState({
-			sortType: newSortType
-		}, () => {
-			this.props.sortRows(newSortType, {
-				itemSortValueFunc: this.props.itemSortValueFunc,
-				caseSensitive: this.props.caseSensitive,
-				key: this.props.filterkey
-			});
+		this.props.sortRows(newSortType, {
+			itemSortValueFunc: this.props.itemSortValueFunc,
+			caseSensitive: this.props.caseSensitive,
+			key: this.props.filterkey
 		});
-
-		
+		// this.setState({
+		// 	sortType: newSortType
+		// }, () => {
+		// 	debugger
+		// 	this.props.sortRows(newSortType, {
+		// 		itemSortValueFunc: this.props.itemSortValueFunc,
+		// 		caseSensitive: this.props.caseSensitive,
+		// 		key: this.props.filterkey
+		// 	});
+		// });
 	},
 
 	render(){
@@ -279,9 +283,14 @@ const FilterList = createReactClass({
 	}
 });
 
-// TODO - Write Proptypes Definition
-// TableFilter.propTypes = {
-
-// }
+FilterList.propTypes = {
+	initialData: PropTypes.array.isRequired,
+	filteredData: PropTypes.array.isRequired,
+	filterRows: PropTypes.func.isRequired,
+	resetRows: PropTypes.func.isRequired,
+	sortRows: PropTypes.func.isRequired,
+	sortKey: PropTypes.string,
+	sortType: PropTypes.string,
+}
 
 export default FilterList

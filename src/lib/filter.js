@@ -7,11 +7,14 @@ import {
 } from './util';
 
 /**
- * [description]
- * @param  {Array}   inputArray [description]
- * @param  {Object}  filter     [description]
- * @param  {Boolean} addFilter  [description]
- * @return {[type]}             [description]
+ * [Function to apply a filter to an Array]
+ * @param  {Array}   inputArray [Array to be filtered]
+ * @param  {Object}  filter     [{key, value} filter key and value]
+ * @param  {Boolean} addFilter  
+ * @param  {Function}  valueFunc  [Function to calculate value of the property(optional)]
+ * @return {Object} 
+ *         filteredArray [Filtered items after appying filte]
+ *         dataWithFilter [inputArray along with modification due to applied filters]            			 			
  */
 export const filterAction = (inputArray=[], filter={}, addFilter=true, valueFunc=undefined) => {
 	let key = filter.key,
@@ -77,6 +80,15 @@ export const filterAction = (inputArray=[], filter={}, addFilter=true, valueFunc
 	return;
 }
 
+/**
+ * [Function to reset certain values for a filter]
+ * @param  {Array}   inputArray [Array to be filtered]
+ * @param  {Array}   values     [Filter values to reset]
+ * @param  {[type]}  key        [Filter key]
+ * @param  {Boolean} selectAll
+ * @param  {Function}  valueFunc  [Function to calculate value of the property(optional)]
+ * @return {[type]}
+ */
 export const filtersReset = (inputArray=[], values=[], key=undefined, selectAll=true, valueFunc=undefined) => {
 
 	let filteredArray = [];
@@ -125,3 +137,8 @@ export const filtersReset = (inputArray=[], values=[], key=undefined, selectAll=
 		dataWithFilter
 	};
 } 
+
+export default {
+	filterAction : filterAction,
+	filtersReset: filtersReset
+}

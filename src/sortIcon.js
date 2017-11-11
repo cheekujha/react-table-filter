@@ -3,6 +3,7 @@ import {
 	isUndefined
 } from './lib/util';
 import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 
 const SortIcon = createReactClass({
 	getInitialState(){
@@ -31,8 +32,9 @@ const SortIcon = createReactClass({
 	}
 });
 
-// TODO - Write Proptypes Definition
-// SortIcon.propTypes = {
-// }
+SortIcon.propTypes = {
+	sort: PropTypes.func.isRequired,
+	sortType: PropTypes.string,
+}
 
 export default SortIcon

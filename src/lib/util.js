@@ -48,3 +48,10 @@ export const getValForKey = (obj, key) => {
 	}
 	return;
 }
+
+export default {
+	isUndefined,
+	isTypeArray,
+	isTypeString,
+	getValForKey
+}

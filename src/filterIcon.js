@@ -1,5 +1,7 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
+
 
 const FilterIcon = createReactClass({
 	getInitialState(){
@@ -25,8 +27,9 @@ const FilterIcon = createReactClass({
 	}
 });
 
-// TODO - Write Proptypes Definition
-// FilterListItem.propTypes = {
-// }
+FilterIcon.propTypes = {
+	iconClicked: PropTypes.func.isRequired, // Function to be called when filter icon is clicked
+	selected: PropTypes.bool,
+}
 
 export default FilterIcon
