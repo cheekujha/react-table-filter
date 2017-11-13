@@ -68,6 +68,19 @@ filterkey - The key by which that column is to be filtered(key as present in row
 
 Only the Columns with "filterkey" prop present will be considered for filtering.
 
+## Reset Items after Initialization
+
+If you want to reset Items after component mount. Make as reference to "TableFilter" node and call "reset" method as shown below.
+
+```
+<TableFilter 
+  rows={data} 
+  onFilterUpdate={this._filterUpdated}
+  ref={ (node) => {this.tableFilterNode = node;}>
+  
+this.tableFilterNode.reset(newData);
+```
+
 ## License
 
 ISC
