@@ -80,6 +80,34 @@ If you want to reset Items after component mount. Make as reference to "TableFil
   
 this.tableFilterNode.reset(newData);
 ```
+## API
+
+### Properties
+
+#### TableFilter
+
+Name | Type | Default | Required | Description 
+:--- | :--- | :------ | :------- | :----------
+rows | array | | true | Items for the Filter
+onFilterUpdate | function(updatedData) | | true | Function called with filtered data
+rowClass | string | | false | Any additional class to be added to table row contaning header columns
+
+#### TableFilter Ref Methods
+
+Name | Type | Description 
+:--- | :--- | :----------
+reset | function(items) | Function called to reset items after component has been mounted
+
+
+#### Cloumn Headers(td/th)
+
+Name | Type | Default | Required | Description 
+:--- | :--- | :------ | :------- | :----------
+filterkey | string | | false | Key by which the Column should be filtered(Key as present in single Item)
+itemDisplayValueFunc | function(itemValue) | | false | Optional Function that returns the Value that is displayed in the filter list for each item(Default is the item value - Item[key])
+itemSortValueFunc | function(itemValue) | | false | Optional Function that returns the Value that is used while sorting (Default is the item value - Item[key])
+alignleft | boolean | false | false | Decides while side filter list should be aligned w.r.t Column
+caseSensitive | boolean | false | false | Case Sensitivity during sort
 
 ## License
 
