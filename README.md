@@ -4,6 +4,10 @@
 
 ![alt text](https://user-images.githubusercontent.com/3127722/32687714-9d29ac44-c6e8-11e7-969e-8697a55d42d5.png)
 
+## Demo
+
+[https://cheekujha.github.io/react-table-filter/](https://cheekujha.github.io/react-table-filter/)
+
 ## Install
 You need to have react and react-dom as dependencies in your project.
 
