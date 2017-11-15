@@ -1,5 +1,6 @@
 var path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+var webpack = require('webpack');
 
 module.exports = {
 	entry: './src/index.js',
@@ -36,6 +37,9 @@ module.exports = {
 			filename: 'styles.css', 
 			disable: false, 
 			allChunks: true
-		})
+		}),
+		new webpack.optimize.UglifyJsPlugin({
+			drop_console: true
+		}),
 	]
 };

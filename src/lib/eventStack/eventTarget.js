@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _ from '../lodash.custom'
 
 export default class EventTarget {
 
