@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import Template from './template.js';
 import {
 	isUndefined, 
@@ -12,24 +12,34 @@ import {
 import {
 	sortAction
 } from './lib/sort';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 
 /**
  * Root Filter Component. This Component attaches filter icon and list to the table heads
  */
-const TableFilter = createReactClass({
-	getInitialState(){
+class TableFilter extends Component {
+	constructor(props){
+		super(props);
 		this.filterIcons = {};
 		this.childrenIntances;
 		let stateData = this._createData(this.props.rows);
 
-		return {
+		this._initMethods();
+
+		this.state = {
 			initialData: stateData.initialData,
 			filteredData: stateData.filteredData,
 			sortKey: undefined
 		}
-	},
+	}
+
+	/*Bind Functions to Context*/
+	_initMethods(){
+		this._filterRows = this._filterRows.bind(this);
+		this._resetRows = this._resetRows.bind(this);
+		this._sortRows = this._sortRows.bind(this);
+		this.reset = this.reset.bind(this);
+	}
 
 	// This method to be done with web worker
 	/**
@@ -50,7 +60,7 @@ const TableFilter = createReactClass({
 			initialData,
 			filteredData
 		};
-	},
+	}
 	
 	/**
 	 * [_filterRows Function passed as a prop to FilterList Componenet and called in case a filter is applied 
@@ -60,7 +70,7 @@ const TableFilter = createReactClass({
 	 * @param  {Boolean} addFilter [Add or remove fitler]
 	 * @param  {[type]}  valueFunc(optional) [Function passed to calculate the value of an item]
 	 */
-	_filterRows: function(value=undefined, key=undefined, addFilter=true, valueFunc=undefined){
+	_filterRows(value=undefined, key=undefined, addFilter=true, valueFunc=undefined){
 		let filteredData = this.state.filteredData;
 		if(!isUndefined(value) && !isUndefined(key)){
 			
@@ -77,7 +87,7 @@ const TableFilter = createReactClass({
 				this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray);
 			}
 		}
-	},
+	}
 
 	/**
 	 * [_resetRows Function called to reset selected the filters.]
@@ -87,7 +97,7 @@ const TableFilter = createReactClass({
 	 * @param  {[type]}  valueFunc    [description]
 	 * @return {[type]}               [description]
 	 */
-	_resetRows: function(filterValues=[], key=undefined, selectAll=true, valueFunc=undefined){
+	_resetRows(filterValues=[], key=undefined, selectAll=true, valueFunc=undefined){
 		if(!isUndefined(key)){
 			let filteredData = this.state.filteredData;
 			const result = filtersReset(filteredData, filterValues, key, selectAll, valueFunc);
@@ -103,7 +113,7 @@ const TableFilter = createReactClass({
 				this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray);
 			}
 		}
-	},
+	}
 
 	/**
 	 * [_sortRows Function to sort the values according to a filter]
@@ -112,7 +122,7 @@ const TableFilter = createReactClass({
 	 * @param  {Boolean} options.caseSensitive [Case Sensitive or not]
 	 * @param  {[type]}  options.key           [Key to sort by]
 	 */
-	_sortRows: function(sortType=undefined, {valueFunc=undefined, caseSensitive=false, key=undefined} = {}){
+	_sortRows(sortType=undefined, {valueFunc=undefined, caseSensitive=false, key=undefined} = {}){
 		if(!isUndefined(sortType)){
 			let filteredData = this.state.filteredData;
 			const result = sortAction(filteredData, sortType, {valueFunc, caseSensitive, key} );
@@ -136,7 +146,7 @@ const TableFilter = createReactClass({
 			this.insideCall = true;
 			this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray);
 		}
-	},
+	}
 
 	/**
 	 * [reset Function called from parent(main code) to load/reset date of the filters]
@@ -148,10 +158,12 @@ const TableFilter = createReactClass({
 			initialData: stateData.initialData,
 			filteredData: stateData.filteredData
 		});
-	},
+	}
 
-	render: Template
-});
+	render(){
+		return Template.call(this);
+	}
+} 
 
 TableFilter.propTypes = {
 	rows: PropTypes.array.isRequired, // Filterable Data

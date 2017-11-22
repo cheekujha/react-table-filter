@@ -1,27 +1,25 @@
-import React from 'react'
+import React from 'react';
 import {
 	isUndefined
 } from './lib/util';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 
-const SortIcon = createReactClass({
-	getInitialState(){
-		return {
-		};
-	},
+class SortIcon extends React.Component{
+	constructor(props){
+		super(props);
+		this.state = {};
 
-	componentWillMount(){
-		// console.log('------', this.props.children);
-	},
+		this._initMethods();
+	}
 
-	componentDidMount(){
-
-	},
+	/*Bind Functions to Context*/
+	_initMethods(){
+		this._sortClicked = this._sortClicked.bind(this);
+	}
 
 	_sortClicked(){
 		this.props.sort();
-	},
+	}
 
 	render(){
 		const sortClass = !isUndefined(this.props.sortType) ? (' ' + this.props.sortType) : '';
@@ -30,7 +28,7 @@ const SortIcon = createReactClass({
 					<div className="asc table-filter-arrow"></div>
 				</div>);
 	}
-});
+}
 
 SortIcon.propTypes = {
 	sort: PropTypes.func.isRequired,

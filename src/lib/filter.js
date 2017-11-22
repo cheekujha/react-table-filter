@@ -51,12 +51,12 @@ export const filterAction = (inputArray=[], filter={}, addFilter=true, valueFunc
 					if(!itemCopy.appliedFilters[key]){
 						itemCopy.appliedFilters[key] = 0;
 					}
-					itemCopy.appliedFilters[key]++;
+					itemCopy.appliedFilters[key] += 1;
 				}
 			}
 			else{
 				if(itemValue === value){
-					itemCopy.appliedFilters[key]--;
+					itemCopy.appliedFilters[key] -= 1;
 					if(itemCopy.appliedFilters[key] === 0){
 						delete itemCopy.appliedFilters[key];
 					}

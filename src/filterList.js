@@ -17,39 +17,46 @@ import {
 	DSC_VALUE
 } from './lib/constants';
 import SortIcon from './sortIcon';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 
-const FilterList = createReactClass({
-	getInitialState(){
+class FilterList extends React.Component {
+	constructor(props){
+		super(props);
+
+		this._initMethods();
+
 		this.unselectedFilters = 0;
 		const { filterList, selectState } = this._calculateFilterState(this.props);
-		// this._sortClicked = this._sortClicked.bind(this);
-		return {
+		this.state = {
 			filterList: filterList,
 			showFilter: false,
 			selectAllFilters: selectState,
 			sortType: undefined
 		};
-	},
+	}
 
-	componentWillMount(){
-
-	},
-
-	componentDidMount(){
-		
-	},
+	_initMethods(){
+		this._handleOutsideClick = this._handleOutsideClick.bind(this);
+		this._calculateFilterState = this._calculateFilterState.bind(this);
+		this._filterIconClicked = this._filterIconClicked.bind(this);
+		this._displayFilter = this._displayFilter.bind(this);
+		this._hideFilter = this._hideFilter.bind(this);
+		this._filterUpdated = this._filterUpdated.bind(this);
+		this._selectAllClicked = this._selectAllClicked.bind(this);
+		this._filterData = this._filterData.bind(this);
+		this._resetData = this._resetData.bind(this);
+		this._sortClicked = this._sortClicked.bind(this);
+	}
 
 	componentWillUnmount(){
 		EventStack.unsub('click', this._handleOutsideClick, document);
-	},
+	}
 
 	_handleOutsideClick(e){
 		if(!this.filterIconNode.contains(e.target)){
 			this._hideFilter();
 		}
-	},
+	}
 
 	componentWillReceiveProps(nextProps){
 		const { filterList, selectState } = this._calculateFilterState(nextProps);
@@ -61,7 +68,7 @@ const FilterList = createReactClass({
 			selectAllFilters: selectState,
 			sortType: sortTypeState
 		});
-	},
+	}
 
 	_calculateFilterState(props){
 		const initialData = props.initialData ? [...props.initialData] : [];
@@ -154,7 +161,7 @@ const FilterList = createReactClass({
 			filterList,
 			selectState
 		};
-	},
+	}
 
 	_filterIconClicked(e){
 		const filterState = this.state.showFilter;
@@ -166,21 +173,21 @@ const FilterList = createReactClass({
 			this._hideFilter();
 		}
 		
-	},
+	}
 
 	_displayFilter(){
 		EventStack.sub('click', this._handleOutsideClick, document);
 		this.setState({
 			showFilter: true
 		});
-	},
+	}
 
 	_hideFilter(){
 		EventStack.unsub('click', this._handleOutsideClick, document);
 		this.setState({
 			showFilter: false
 		});
-	},
+	}
 
 	_filterUpdated(index){
 		let allFilters = this.state.filterList;
@@ -188,7 +195,7 @@ const FilterList = createReactClass({
 			const newFilterState = !allFilters[index]['selected'];
 			this._filterData(allFilters[index]['key'], !newFilterState);
 		}
-	},
+	}
 
 	_selectAllClicked(){
 		const selectAllState = this.state.selectAllFilters;
@@ -212,15 +219,15 @@ const FilterList = createReactClass({
 
 			this._resetData(visibleFiltersValues, newSelectAllState);
 		}		
-	}, 
-	
+	}
+
 	_filterData(filterValue=undefined, addFilter=true){
 		this.props.filterRows(filterValue, this.props.filterkey, addFilter, this.props.itemDisplayValueFunc);
-	},
+	}
 
 	_resetData(filterValues=[], selectAll=true){
 		this.props.resetRows(filterValues, this.props.filterkey, selectAll, this.props.itemDisplayValueFunc);
-	},
+	}
 
 	_sortClicked(){
 		const currentSortType = this.state.sortType;
@@ -246,7 +253,7 @@ const FilterList = createReactClass({
 		// 		key: this.props.filterkey
 		// 	});
 		// });
-	},
+	}
 
 	render(){
 		const filterState = this.state.showFilter,
@@ -281,7 +288,7 @@ const FilterList = createReactClass({
 			return (<div style={ {display: "none"} }></div>);
 		}
 	}
-});
+}
 
 FilterList.propTypes = {
 	initialData: PropTypes.array.isRequired,

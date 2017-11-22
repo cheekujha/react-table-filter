@@ -1,24 +1,22 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 
-const FilterListItem = createReactClass({
-	getInitialState(){
-		return {
-		};
-	},
+class FilterListItem extends React.Component {
+	constructor(props){
+		super(props);
 
-	componentWillMount(){
-		// console.log('------', this.props.children);
-	},
+		this._initMethods();
+		this.state = {};
+	}
 
-	componentDidMount(){
-
-	},
+	/*Bind Functions to Context*/
+	_initMethods(){
+		this._checkBoxClicked = this._checkBoxClicked.bind(this);
+	}
 
 	_checkBoxClicked(){
 		this.props.filterClicked(this.props.index);
-	},
+	}
 
 	render(){
 		const checkBoxClass = [this.props.selected ? "selected " : "", "filter-check-box"].join('');
@@ -27,7 +25,8 @@ const FilterListItem = createReactClass({
 					<div className="filter-label">{this.props.label}</div>
 				</div>);
 	}
-});
+}
+
 
 FilterListItem.propTypes = {
 	filterClicked: PropTypes.func.isRequired,

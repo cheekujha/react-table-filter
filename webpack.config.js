@@ -10,6 +10,10 @@ module.exports = {
 		library: 'tableFilter',
 		libraryTarget: 'umd'
 	},
+	externals: {
+		'react': 'React',
+		'react-dom': 'ReactDOM'
+	},
 	module: {
 		rules: [
 			{
@@ -33,6 +37,11 @@ module.exports = {
 		]
 	},
 	plugins: [
+		new webpack.DefinePlugin({ // <-- key to reducing React's size
+			'process.env': {
+				'NODE_ENV': JSON.stringify('production')
+			}
+		}),
 		new ExtractTextPlugin({
 			filename: 'styles.css', 
 			disable: false, 
@@ -41,5 +50,6 @@ module.exports = {
 		new webpack.optimize.UglifyJsPlugin({
 			drop_console: true
 		}),
+		new webpack.optimize.AggressiveMergingPlugin()//Merge chunks
 	]
 };
