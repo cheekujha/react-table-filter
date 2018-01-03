@@ -1,6 +1,6 @@
 {
   "name": "react-table-filter",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "",
   "main": "lib/bundle.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "start:dev": "webpack-dev-server --content-base ./docs --inline --hot",
     "build-example": "cd examples; ../node_modules/.bin/webpack",
     "run-example": "cd examples; ../node_modules/.bin/webpack-dev-server --content-base ../docs --inline --hot --config webpack.config.js",
-    "release" : "npm run build;"
+    "release": "npm run build;"
   },
   "repository": {
     "type": "git",
@@ -42,5 +42,13 @@
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
   },
-  "keywords": ["react", "reactjs", "react-table", "react-table-filter", "tablefilter", "react-component", "react-filter-table"]
+  "keywords": [
+    "react",
+    "reactjs",
+    "react-table",
+    "react-table-filter",
+    "tablefilter",
+    "react-component",
+    "react-filter-table"
+  ]
 }
