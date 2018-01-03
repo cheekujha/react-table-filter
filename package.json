@@ -9,7 +9,8 @@
     "watch": "./node_modules/.bin/webpack --watch",
     "start:dev": "webpack-dev-server --content-base ./docs --inline --hot",
     "build-example": "cd examples; ../node_modules/.bin/webpack",
-    "run-example": "cd examples; ../node_modules/.bin/webpack-dev-server --content-base ../docs --inline --hot --config webpack.config.js"
+    "run-example": "cd examples; ../node_modules/.bin/webpack-dev-server --content-base ../docs --inline --hot --config webpack.config.js",
+    "release" : "npm run build;"
   },
   "repository": {
     "type": "git",
