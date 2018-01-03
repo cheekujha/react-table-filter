@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import SampleData from './sampleData.json';
 import TableFilter from '../src/index.js';
 import styles from './example.scss';
-import TableFilterStyles from '../lib/styles.css';
+// import TableFilterStyles from '../lib/styles.css';
 
 class SimpleExample extends Component {
 	constructor(props){

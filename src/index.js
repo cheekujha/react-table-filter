@@ -7,6 +7,7 @@ import {
 } from './lib/util';
 import {
 	filterAction,
+	filterActions,
 	filtersReset
 } from './lib/filter';
 import {
@@ -38,6 +39,7 @@ class TableFilter extends Component {
 		this._filterRows = this._filterRows.bind(this);
 		this._resetRows = this._resetRows.bind(this);
 		this._sortRows = this._sortRows.bind(this);
+		this._filterMulipleRows = this._filterMulipleRows.bind(this);
 		this.reset = this.reset.bind(this);
 	}
 
@@ -60,6 +62,30 @@ class TableFilter extends Component {
 			initialData,
 			filteredData
 		};
+	}
+
+	_filterMulipleRows(addFilterArray=[], removeFilterArray=[] , valueFunc=undefined){
+		let filteredData = this.state.filteredData;
+
+		if(!isUndefined(addFilterArray)){
+
+			let result = filterActions(filteredData, removeFilterArray, false, valueFunc);
+
+			result = filterActions(result.dataWithFilter, addFilterArray, true, valueFunc);
+
+			if(!isUndefined(result)){
+				const filteredArray = result.filteredArray,
+					dataWithFilter = result.dataWithFilter;
+				
+				this.setState({
+					filteredData: dataWithFilter
+				});
+
+				this.insideCall = true;
+				this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray);
+			}
+
+		}
 	}
 	
 	/**

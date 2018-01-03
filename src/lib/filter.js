@@ -6,6 +6,72 @@ import {
 	getValForKey
 } from './util';
 
+
+export const filterActions = (inputArray=[], filterArray=[], addFilter=true, valueFunc=undefined) => {
+	let filteredArray = [];
+	let dataWithFilter = inputArray.map((item) => {
+		let itemCopy = Object.assign({}, item);
+
+		let i,l;
+
+		if(isUndefined(itemCopy.appliedFilters)){
+			itemCopy.appliedFilters = {};
+		}
+
+		for(i=0,l=filterArray.length; i<l; i=i+1){
+			const filterItem = filterArray[i];
+			let key =  filterItem.key,
+				value = filterItem.value;
+
+			if(isUndefined(value)){
+				value = "";
+			}
+
+			let itemValue = getValForKey(item, key);
+			if(!isUndefined(valueFunc)){
+				itemValue = valueFunc(itemValue);
+			}
+
+			if(isUndefined(itemValue)){
+				itemValue = "";
+			}
+
+			if(isTypeString(itemValue)){
+				itemValue = itemValue.trim();
+			}
+
+			if(addFilter){
+				if(itemValue === value){
+					if(!itemCopy.appliedFilters[key]){
+						itemCopy.appliedFilters[key] = 0;
+					}
+					itemCopy.appliedFilters[key] += 1;
+				}
+			}
+			else{
+				if(itemValue === value){
+					itemCopy.appliedFilters[key] -= 1;
+					if(itemCopy.appliedFilters[key] === 0){
+						delete itemCopy.appliedFilters[key];
+					}
+				}
+			}
+		}
+			
+		if(Object.keys(itemCopy.appliedFilters).length === 0){
+			delete itemCopy['appliedFilters'];
+			filteredArray.push(Object.assign({}, itemCopy));
+		}
+
+		return itemCopy;
+	});
+
+	return {
+		filteredArray,
+		dataWithFilter
+	};
+}
+
 /**
  * [Function to apply a filter to an Array]
  * @param  {Array}   inputArray [Array to be filtered]

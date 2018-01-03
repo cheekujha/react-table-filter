@@ -1,46 +1,3 @@
-body {
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  color: #222; }
-
-.nav-bar {
-  background-color: #f8f8f8;
-  border: 1px solid #e7e7e7;
-  height: 50px;
-  border-radius: 4px; }
-  .nav-bar .container {
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    line-height: 50px;
-    color: #777; }
-  .nav-bar:before {
-    display: table;
-    content: ""; }
-
-.examples {
-  padding: 10px;
-  box-sizing: border-box;
-  position: relative; }
-  .examples .basic {
-    position: relative;
-    border: 1px solid #d6d6d6;
-    padding-bottom: 10px; }
-
-.header {
-  position: relative;
-  text-align: center; }
-
-.basic-table {
-  position: relative;
-  margin: auto;
-  border: 1px solid black;
-  border-collapse: collapse;
-  width: 50%; }
-  .basic-table .cell {
-    position: relative;
-    border: 1px solid black;
-    padding: 3px; }
 .table-filter-row {
   position: relative; }
 
@@ -229,3 +186,61 @@ body {
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     left: -4px; }
+
+.search-parent {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 8px;
+  padding-right: 60px; }
+  .search-parent .search-input {
+    position: relative;
+    width: 100%;
+    height: 24px;
+    margin: 0;
+    padding-left: 5px;
+    box-sizing: border-box;
+    font-size: 14px; }
+body {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  color: #222; }
+
+.nav-bar {
+  background-color: #f8f8f8;
+  border: 1px solid #e7e7e7;
+  height: 50px;
+  border-radius: 4px; }
+  .nav-bar .container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    line-height: 50px;
+    color: #777; }
+  .nav-bar:before {
+    display: table;
+    content: ""; }
+
+.examples {
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative; }
+  .examples .basic {
+    position: relative;
+    border: 1px solid #d6d6d6;
+    padding-bottom: 10px; }
+
+.header {
+  position: relative;
+  text-align: center; }
+
+.basic-table {
+  position: relative;
+  margin: auto;
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 50%; }
+  .basic-table .cell {
+    position: relative;
+    border: 1px solid black;
+    padding: 3px; }

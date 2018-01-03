@@ -1,6 +1,7 @@
 import React from 'react';
 import FilterListItem from './filterListItem';
 import SelectAllItem from './selectAllItem';
+import SearchBar from './searchBar';
 import {
 	isUndefined, 
 	isTypeString,
@@ -27,11 +28,14 @@ class FilterList extends React.Component {
 
 		this.unselectedFilters = 0;
 		const { filterList, selectState } = this._calculateFilterState(this.props);
+		this.appliedSearchFilters = undefined;
+		this.searchValue = undefined;
 		this.state = {
 			filterList: filterList,
 			showFilter: false,
 			selectAllFilters: selectState,
-			sortType: undefined
+			sortType: undefined,
+			searchEnabled: false
 		};
 	}
 
@@ -46,6 +50,7 @@ class FilterList extends React.Component {
 		this._filterData = this._filterData.bind(this);
 		this._resetData = this._resetData.bind(this);
 		this._sortClicked = this._sortClicked.bind(this);
+		this._searchChanged = this._searchChanged.bind(this);
 	}
 
 	componentWillUnmount(){
@@ -185,7 +190,8 @@ class FilterList extends React.Component {
 	_hideFilter(){
 		EventStack.unsub('click', this._handleOutsideClick, document);
 		this.setState({
-			showFilter: false
+			showFilter: false,
+			searchEnabled: false
 		});
 	}
 
@@ -200,25 +206,24 @@ class FilterList extends React.Component {
 	_selectAllClicked(){
 		const selectAllState = this.state.selectAllFilters;
 		const newSelectAllState = !selectAllState;
+		const searchState = this.state.searchEnabled;
+		// const searchValue = this.searchValue;
 
-		if(newSelectAllState){
-			const visibleFiltersValues = this.state.filterList.filter((filterItem) => {
+		if(searchState){
+			return;
+		}
+
+		const visibleFiltersValues = this.state.filterList.filter((filterItem) => {
+			if(newSelectAllState){
 				return (filterItem.visible && !filterItem.selected);
-			}).map((filterItem) => {
-				return filterItem.key;
-			});
-
-			this._resetData(visibleFiltersValues, newSelectAllState);
-		}else{
-
-			const visibleFiltersValues = this.state.filterList.filter((filterItem) => {
+			}else{
 				return (filterItem.visible && filterItem.selected);
-			}).map((filterItem) => {
-				return filterItem.key;
-			});
+			}
+		}).map((filterItem) => {
+			return filterItem.key;
+		});
 
-			this._resetData(visibleFiltersValues, newSelectAllState);
-		}		
+		this._resetData(visibleFiltersValues, newSelectAllState);		
 	}
 
 	_filterData(filterValue=undefined, addFilter=true){
@@ -255,6 +260,48 @@ class FilterList extends React.Component {
 		// });
 	}
 
+	_searchChanged(searchValue){
+		let searchState = false;
+		let propKey = this.props.filterkey;
+		this.searchValue = searchValue;
+		
+
+		const prevAppliedFilters = this.appliedSearchFilters;
+		if(!isUndefined(searchValue, true)){
+
+			this.setState({
+				searchEnabled: true
+			});
+
+			searchValue = searchValue.toLowerCase();
+			let filterList = this.state.filterList;
+			searchState = true;
+			
+			const filtersToApply = filterList.filter((filterItem) => {
+				const filterKey = filterItem.key.toString().toLowerCase();
+				if(filterKey.indexOf(searchValue) < 0 && filterItem.visible){
+					return true;
+				}
+				return false;
+			}).map((filterItem) => {
+				return {
+					key: propKey,
+					value: filterItem.key
+				}
+			});
+			this.appliedSearchFilters = filtersToApply;
+			this.props.filterMultipleRows(filtersToApply, prevAppliedFilters, this.props.itemDisplayValueFunc);
+		}else{
+
+			this.setState({
+				searchEnabled: false
+			});
+
+			this.appliedSearchFilters = [];
+			this.props.filterMultipleRows([], prevAppliedFilters, this.props.itemDisplayValueFunc);
+		}
+	}
+
 	render(){
 		const filterState = this.state.showFilter,
 			filterkey = this.props.filterkey;
@@ -266,13 +313,23 @@ class FilterList extends React.Component {
 			if(filterState){
 				this.state.filterList.map((filterItem, index) => {
 					if(filterItem.visible){
-						filterListItemHtml.push(<FilterListItem filterClicked={this._filterUpdated} index={index} label={filterItem.display} selected={filterItem.selected}/>);
+						if(this.state.searchEnabled){
+							const filterKey = filterItem.key.toString().toLowerCase();
+							if(filterKey.indexOf(this.searchValue.toLowerCase()) >= 0){
+								return filterListItemHtml.push(<FilterListItem filterClicked={this._filterUpdated} index={index} label={filterItem.display} selected={filterItem.selected}/>);
+							}else{
+								return null;
+							}
+						}else{
+							filterListItemHtml.push(<FilterListItem filterClicked={this._filterUpdated} index={index} label={filterItem.display} selected={filterItem.selected}/>);
+						}
 					}
 				});
 
 				const filterListClass = [!isUndefined(this.props.alignleft) ? "align-left " : "",  "filter-list"].join('');
 
 				filterListHtml = (<div className={ filterListClass }>
+									<SearchBar searchChanged={ this._searchChanged }/>
 									<SortIcon sort={ this._sortClicked } sortType={ this.state.sortType }/>
 									<SelectAllItem filterClicked={this._selectAllClicked} selected={this.state.selectAllFilters}/>
 									{ filterListItemHtml }
