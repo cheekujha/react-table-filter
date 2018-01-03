@@ -10,7 +10,7 @@
     "start:dev": "webpack-dev-server --content-base ./docs --inline --hot",
     "build-example": "cd examples; ../node_modules/.bin/webpack",
     "run-example": "cd examples; ../node_modules/.bin/webpack-dev-server --content-base ../docs --inline --hot --config webpack.config.js",
-    "release": "npm run build;"
+    "release": "npm run build; npm publish"
   },
   "repository": {
     "type": "git",
