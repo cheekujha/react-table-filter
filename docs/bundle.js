@@ -1294,7 +1294,7 @@ var SimpleExample = function (_Component) {
 										onFilterUpdate: this._filterUpdated },
 									_react2.default.createElement(
 										'th',
-										{ filterkey: 'name', className: 'cell' },
+										{ filterkey: 'name', className: 'cell', showsearch: false },
 										'Name'
 									),
 									_react2.default.createElement(
@@ -9982,7 +9982,7 @@ var TableFilter = function (_Component) {
 			var valueFunc = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
 
 			var filteredData = this.state.filteredData;
-			debugger;
+
 			if (!(0, _util.isUndefined)(addFilterArray)) {
 
 				var result = (0, _filter.filterActions)(filteredData, removeFilterArray, false, valueFunc);
@@ -10535,20 +10535,6 @@ var FilterList = function (_React$Component) {
 			}
 
 			var visibleFiltersValues = this.state.filterList.filter(function (filterItem) {
-				// if(searchState){
-				// 	const filterKey = filterItem.key.toString().toLowerCase();
-				// 	if(newSelectAllState){
-				// 		return (filterItem.visible && !filterItem.selected && filterKey.indexOf(searchValue.toLowerCase()) >= 0);
-				// 	}else{
-				// 		return (filterItem.visible && filterItem.selected && filterKey.indexOf(searchValue.toLowerCase()) >= 0);
-				// 	}
-				// }else{
-				// 	if(newSelectAllState){
-				// 		return (filterItem.visible && !filterItem.selected);
-				// 	}else{
-				// 		return (filterItem.visible && filterItem.selected);
-				// 	}
-				// }
 				if (newSelectAllState) {
 					return filterItem.visible && !filterItem.selected;
 				} else {
@@ -10622,7 +10608,8 @@ var FilterList = function (_React$Component) {
 				searchState = true;
 
 				var filtersToApply = filterList.filter(function (filterItem) {
-					if (filterItem.key.toString().toLowerCase().indexOf(searchValue) < 0 && filterItem.visible) {
+					var filterKey = filterItem.key.toString().toLowerCase();
+					if (filterKey.indexOf(searchValue) < 0 && filterItem.visible) {
 						return true;
 					}
 					return false;
@@ -10650,17 +10637,21 @@ var FilterList = function (_React$Component) {
 			var _this3 = this;
 
 			var filterState = this.state.showFilter,
-			    filterkey = this.props.filterkey;
+			    filterkey = this.props.filterkey,
+			    showSearch = !(0, _util.isUndefined)(this.props.showsearch) ? this.props.showsearch : true;
+
 			var filterListItemHtml = [],
 			    filterListHtml = void 0;
 
 			if (this.state.filterList.length > 1) {
 				if (filterState) {
+					var searchBarHtml = showSearch ? _react2.default.createElement(_searchBar2.default, { searchChanged: this._searchChanged }) : null;
+
 					this.state.filterList.map(function (filterItem, index) {
 						if (filterItem.visible) {
-							// debugger;
 							if (_this3.state.searchEnabled) {
-								if (filterItem.key.toString().toLowerCase().indexOf(_this3.searchValue.toLowerCase()) >= 0) {
+								var filterKey = filterItem.key.toString().toLowerCase();
+								if (filterKey.indexOf(_this3.searchValue.toLowerCase()) >= 0) {
 									return filterListItemHtml.push(_react2.default.createElement(_filterListItem2.default, { filterClicked: _this3._filterUpdated, index: index, label: filterItem.display, selected: filterItem.selected }));
 								} else {
 									return null;
@@ -10676,7 +10667,7 @@ var FilterList = function (_React$Component) {
 					filterListHtml = _react2.default.createElement(
 						'div',
 						{ className: filterListClass },
-						_react2.default.createElement(_searchBar2.default, { searchChanged: this._searchChanged }),
+						searchBarHtml,
 						_react2.default.createElement(_sortIcon2.default, { sort: this._sortClicked, sortType: this.state.sortType }),
 						_react2.default.createElement(_selectAllItem2.default, { filterClicked: this._selectAllClicked, selected: this.state.selectAllFilters }),
 						filterListItemHtml
@@ -10925,7 +10916,7 @@ var SearchBar = function (_React$Component) {
 		key: '_initMethods',
 		value: function _initMethods() {
 			this._searchInputChanged = this._searchInputChanged.bind(this);
-			this._callSearchChanged = (0, _debounce2.default)(this._callSearchChanged.bind(this), 500);
+			this._callSearchChanged = (0, _debounce2.default)(this._callSearchChanged.bind(this), 300);
 		}
 	}, {
 		key: '_searchInputChanged',

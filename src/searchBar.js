@@ -12,7 +12,7 @@ class SearchBar extends React.Component {
 
 	_initMethods(){
 		this._searchInputChanged = this._searchInputChanged.bind(this);
-		this._callSearchChanged = Debounce(this._callSearchChanged.bind(this), 500);
+		this._callSearchChanged = Debounce(this._callSearchChanged.bind(this), 300);
 	}
 
 	_searchInputChanged(e){

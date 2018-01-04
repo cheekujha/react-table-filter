@@ -304,13 +304,17 @@ class FilterList extends React.Component {
 
 	render(){
 		const filterState = this.state.showFilter,
-			filterkey = this.props.filterkey;
+			filterkey = this.props.filterkey,
+			showSearch = !isUndefined(this.props.showsearch) ? this.props.showsearch : true;
+
 		let filterListItemHtml = [],
 			filterListHtml;
 		
 
 		if(this.state.filterList.length > 1){
 			if(filterState){
+				const searchBarHtml = showSearch ? <SearchBar searchChanged={ this._searchChanged }/> : null;
+				
 				this.state.filterList.map((filterItem, index) => {
 					if(filterItem.visible){
 						if(this.state.searchEnabled){
@@ -326,10 +330,11 @@ class FilterList extends React.Component {
 					}
 				});
 
+
 				const filterListClass = [!isUndefined(this.props.alignleft) ? "align-left " : "",  "filter-list"].join('');
 
 				filterListHtml = (<div className={ filterListClass }>
-									<SearchBar searchChanged={ this._searchChanged }/>
+									{ searchBarHtml }
 									<SortIcon sort={ this._sortClicked } sortType={ this.state.sortType }/>
 									<SelectAllItem filterClicked={this._selectAllClicked} selected={this.state.selectAllFilters}/>
 									{ filterListItemHtml }
