@@ -1294,7 +1294,7 @@ var SimpleExample = function (_Component) {
 										onFilterUpdate: this._filterUpdated },
 									_react2.default.createElement(
 										'th',
-										{ filterkey: 'name', className: 'cell', showsearch: false },
+										{ filterkey: 'name', className: 'cell', showSearch: true },
 										'Name'
 									),
 									_react2.default.createElement(
@@ -10638,7 +10638,7 @@ var FilterList = function (_React$Component) {
 
 			var filterState = this.state.showFilter,
 			    filterkey = this.props.filterkey,
-			    showSearch = !(0, _util.isUndefined)(this.props.showsearch) ? this.props.showsearch : true;
+			    showSearch = this.props.showSearch === false ? false : true;
 
 			var filterListItemHtml = [],
 			    filterListHtml = void 0;
