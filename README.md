@@ -2,7 +2,7 @@
 
 > Module creates Excel like Column Filters for Table. The filter list contains all the unique items present in every column. See image below for example.
 
-![alt text](https://user-images.githubusercontent.com/3127722/32687714-9d29ac44-c6e8-11e7-969e-8697a55d42d5.png)
+![alt text](https://user-images.githubusercontent.com/13845950/34553583-42f475c0-f14e-11e7-87f0-7d9704545bb9.png)
 
 ## Demo
 

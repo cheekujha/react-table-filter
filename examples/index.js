@@ -52,7 +52,7 @@ class SimpleExample extends Component {
 								<TableFilter 
 									rows={episodes} 
 									onFilterUpdate={this._filterUpdated}>
-									<th filterkey="name" className="cell" showSearch={false}>
+									<th filterkey="name" className="cell" showSearch={true}>
 										Name
 									</th>
 									<th filterkey="season" className="cell">
