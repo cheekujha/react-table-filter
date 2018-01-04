@@ -112,6 +112,7 @@ itemDisplayValueFunc | function(itemValue) | | false | Optional Function that re
 itemSortValueFunc | function(itemValue) | | false | Optional Function that returns the Value that is used while sorting (Default is the item value - Item[key])
 alignleft | boolean | false | false | Decides while side filter list should be aligned w.r.t Column
 caseSensitive | boolean | false | false | Case Sensitivity during sort
+showSearch | boolean | true | false | Display/Hide the search input
 
 ## License
 

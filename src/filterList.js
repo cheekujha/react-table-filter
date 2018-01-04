@@ -305,7 +305,7 @@ class FilterList extends React.Component {
 	render(){
 		const filterState = this.state.showFilter,
 			filterkey = this.props.filterkey,
-			showSearch = !isUndefined(this.props.showsearch) ? this.props.showsearch : true;
+			showSearch = this.props.showSearch === false ? false : true;
 
 		let filterListItemHtml = [],
 			filterListHtml;
@@ -314,7 +314,7 @@ class FilterList extends React.Component {
 		if(this.state.filterList.length > 1){
 			if(filterState){
 				const searchBarHtml = showSearch ? <SearchBar searchChanged={ this._searchChanged }/> : null;
-				
+
 				this.state.filterList.map((filterItem, index) => {
 					if(filterItem.visible){
 						if(this.state.searchEnabled){
