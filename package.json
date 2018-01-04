@@ -1,6 +1,6 @@
 {
   "name": "react-table-filter",
-  "version": "0.0.9",
+  "version": "1.0.0",
   "description": "",
   "main": "lib/bundle.js",
   "scripts": {
