@@ -331,7 +331,7 @@ class FilterList extends React.Component {
 				});
 
 
-				const filterListClass = [!isUndefined(this.props.alignleft) ? "align-left " : "",  "filter-list"].join('');
+				const filterListClass = [ (this.props.alignleft === true) ? "align-left " : "",  "filter-list"].join('');
 
 				filterListHtml = (<div className={ filterListClass }>
 									{ searchBarHtml }

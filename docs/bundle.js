@@ -10662,7 +10662,7 @@ var FilterList = function (_React$Component) {
 						}
 					});
 
-					var filterListClass = [!(0, _util.isUndefined)(this.props.alignleft) ? "align-left " : "", "filter-list"].join('');
+					var filterListClass = [this.props.alignleft === true ? "align-left " : "", "filter-list"].join('');
 
 					filterListHtml = _react2.default.createElement(
 						'div',
