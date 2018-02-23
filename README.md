@@ -40,7 +40,8 @@ import react-table-filter/lib/styles.css;
 ```
 <TableFilter 
   rows={data} 
-  onFilterUpdate={this._filterUpdated}>
+  onFilterUpdate={this._filterUpdated}
+  filteredData={filteredData}>
   <th filterkey="name">
     Name
   </th>
@@ -52,6 +53,10 @@ import react-table-filter/lib/styles.css;
   </th>
 </TableFilter>
 ```
+Not Required Props on TableFilter
+
+filteredData - Filters state to restore it. You can take it from second parameter of onFilterUpdate()
+
 Required Props on TableFilter
 
 rows - Initial Array of Items
@@ -59,9 +64,10 @@ rows - Initial Array of Items
 onFilterUpdate - Function called with updated filtered data when filters are added/removed. This function is used to show updated data by your application. Ex:
 
 ```
-filterUpdated = (newData) => {
+filterUpdated = (newData, filtersState) => {
 		this.setState({
-			"upddatedData": newData
+			"upddatedData": newData,
+			"filtersState" : filtersState
 		});
 	}
 ```
@@ -93,7 +99,7 @@ this.tableFilterNode.reset(newData);
 Name | Type | Default | Required | Description 
 :--- | :--- | :------ | :------- | :----------
 rows | array | | true | Items for the Filter
-onFilterUpdate | function(updatedData) | | true | Function called with filtered data
+onFilterUpdate | function(updatedData, filtersState) | | true | Function called with filtered data
 rowClass | string | | false | Any additional class to be added to table row contaning header columns
 
 #### TableFilter Ref Methods
