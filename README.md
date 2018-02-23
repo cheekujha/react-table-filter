@@ -99,6 +99,7 @@ this.tableFilterNode.reset(newData);
 Name | Type | Default | Required | Description 
 :--- | :--- | :------ | :------- | :----------
 rows | array | | true | Items for the Filter
+filteredData | array | | true | Items for restore filters state
 onFilterUpdate | function(updatedData, filtersState) | | true | Function called with filtered data
 rowClass | string | | false | Any additional class to be added to table row contaning header columns
 
