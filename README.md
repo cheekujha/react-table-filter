@@ -70,7 +70,7 @@ Arguments Detail:
 newData - Filtered Data to be used to show on UI
 filterConfiguration - Current filters configuration.
 ```
-**filterConfiguration** can be saved and be passed as prop(initialFilters) to **TableFilter** to maintain filter state even after component is unmounted.(In case user navigates away)
+**filterConfiguration** can be saved and be passed as prop(initialFilters) to **TableFilter** to maintain filter state while initializing the component.(In case user navigates away and comes back etc.)
 
 Required Props on th/td (Header columns)
 
@@ -91,6 +91,8 @@ If you want to reset Items after component mount. Make a reference to **TableFil
   
 this.tableFilterNode.reset(newData, resetFilters);
 ```
+
+```
 Arguments Detail:
 newData - Data to reset
 resetFilters(Default: true) - Boolean tells component to maintain/reset existing filters
@@ -104,14 +106,15 @@ resetFilters(Default: true) - Boolean tells component to maintain/reset existing
 Name | Type | Default | Required | Description 
 :--- | :--- | :------ | :------- | :----------
 rows | array | | true | Items for the Filter
-onFilterUpdate | function(updatedData) | | true | Function called with filtered data
+onFilterUpdate | function(updatedData, filterConfiguration) | | true | Function called with filtered data and updated filter configuration
 rowClass | string | | false | Any additional class to be added to table row contaning header columns
+initialFilters | Array | | false | Initial Filter configuration to be applied. Configuration is received as second argument for **onFilterUpdate** function
 
 #### TableFilter Ref Methods
 
 Name | Type | Description 
 :--- | :--- | :----------
-reset | function(items) | Function called to reset items after component has been mounted
+reset | function(items, resetFilters=true) | Function called to reset items after component has been mounted. You can choose to either reset current filters or not.
 
 
 #### Cloumn Headers(td/th)
