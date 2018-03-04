@@ -91,6 +91,8 @@ If you want to reset Items after component mount. Make a reference to **TableFil
   
 this.tableFilterNode.reset(newData, resetFilters);
 ```
+
+```
 Arguments Detail:
 newData - Data to reset
 resetFilters(Default: true) - Boolean tells component to maintain/reset existing filters
