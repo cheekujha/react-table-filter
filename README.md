@@ -59,14 +59,20 @@ rows - Initial Array of Items
 onFilterUpdate - Function called with updated filtered data when filters are added/removed. This function is used to show updated data by your application. Ex:
 
 ```
-filterUpdated = (newData) => {
+filterUpdated = (newData, filterConfiguration) => {
 		this.setState({
 			"upddatedData": newData
 		});
 	}
 ```
+```
+Arguments Detail:
+newData - Filtered Data to be used to show on UI
+filterConfiguration - Current filters configuration.
+```
+**filterConfiguration** can be saved and be passed as prop(initialFilters) to **TableFilter** to maintain filter state even after component is unmounted.(In case user navigates away)
 
-Requied Props on th/td (Header columns)
+Required Props on th/td (Header columns)
 
 filterkey - The key by which that column is to be filtered(key as present in rows data)
 
@@ -74,15 +80,20 @@ Only the Columns with "filterkey" prop present will be considered for filtering.
 
 ## Reset Items after Initialization
 
-If you want to reset Items after component mount. Make as reference to "TableFilter" node and call "reset" method as shown below.
+If you want to reset Items after component mount. Make a reference to **TableFilter** node and call **reset** method as shown below.
 
 ```
 <TableFilter 
   rows={data} 
   onFilterUpdate={this._filterUpdated}
+  initialFilters={this.state.filterConfiguration}
   ref={ (node) => {this.tableFilterNode = node;}>
   
-this.tableFilterNode.reset(newData);
+this.tableFilterNode.reset(newData, resetFilters);
+```
+Arguments Detail:
+newData - Data to reset
+resetFilters(Default: true) - Boolean tells component to maintain/reset existing filters
 ```
 ## API
 
