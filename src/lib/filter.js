@@ -79,7 +79,7 @@ export const filterActions = (inputArray=[], filterArray=[], addFilter=true, val
  * @param  {Boolean} addFilter  
  * @param  {Function}  valueFunc  [Function to calculate value of the property(optional)]
  * @return {Object} 
- *         filteredArray [Filtered items after appying filte]
+ *         filteredArray [Filtered items after appying filter]
  *         dataWithFilter [inputArray along with modification due to applied filters]            			 			
  */
 export const filterAction = (inputArray=[], filter={}, addFilter=true, valueFunc=undefined) => {
@@ -202,9 +202,4 @@ export const filtersReset = (inputArray=[], values=[], key=undefined, selectAll=
 		filteredArray,
 		dataWithFilter
 	};
-} 
-
-export default {
-	filterAction : filterAction,
-	filtersReset: filtersReset
 }

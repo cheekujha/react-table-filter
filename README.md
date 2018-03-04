@@ -116,5 +116,5 @@ showSearch | boolean | true | false | Display/Hide the search input
 
 ## License
 
-ISC
+MIT
 
