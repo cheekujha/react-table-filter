@@ -1,5 +1,7 @@
 import React from 'react';
 import Debounce from './lib/debounce';
+import constants from './lib/constants';
+
 
 class SearchBar extends React.Component {
 
@@ -28,7 +30,7 @@ class SearchBar extends React.Component {
 	render(){
 		return (
 			<div className="search-parent filter-list-item">
-				<input className="search-input" type="text" placeholder="search" onChange={this._searchInputChanged}/>
+				<input className="search-input" type="text" placeholder={constants.SEARCH_PLACEHOLDER} onChange={this._searchInputChanged}/>
 			</div>
 		);
 	}

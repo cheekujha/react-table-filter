@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import constants from './lib/constants'
+
 
 class SelectAllItem extends React.Component{
 	constructor(props){
@@ -22,7 +24,7 @@ class SelectAllItem extends React.Component{
 		const checkBoxClass = [this.props.selected ? "selected " : "", "filter-check-box"].join('');
 		return (<div className="filter-list-item" onClick={this._selectAllClicked}>
 					<div className={ checkBoxClass } ></div>
-					<div className="filter-label select-all-label">Select All</div>
+					<div className="filter-label select-all-label">{constants.SELECT_ALL_LABEL}</div>
 				</div>);
 	}
 }

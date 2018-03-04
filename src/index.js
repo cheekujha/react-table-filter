@@ -29,7 +29,7 @@ class TableFilter extends Component {
 
 		this.state = {
 			initialData: stateData.initialData,
-			filteredData: stateData.filteredData,
+			filteredData: this.props.filteredData?this.props.filteredData:stateData.filteredData,
 			sortKey: undefined
 		}
 	}
@@ -82,7 +82,7 @@ class TableFilter extends Component {
 				});
 
 				this.insideCall = true;
-				this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray);
+				this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray, dataWithFilter);
 			}
 
 		}
@@ -110,7 +110,7 @@ class TableFilter extends Component {
 				});
 
 				this.insideCall = true;
-				this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray);
+				this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray, dataWithFilter);
 			}
 		}
 	}
