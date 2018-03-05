@@ -1,5 +1,6 @@
 import React from 'react';
 import Debounce from './lib/debounce';
+import PropTypes from 'prop-types';
 
 class SearchBar extends React.Component {
 
@@ -32,6 +33,10 @@ class SearchBar extends React.Component {
 			</div>
 		);
 	}
+}
+
+SearchBar.propTypes = {
+	searchChanged: PropTypes.func.isRequired
 }
 
 export default SearchBar;

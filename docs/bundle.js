@@ -317,6 +317,40 @@ module.exports = emptyFunction;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (process.env.NODE_ENV !== 'production') {
+  var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element') || 0xeac7;
+
+  var isValidElement = function isValidElement(object) {
+    return (typeof object === 'undefined' ? 'undefined' : _typeof(object)) === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+  };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(33)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = __webpack_require__(34)();
+}
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -370,40 +404,6 @@ function invariant(condition, format, a, b, c, d, e, f) {
 }
 
 module.exports = invariant;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (process.env.NODE_ENV !== 'production') {
-  var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element') || 0xeac7;
-
-  var isValidElement = function isValidElement(object) {
-    return (typeof object === 'undefined' ? 'undefined' : _typeof(object)) === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-  };
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(33)(isValidElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(34)();
-}
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
@@ -679,7 +679,7 @@ module.exports = warning;
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 if (process.env.NODE_ENV !== 'production') {
-  var invariant = __webpack_require__(3);
+  var invariant = __webpack_require__(4);
   var warning = __webpack_require__(8);
   var ReactPropTypesSecret = __webpack_require__(10);
   var loggedTypeFailures = {};
@@ -1345,7 +1345,7 @@ _reactDom2.default.render(_react2.default.createElement(SimpleExample, null), do
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var f = __webpack_require__(6),
-    p = __webpack_require__(7);__webpack_require__(3);var r = __webpack_require__(2);
+    p = __webpack_require__(7);__webpack_require__(4);var r = __webpack_require__(2);
 function t(a) {
   for (var b = arguments.length - 1, d = "Minified React error #" + a + "; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d" + a, e = 0; e < b; e++) {
     d += "\x26args[]\x3d" + encodeURIComponent(arguments[e + 1]);
@@ -1481,7 +1481,7 @@ if (process.env.NODE_ENV !== "production") {
     var objectAssign$1 = __webpack_require__(6);
     var require$$0 = __webpack_require__(8);
     var emptyObject = __webpack_require__(7);
-    var invariant = __webpack_require__(3);
+    var invariant = __webpack_require__(4);
     var emptyFunction = __webpack_require__(2);
     var checkPropTypes = __webpack_require__(9);
 
@@ -3220,7 +3220,7 @@ if (process.env.NODE_ENV === 'production') {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var aa = __webpack_require__(0);__webpack_require__(3);var l = __webpack_require__(11),
+var aa = __webpack_require__(0);__webpack_require__(4);var l = __webpack_require__(11),
     n = __webpack_require__(6),
     ba = __webpack_require__(12),
     ca = __webpack_require__(2),
@@ -5672,7 +5672,7 @@ module.exports = isNode;
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- */var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};if(process.env.NODE_ENV!=="production"){(function(){'use strict';var react=__webpack_require__(0);var invariant=__webpack_require__(3);var ExecutionEnvironment=__webpack_require__(11);var _assign=__webpack_require__(6);var EventListener=__webpack_require__(12);var require$$0=__webpack_require__(8);var hyphenateStyleName=__webpack_require__(27);var emptyFunction=__webpack_require__(2);var camelizeStyleName=__webpack_require__(29);var performanceNow=__webpack_require__(31);var propTypes=__webpack_require__(4);var emptyObject=__webpack_require__(7);var checkPropTypes=__webpack_require__(9);var shallowEqual=__webpack_require__(13);var containsNode=__webpack_require__(14);var focusNode=__webpack_require__(15);var getActiveElement=__webpack_require__(16);/**
+ */var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};if(process.env.NODE_ENV!=="production"){(function(){'use strict';var react=__webpack_require__(0);var invariant=__webpack_require__(4);var ExecutionEnvironment=__webpack_require__(11);var _assign=__webpack_require__(6);var EventListener=__webpack_require__(12);var require$$0=__webpack_require__(8);var hyphenateStyleName=__webpack_require__(27);var emptyFunction=__webpack_require__(2);var camelizeStyleName=__webpack_require__(29);var performanceNow=__webpack_require__(31);var propTypes=__webpack_require__(3);var emptyObject=__webpack_require__(7);var checkPropTypes=__webpack_require__(9);var shallowEqual=__webpack_require__(13);var containsNode=__webpack_require__(14);var focusNode=__webpack_require__(15);var getActiveElement=__webpack_require__(16);/**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
@@ -9301,7 +9301,7 @@ module.exports = performance || {};
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var emptyFunction = __webpack_require__(2);
-var invariant = __webpack_require__(3);
+var invariant = __webpack_require__(4);
 var warning = __webpack_require__(8);
 var assign = __webpack_require__(6);
 
@@ -9824,7 +9824,7 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
 
 
 var emptyFunction = __webpack_require__(2);
-var invariant = __webpack_require__(3);
+var invariant = __webpack_require__(4);
 var ReactPropTypesSecret = __webpack_require__(10);
 
 module.exports = function () {
@@ -9899,11 +9899,13 @@ var _filter = __webpack_require__(54);
 
 var _sort = __webpack_require__(18);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -9922,9 +9924,9 @@ var TableFilter = function (_Component) {
 
 		var _this = _possibleConstructorReturn(this, (TableFilter.__proto__ || Object.getPrototypeOf(TableFilter)).call(this, props));
 
-		_this.filterIcons = {};
-		_this.childrenIntances;
-		var stateData = _this._createData(_this.props.rows);
+		_this.currentFilters = _this.props.initialFilters || {};
+		var rows = _this._applyInitialFilters(_this.props.rows);
+		var stateData = _this._createData(rows);
 
 		_this._initMethods();
 
@@ -9946,7 +9948,67 @@ var TableFilter = function (_Component) {
 			this._resetRows = this._resetRows.bind(this);
 			this._sortRows = this._sortRows.bind(this);
 			this._filterMulipleRows = this._filterMulipleRows.bind(this);
+			this._applyInitialFilters = this._applyInitialFilters.bind(this);
+			this._getValueFunctionForKey = this._getValueFunctionForKey.bind(this);
 			this.reset = this.reset.bind(this);
+		}
+
+		/**
+   * [_applyInitialFilters If initial filters are provided we apply the filters to given data to maintain filter state]
+   * @param  {Array}  rows [Data on which filters will be applied]
+   * @return {Array}       [Data with filter props applied]
+   */
+
+	}, {
+		key: '_applyInitialFilters',
+		value: function _applyInitialFilters() {
+			var _this2 = this;
+
+			var rows = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+			console.log('--_applyInitialFilters-', this.currentFilters);
+			var currentFilters = this.currentFilters;
+			if (!(0, _util.isUndefined)(currentFilters) && Object.keys(currentFilters).length > 0) {
+
+				var filterKeys = Object.keys(currentFilters);
+				var filteredArray = void 0;
+				filterKeys.map(function (currKey) {
+					var filterValues = currentFilters[currKey];
+					var filterToApply = filterValues.map(function (currValue) {
+						return {
+							key: currKey,
+							value: currValue
+						};
+					});
+
+					var result = (0, _filter.filterActions)(rows, filterToApply, true, _this2._getValueFunctionForKey(currKey));
+					filteredArray = result.filteredArray;
+					rows = result.dataWithFilter;
+				});
+
+				this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray, currentFilters);
+			}
+
+			return rows;
+		}
+
+		/**
+   * [_getValueFunctionForKey Method to get the itemDisplayValueFunc(if any) provided to individual filter list element]
+   * @param  {String} filterKey [key]
+   * @return {Function}    [Value function for that filter list]
+   */
+
+	}, {
+		key: '_getValueFunctionForKey',
+		value: function _getValueFunctionForKey(filterKey) {
+			var valueFunc = void 0;
+			this.props.children.map(function (child, index) {
+				if (!(0, _util.isUndefined)(child) && !(0, _util.isUndefined)(child.props.filterkey, true) && child.props.filterkey === filterKey) {
+					valueFunc = child.props.itemDisplayValueFunc;
+				}
+			});
+
+			return valueFunc;
 		}
 
 		// This method to be done with web worker
@@ -9978,12 +10040,23 @@ var TableFilter = function (_Component) {
 		key: '_filterMulipleRows',
 		value: function _filterMulipleRows() {
 			var addFilterArray = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+			var _this3 = this;
+
 			var removeFilterArray = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
 			var valueFunc = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
 
 			var filteredData = this.state.filteredData;
 
 			if (!(0, _util.isUndefined)(addFilterArray)) {
+
+				removeFilterArray.map(function (filterItem) {
+					_this3._updateCurrentFilter(filterItem.value, false, filterItem.key);
+				});
+
+				addFilterArray.map(function (filterItem) {
+					_this3._updateCurrentFilter(filterItem.value, true, filterItem.key);
+				});
 
 				var result = (0, _filter.filterActions)(filteredData, removeFilterArray, false, valueFunc);
 
@@ -9996,9 +10069,7 @@ var TableFilter = function (_Component) {
 					this.setState({
 						filteredData: dataWithFilter
 					});
-
-					this.insideCall = true;
-					this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray);
+					this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray, this._getCurrentFilters());
 				}
 			}
 		}
@@ -10022,7 +10093,7 @@ var TableFilter = function (_Component) {
 
 			var filteredData = this.state.filteredData;
 			if (!(0, _util.isUndefined)(value) && !(0, _util.isUndefined)(key)) {
-
+				this._updateCurrentFilters([value], addFilter, key);
 				var result = (0, _filter.filterAction)(filteredData, { key: key, value: value }, addFilter, valueFunc);
 				if (!(0, _util.isUndefined)(result)) {
 					var filteredArray = result.filteredArray,
@@ -10031,20 +10102,83 @@ var TableFilter = function (_Component) {
 					this.setState({
 						filteredData: dataWithFilter
 					});
-
-					this.insideCall = true;
-					this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray);
+					this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray, this._getCurrentFilters());
 				}
 			}
 		}
 
 		/**
-   * [_resetRows Function called to reset selected the filters.]
+   * [_updateCurrentFilter Method to update current filter configuration, used to maintain state if component is unmounted]
+   * @param  {String}  filter [Filter value to add/remove]
+   * @param  {Boolean} add    [add/remove filter option]
+   * @param  {String}  key    [Filter key]
+   */
+
+	}, {
+		key: '_updateCurrentFilter',
+		value: function _updateCurrentFilter(filter) {
+			var add = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+			var key = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
+
+			if (!(0, _util.isUndefined)(key, true) && !(0, _util.isUndefined)(filter, true)) {
+				if ((0, _util.isUndefined)(this.currentFilters[key])) {
+					this.currentFilters[key] = [];
+				}
+
+				if (add) {
+					if (this.currentFilters[key].indexOf(filter) < 0) {
+						this.currentFilters[key].push(filter);
+					}
+				} else {
+					if (this.currentFilters[key].indexOf(filter) >= 0) {
+						var index = this.currentFilters[key].indexOf(filter);
+						this.currentFilters[key] = [].concat(_toConsumableArray(this.currentFilters[key].slice(0, index)), _toConsumableArray(this.currentFilters[key].slice(index + 1)));
+					}
+				}
+			}
+		}
+
+		/**
+   * [_updateCurrentFilters Mehtod to update current filter configuration with multiple values]
+   * @param  {Array}   filters [Array of filters to add/remove]
+   * @param  {Boolean} add     [add/remove filter option]
+   * @param  {String}  key     [Filter key]
+   */
+
+	}, {
+		key: '_updateCurrentFilters',
+		value: function _updateCurrentFilters() {
+			var filters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+			var _this4 = this;
+
+			var add = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+			var key = arguments[2];
+
+			if (!(0, _util.isUndefined)(filters) && !(0, _util.isUndefined)(key)) {
+				filters.map(function (filterItem) {
+					_this4._updateCurrentFilter(filterItem, add, key);
+				});
+			}
+		}
+
+		/**
+   * [_getCurrentFilters get method for current filter configuration]
+   * @return {Object} [current filter configuration]
+   */
+
+	}, {
+		key: '_getCurrentFilters',
+		value: function _getCurrentFilters() {
+			return this.currentFilters;
+		}
+
+		/**
+   * [_resetRows Function called to reset the selected filters.]
    * @param  {Array}   filterValues [Array of values for which filter is to be removed]
-   * @param  {[type]}  key          [Key of the filter to be removed]
-   * @param  {Boolean} selectAll    [description]
-   * @param  {[type]}  valueFunc    [description]
-   * @return {[type]}               [description]
+   * @param  {String}  key          [Key of the filter to be removed]
+   * @param  {Boolean} selectAll    [option to select all / remove all]
+   * @param  {Function}  valueFunc  [Get value function for filter]
    */
 
 	}, {
@@ -10057,6 +10191,7 @@ var TableFilter = function (_Component) {
 
 			if (!(0, _util.isUndefined)(key)) {
 				var filteredData = this.state.filteredData;
+				this._updateCurrentFilters(filterValues, !selectAll, key);
 				var result = (0, _filter.filtersReset)(filteredData, filterValues, key, selectAll, valueFunc);
 				if (!(0, _util.isUndefined)(result)) {
 					var filteredArray = result.filteredArray,
@@ -10065,19 +10200,17 @@ var TableFilter = function (_Component) {
 					this.setState({
 						filteredData: dataWithFilter
 					});
-
-					this.insideCall = true;
-					this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray);
+					this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray, this._getCurrentFilters());
 				}
 			}
 		}
 
 		/**
    * [_sortRows Function to sort the values according to a filter]
-   * @param  {[type]}  sortType              [description]
+   * @param  {String}  sortType              [description]
    * @param  {[type]}  options.valueFunc     [(optional) Function to calculate the value of the item]
    * @param  {Boolean} options.caseSensitive [Case Sensitive or not]
-   * @param  {[type]}  options.key           [Key to sort by]
+   * @param  {[String]}  options.key         [Key to sort by]
    */
 
 	}, {
@@ -10113,19 +10246,24 @@ var TableFilter = function (_Component) {
 					}
 				});
 
-				this.insideCall = true;
-				this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray);
+				this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray, this._getCurrentFilters());
 			}
 		}
 
 		/**
-   * [reset Function called from parent(main code) to load/reset date of the filters]
-   * @param  {[type]} rows [Array of items]
+   * [reset Function called from parent(main code) to load/reset data of the filters]
+   * @param  {Array}  rows         [Array of items]
+   * @param  {Boolean} resetFilters [Option to reset current filters]
    */
 
 	}, {
 		key: 'reset',
 		value: function reset(rows) {
+			var resetFilters = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+			if (!resetFilters) {
+				rows = this._applyInitialFilters(rows);
+			}
 			var stateData = this._createData(rows);
 			this.setState({
 				initialData: stateData.initialData,
@@ -10145,7 +10283,8 @@ var TableFilter = function (_Component) {
 TableFilter.propTypes = {
 	rows: _propTypes2.default.array.isRequired, // Filterable Data
 	onFilterUpdate: _propTypes2.default.func.isRequired, // Function to be called with updated data when filters are applied or removed
-	rowClass: _propTypes2.default.string // Optional class to be attached to row elements
+	rowClass: _propTypes2.default.string, // Optional class to be attached to row elements
+	initialFilters: _propTypes2.default.array // Initial filter configuration if any(provided as a parameter in onFilterUpdate)
 };
 
 exports.default = TableFilter;
@@ -10304,7 +10443,7 @@ var _sortIcon = __webpack_require__(52);
 
 var _sortIcon2 = _interopRequireDefault(_sortIcon);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -10328,9 +10467,7 @@ var FilterList = function (_React$Component) {
 
 		_this._initMethods();
 
-		_this.unselectedFilters = 0;
-
-		var _this$_calculateFilte = _this._calculateFilterState(_this.props),
+		var _this$_calculateFilte = _this._calculateFilterState(_this.props.filteredData),
 		    filterList = _this$_calculateFilte.filterList,
 		    selectState = _this$_calculateFilte.selectState;
 
@@ -10345,6 +10482,9 @@ var FilterList = function (_React$Component) {
 		};
 		return _this;
 	}
+
+	/*Bind functions to react context*/
+
 
 	_createClass(FilterList, [{
 		key: '_initMethods',
@@ -10364,8 +10504,14 @@ var FilterList = function (_React$Component) {
 	}, {
 		key: 'componentWillUnmount',
 		value: function componentWillUnmount() {
+			/*Remove body click listener*/
 			_eventStack2.default.unsub('click', this._handleOutsideClick, document);
 		}
+
+		/**
+   * [_handleOutsideClick Function to hide open filter list when click is done anywhere else]
+   */
+
 	}, {
 		key: '_handleOutsideClick',
 		value: function _handleOutsideClick(e) {
@@ -10376,7 +10522,7 @@ var FilterList = function (_React$Component) {
 	}, {
 		key: 'componentWillReceiveProps',
 		value: function componentWillReceiveProps(nextProps) {
-			var _calculateFilterState2 = this._calculateFilterState(nextProps),
+			var _calculateFilterState2 = this._calculateFilterState(nextProps.filteredData),
 			    filterList = _calculateFilterState2.filterList,
 			    selectState = _calculateFilterState2.selectState;
 
@@ -10388,14 +10534,19 @@ var FilterList = function (_React$Component) {
 				sortType: sortTypeState
 			});
 		}
+
+		/**
+   * [_calculateFilterState Function calculates current filter state to display]
+   * @param  {Array} dataArray [Data passed from parent on which filter is to be applies]
+   */
+
 	}, {
 		key: '_calculateFilterState',
-		value: function _calculateFilterState(props) {
+		value: function _calculateFilterState(dataArray) {
 			var _this2 = this;
 
-			var initialData = props.initialData ? [].concat(_toConsumableArray(props.initialData)) : [];
-			var filteredData = props.filteredData ? [].concat(_toConsumableArray(props.filteredData)) : [];
-			var filterkey = props.filterkey;
+			var filteredData = dataArray ? [].concat(_toConsumableArray(dataArray)) : [];
+			var filterkey = this.props.filterkey;
 			var usedKeys = [];
 			var filteredUsedKeys = [];
 			var filterList = [];
@@ -10499,6 +10650,7 @@ var FilterList = function (_React$Component) {
 	}, {
 		key: '_displayFilter',
 		value: function _displayFilter() {
+			/*Body Click listener added*/
 			_eventStack2.default.sub('click', this._handleOutsideClick, document);
 			this.setState({
 				showFilter: true
@@ -10507,12 +10659,19 @@ var FilterList = function (_React$Component) {
 	}, {
 		key: '_hideFilter',
 		value: function _hideFilter() {
+			/*Body Click listener removed*/
 			_eventStack2.default.unsub('click', this._handleOutsideClick, document);
 			this.setState({
 				showFilter: false,
 				searchEnabled: false
 			});
 		}
+
+		/**
+   * [_filterUpdated method called when a filter list item is clicked]
+   * @param  {Number} index [Index of the filter clicked]
+   */
+
 	}, {
 		key: '_filterUpdated',
 		value: function _filterUpdated(index) {
@@ -10522,6 +10681,11 @@ var FilterList = function (_React$Component) {
 				this._filterData(allFilters[index]['key'], !newFilterState);
 			}
 		}
+
+		/**
+   * [_selectAllClicked method called when a select all item is clicked]
+   */
+
 	}, {
 		key: '_selectAllClicked',
 		value: function _selectAllClicked() {
@@ -10546,6 +10710,13 @@ var FilterList = function (_React$Component) {
 
 			this._resetData(visibleFiltersValues, newSelectAllState);
 		}
+
+		/**
+   * [_filterData Method calls parent props filter mehtod when filters are changed]
+   * @param  {String}  filterValue [Filter value]
+   * @param  {Boolean} addFilter   [Add/Remove]
+   */
+
 	}, {
 		key: '_filterData',
 		value: function _filterData() {
@@ -10554,6 +10725,13 @@ var FilterList = function (_React$Component) {
 
 			this.props.filterRows(filterValue, this.props.filterkey, addFilter, this.props.itemDisplayValueFunc);
 		}
+
+		/**
+   * [_resetData Method calls parent props reset mehtod]
+   * @param  {Array}   filterValues [Array of filter values]
+   * @param  {Boolean} selectAll    [Add/Remove]
+   */
+
 	}, {
 		key: '_resetData',
 		value: function _resetData() {
@@ -10562,6 +10740,12 @@ var FilterList = function (_React$Component) {
 
 			this.props.resetRows(filterValues, this.props.filterkey, selectAll, this.props.itemDisplayValueFunc);
 		}
+
+		/**
+   * [_sortClicked description]
+   * @return {[type]} [description]
+   */
+
 	}, {
 		key: '_sortClicked',
 		value: function _sortClicked() {
@@ -10578,17 +10762,13 @@ var FilterList = function (_React$Component) {
 				caseSensitive: this.props.caseSensitive,
 				key: this.props.filterkey
 			});
-			// this.setState({
-			// 	sortType: newSortType
-			// }, () => {
-			// 	debugger
-			// 	this.props.sortRows(newSortType, {
-			// 		itemSortValueFunc: this.props.itemSortValueFunc,
-			// 		caseSensitive: this.props.caseSensitive,
-			// 		key: this.props.filterkey
-			// 	});
-			// });
 		}
+
+		/**
+   * [_searchChanged Method called when search is triggered]
+   * @param  {String} searchValue [Search value]
+   */
+
 	}, {
 		key: '_searchChanged',
 		value: function _searchChanged(searchValue) {
@@ -10721,7 +10901,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -10805,7 +10985,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -10892,6 +11072,10 @@ var _debounce = __webpack_require__(42);
 
 var _debounce2 = _interopRequireDefault(_debounce);
 
+var _propTypes = __webpack_require__(3);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -10943,6 +11127,10 @@ var SearchBar = function (_React$Component) {
 
 	return SearchBar;
 }(_react2.default.Component);
+
+SearchBar.propTypes = {
+	searchChanged: _propTypes2.default.func.isRequired
+};
 
 exports.default = SearchBar;
 
@@ -12015,7 +12203,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -12108,7 +12296,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _util = __webpack_require__(5);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(3);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -12267,7 +12455,7 @@ var filterActions = exports.filterActions = function filterActions() {
  * @param  {Boolean} addFilter  
  * @param  {Function}  valueFunc  [Function to calculate value of the property(optional)]
  * @return {Object} 
- *         filteredArray [Filtered items after appying filte]
+ *         filteredArray [Filtered items after appying filter]
  *         dataWithFilter [inputArray along with modification due to applied filters]            			 			
  */
 var filterAction = exports.filterAction = function filterAction() {
@@ -12400,11 +12588,6 @@ var filtersReset = exports.filtersReset = function filtersReset() {
 		filteredArray: filteredArray,
 		dataWithFilter: dataWithFilter
 	};
-};
-
-exports.default = {
-	filterAction: filterAction,
-	filtersReset: filtersReset
 };
 
 /***/ }),

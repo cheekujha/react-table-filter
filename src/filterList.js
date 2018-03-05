@@ -25,9 +25,7 @@ class FilterList extends React.Component {
 		super(props);
 
 		this._initMethods();
-
-		this.unselectedFilters = 0;
-		const { filterList, selectState } = this._calculateFilterState(this.props);
+		const { filterList, selectState } = this._calculateFilterState(this.props.filteredData);
 		this.appliedSearchFilters = undefined;
 		this.searchValue = undefined;
 		this.state = {
@@ -39,6 +37,7 @@ class FilterList extends React.Component {
 		};
 	}
 
+	/*Bind functions to react context*/
 	_initMethods(){
 		this._handleOutsideClick = this._handleOutsideClick.bind(this);
 		this._calculateFilterState = this._calculateFilterState.bind(this);
@@ -54,9 +53,13 @@ class FilterList extends React.Component {
 	}
 
 	componentWillUnmount(){
+		/*Remove body click listener*/
 		EventStack.unsub('click', this._handleOutsideClick, document);
 	}
 
+	/**
+	 * [_handleOutsideClick Function to hide open filter list when click is done anywhere else]
+	 */
 	_handleOutsideClick(e){
 		if(!this.filterIconNode.contains(e.target)){
 			this._hideFilter();
@@ -64,7 +67,7 @@ class FilterList extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps){
-		const { filterList, selectState } = this._calculateFilterState(nextProps);
+		const { filterList, selectState } = this._calculateFilterState(nextProps.filteredData);
 
 		const sortTypeState = (!isUndefined(nextProps.sortKey) && (nextProps.sortKey === this.props.filterkey) ) ? nextProps.sortType : undefined;
 
@@ -75,10 +78,13 @@ class FilterList extends React.Component {
 		});
 	}
 
-	_calculateFilterState(props){
-		const initialData = props.initialData ? [...props.initialData] : [];
-		let filteredData = props.filteredData ? [...props.filteredData] : [];
-		const filterkey = props.filterkey;
+	/**
+	 * [_calculateFilterState Function calculates current filter state to display]
+	 * @param  {Array} dataArray [Data passed from parent on which filter is to be applies]
+	 */
+	_calculateFilterState(dataArray){
+		let filteredData = dataArray ? [...dataArray] : [];
+		const filterkey = this.props.filterkey;
 		let usedKeys = [];
 		let filteredUsedKeys = [];
 		let filterList = [];
@@ -181,6 +187,7 @@ class FilterList extends React.Component {
 	}
 
 	_displayFilter(){
+		/*Body Click listener added*/
 		EventStack.sub('click', this._handleOutsideClick, document);
 		this.setState({
 			showFilter: true
@@ -188,6 +195,7 @@ class FilterList extends React.Component {
 	}
 
 	_hideFilter(){
+		/*Body Click listener removed*/
 		EventStack.unsub('click', this._handleOutsideClick, document);
 		this.setState({
 			showFilter: false,
@@ -195,6 +203,10 @@ class FilterList extends React.Component {
 		});
 	}
 
+	/**
+	 * [_filterUpdated method called when a filter list item is clicked]
+	 * @param  {Number} index [Index of the filter clicked]
+	 */
 	_filterUpdated(index){
 		let allFilters = this.state.filterList;
 		if(!isUndefined(allFilters[index])){
@@ -203,6 +215,9 @@ class FilterList extends React.Component {
 		}
 	}
 
+	/**
+	 * [_selectAllClicked method called when a select all item is clicked]
+	 */
 	_selectAllClicked(){
 		const selectAllState = this.state.selectAllFilters;
 		const newSelectAllState = !selectAllState;
@@ -226,14 +241,28 @@ class FilterList extends React.Component {
 		this._resetData(visibleFiltersValues, newSelectAllState);		
 	}
 
+	/**
+	 * [_filterData Method calls parent props filter mehtod when filters are changed]
+	 * @param  {String}  filterValue [Filter value]
+	 * @param  {Boolean} addFilter   [Add/Remove]
+	 */
 	_filterData(filterValue=undefined, addFilter=true){
 		this.props.filterRows(filterValue, this.props.filterkey, addFilter, this.props.itemDisplayValueFunc);
 	}
 
+	/**
+	 * [_resetData Method calls parent props reset mehtod]
+	 * @param  {Array}   filterValues [Array of filter values]
+	 * @param  {Boolean} selectAll    [Add/Remove]
+	 */
 	_resetData(filterValues=[], selectAll=true){
 		this.props.resetRows(filterValues, this.props.filterkey, selectAll, this.props.itemDisplayValueFunc);
 	}
 
+	/**
+	 * [_sortClicked description]
+	 * @return {[type]} [description]
+	 */
 	_sortClicked(){
 		const currentSortType = this.state.sortType;
 		let newSortType;
@@ -248,18 +277,12 @@ class FilterList extends React.Component {
 			caseSensitive: this.props.caseSensitive,
 			key: this.props.filterkey
 		});
-		// this.setState({
-		// 	sortType: newSortType
-		// }, () => {
-		// 	debugger
-		// 	this.props.sortRows(newSortType, {
-		// 		itemSortValueFunc: this.props.itemSortValueFunc,
-		// 		caseSensitive: this.props.caseSensitive,
-		// 		key: this.props.filterkey
-		// 	});
-		// });
 	}
 
+	/**
+	 * [_searchChanged Method called when search is triggered]
+	 * @param  {String} searchValue [Search value]
+	 */
 	_searchChanged(searchValue){
 		let searchState = false;
 		let propKey = this.props.filterkey;
