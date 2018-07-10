@@ -487,6 +487,8 @@ object-assign
 
 /* eslint-disable no-unused-vars */
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 var propIsEnumerable = Object.prototype.propertyIsEnumerable;
@@ -531,7 +533,7 @@ function shouldUseNative() {
 		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
 			test3[letter] = letter;
 		});
-		if (Object.keys(Object.assign({}, test3)).join('') !== 'abcdefghijklmnopqrst') {
+		if (Object.keys(_extends({}, test3)).join('') !== 'abcdefghijklmnopqrst') {
 			return false;
 		}
 
@@ -9885,6 +9887,8 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(0);
@@ -10027,8 +10031,8 @@ var TableFilter = function (_Component) {
 			var initialData = [];
 			var filteredData = [];
 			rows.map(function (item) {
-				initialData.push(Object.assign({}, item));
-				filteredData.push(Object.assign({}, item));
+				initialData.push(_extends({}, item));
+				filteredData.push(_extends({}, item));
 			});
 
 			return {
@@ -10240,7 +10244,7 @@ var TableFilter = function (_Component) {
 
 				result.map(function (item) {
 					if ((0, _util.isUndefined)(item.appliedFilters) || Object.keys(item.appliedFilters).length === 0) {
-						var itemCopy = Object.assign({}, item);
+						var itemCopy = _extends({}, item);
 						delete itemCopy['appliedFilters'];
 						filteredArray.push(itemCopy);
 					}
@@ -10263,7 +10267,10 @@ var TableFilter = function (_Component) {
 
 			if (!resetFilters) {
 				rows = this._applyInitialFilters(rows);
+			} else {
+				this.currentFilters = {};
 			}
+
 			var stateData = this._createData(rows);
 			this.setState({
 				initialData: stateData.initialData,
@@ -10406,6 +10413,8 @@ exports.default = render;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -10612,14 +10621,14 @@ var FilterList = function (_React$Component) {
 					var filterItem = filterList[filterIndex];
 					if (Object.keys(appliedFilters).length === 0) {
 						if (!filterItem.selected || !filterItem.visible) {
-							filterItem = Object.assign({}, filterItem, { "selected": true, "visible": true });
+							filterItem = _extends({}, filterItem, { "selected": true, "visible": true });
 							filterList[filterIndex] = filterItem;
 						}
 					}
 
 					if (Object.keys(appliedFilters).length === 1 && Object.keys(appliedFilters)[0] === filterkey) {
 						selectState = false;
-						filterItem = Object.assign({}, filterItem, { "selected": false, "visible": true });
+						filterItem = _extends({}, filterItem, { "selected": false, "visible": true });
 						filterList[filterIndex] = filterItem;
 					}
 				}
@@ -12376,6 +12385,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.filtersReset = exports.filterAction = exports.filterActions = undefined;
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _util = __webpack_require__(5);
 
 var filterActions = exports.filterActions = function filterActions() {
@@ -12386,7 +12397,7 @@ var filterActions = exports.filterActions = function filterActions() {
 
 	var filteredArray = [];
 	var dataWithFilter = inputArray.map(function (item) {
-		var itemCopy = Object.assign({}, item);
+		var itemCopy = _extends({}, item);
 
 		var i = void 0,
 		    l = void 0;
@@ -12436,7 +12447,7 @@ var filterActions = exports.filterActions = function filterActions() {
 
 		if (Object.keys(itemCopy.appliedFilters).length === 0) {
 			delete itemCopy['appliedFilters'];
-			filteredArray.push(Object.assign({}, itemCopy));
+			filteredArray.push(_extends({}, itemCopy));
 		}
 
 		return itemCopy;
@@ -12474,7 +12485,7 @@ var filterAction = exports.filterAction = function filterAction() {
 
 		var filteredArray = [];
 		var dataWithFilter = inputArray.map(function (item) {
-			var itemCopy = Object.assign({}, item);
+			var itemCopy = _extends({}, item);
 			var itemValue = (0, _util.getValForKey)(item, key);
 
 			if (!(0, _util.isUndefined)(valueFunc)) {
@@ -12511,7 +12522,7 @@ var filterAction = exports.filterAction = function filterAction() {
 
 			if (Object.keys(itemCopy.appliedFilters).length === 0) {
 				delete itemCopy['appliedFilters'];
-				filteredArray.push(Object.assign({}, itemCopy));
+				filteredArray.push(_extends({}, itemCopy));
 			}
 
 			return itemCopy;
@@ -12545,7 +12556,7 @@ var filtersReset = exports.filtersReset = function filtersReset() {
 
 	var filteredArray = [];
 	var dataWithFilter = inputArray.map(function (item) {
-		var itemCopy = Object.assign({}, item);
+		var itemCopy = _extends({}, item);
 
 		if ((0, _util.isUndefined)(itemCopy.appliedFilters)) {
 			itemCopy.appliedFilters = {};
@@ -12578,7 +12589,7 @@ var filtersReset = exports.filtersReset = function filtersReset() {
 
 		if (Object.keys(itemCopy.appliedFilters).length === 0) {
 			delete itemCopy['appliedFilters'];
-			filteredArray.push(Object.assign({}, itemCopy));
+			filteredArray.push(_extends({}, itemCopy));
 		}
 
 		return itemCopy;
