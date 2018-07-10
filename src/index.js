@@ -280,7 +280,10 @@ class TableFilter extends Component {
 	reset(rows, resetFilters=true){
 		if(!resetFilters){
 			rows = this._applyInitialFilters(rows);
+		}else{
+			this.currentFilters = {};
 		}
+
 		let stateData = this._createData(rows);
 		this.setState({
 			initialData: stateData.initialData,
