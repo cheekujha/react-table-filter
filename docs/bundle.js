@@ -427,11 +427,11 @@ var isUndefined = exports.isUndefined = function isUndefined(str, emptyStringChe
 };
 
 var isTypeArray = exports.isTypeArray = function isTypeArray(val) {
-	return toString.call(val) === "[object Array]" ? true : false;
+	return Object.prototype.toString.call(val) === "[object Array]" ? true : false;
 };
 
 var isTypeString = exports.isTypeString = function isTypeString(val) {
-	return toString.call(val) === "[object String]" ? true : false;
+	return Object.prototype.toString.call(val) === "[object String]" ? true : false;
 };
 
 var getValForKey = exports.getValForKey = function getValForKey(obj, key) {
@@ -9970,7 +9970,6 @@ var TableFilter = function (_Component) {
 
 			var rows = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
-			console.log('--_applyInitialFilters-', this.currentFilters);
 			var currentFilters = this.currentFilters;
 			if (!(0, _util.isUndefined)(currentFilters) && Object.keys(currentFilters).length > 0) {
 
