@@ -11,11 +11,11 @@ export const isUndefined = (str, emptyStringCheck) => {
 }
 
 export const isTypeArray = (val) => {
-	return toString.call(val) === "[object Array]" ? true : false;
+	return Object.prototype.toString.call(val) === "[object Array]" ? true : false;
 }
 
 export const isTypeString = (val) => {
-	return toString.call(val) === "[object String]" ? true : false;
+	return Object.prototype.toString.call(val) === "[object String]" ? true : false;
 }
 
 export const getValForKey = (obj, key) => {

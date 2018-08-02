@@ -51,7 +51,6 @@ class TableFilter extends Component {
 	 * @return {Array}       [Data with filter props applied]
 	 */
 	_applyInitialFilters(rows=[]){
-		console.log('--_applyInitialFilters-', this.currentFilters);
 		const currentFilters = this.currentFilters;
 		if( !isUndefined(currentFilters) && Object.keys(currentFilters).length > 0 ){
 			
