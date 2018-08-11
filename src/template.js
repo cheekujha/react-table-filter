@@ -20,6 +20,7 @@ const render = function(){
 			if(!isUndefined(child) && !isUndefined(child.props.filterkey, true)){
 				
 				let childClass = child.props.className;
+				let childClass = child.props.key;
 				let childChildren = child.props.children || [];
 
 				if(!isTypeArray(childChildren)){
@@ -30,6 +31,12 @@ const render = function(){
 					childClass = "apply-filter"
 				}else{
 					childClass = [childClass, ' ', "apply-filter"].join('');
+				}
+				
+				if(isUndefined(childKey, true)){
+					childKey = index;
+				}else{
+					childClass = [childkey, ' ', index].join('');
 				}
 
 				if(child.props.filterAdded != "true"){
@@ -58,6 +65,7 @@ const render = function(){
 				
 				let newProps = {
 					className: childClass,
+					key= ChildKey,
 					filteradded: "true"
 				}
 
