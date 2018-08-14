@@ -22,9 +22,9 @@ class SimpleExample extends Component {
 
 	render(){
 		const episodes = this.state.episodes;
-		const elementsHtml = episodes.map((item) => {
+		const elementsHtml = episodes.map((item, index) => {
 			return (
-				<tr>
+				<tr key={"row_"+index}>
 					<td className="cell">
 						{ item.name }
 					</td>
@@ -52,13 +52,13 @@ class SimpleExample extends Component {
 								<TableFilter 
 									rows={episodes} 
 									onFilterUpdate={this._filterUpdated}>
-									<th filterkey="name" className="cell" showSearch={true}>
+									<th key="name" filterkey="name" className="cell" showSearch={true}>
 										Name
 									</th>
-									<th filterkey="season" className="cell">
+									<th key="season" filterkey="season" className="cell">
 										Season
 									</th>
-									<th filterkey="number" className="cell" alignleft>
+									<th key="number" ilterkey="number" className="cell" alignleft>
 										Number
 									</th>
 								</TableFilter>
