@@ -343,12 +343,12 @@ class FilterList extends React.Component {
 						if(this.state.searchEnabled){
 							const filterKey = filterItem.key.toString().toLowerCase();
 							if(filterKey.indexOf(this.searchValue.toLowerCase()) >= 0){
-								return filterListItemHtml.push(<FilterListItem filterClicked={this._filterUpdated} index={index} label={filterItem.display} selected={filterItem.selected}/>);
+								return filterListItemHtml.push(<FilterListItem key={"item_"+index} filterClicked={this._filterUpdated} index={index} label={filterItem.display} selected={filterItem.selected}/>);
 							}else{
 								return null;
 							}
 						}else{
-							filterListItemHtml.push(<FilterListItem filterClicked={this._filterUpdated} index={index} label={filterItem.display} selected={filterItem.selected}/>);
+							filterListItemHtml.push(<FilterListItem key={"item_"+index} filterClicked={this._filterUpdated} index={index} label={filterItem.display} selected={filterItem.selected}/>);
 						}
 					}
 				});
