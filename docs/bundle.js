@@ -1239,10 +1239,10 @@ var SimpleExample = function (_Component) {
 		key: 'render',
 		value: function render() {
 			var episodes = this.state.episodes;
-			var elementsHtml = episodes.map(function (item) {
+			var elementsHtml = episodes.map(function (item, index) {
 				return _react2.default.createElement(
 					'tr',
-					null,
+					{ key: "row_" + index },
 					_react2.default.createElement(
 						'td',
 						{ className: 'cell' },
@@ -1296,17 +1296,17 @@ var SimpleExample = function (_Component) {
 										onFilterUpdate: this._filterUpdated },
 									_react2.default.createElement(
 										'th',
-										{ filterkey: 'name', className: 'cell', showSearch: true },
+										{ key: 'name', filterkey: 'name', className: 'cell', showSearch: true },
 										'Name'
 									),
 									_react2.default.createElement(
 										'th',
-										{ filterkey: 'season', className: 'cell' },
+										{ key: 'season', filterkey: 'season', className: 'cell' },
 										'Season'
 									),
 									_react2.default.createElement(
 										'th',
-										{ filterkey: 'number', className: 'cell', alignleft: true },
+										{ key: 'number', ilterkey: 'number', className: 'cell', alignleft: true },
 										'Number'
 									)
 								)
@@ -10356,6 +10356,7 @@ var render = function render() {
 
 				if (child.props.filterAdded != "true") {
 					childChildren.push(_react2.default.createElement(_filterList2.default, _extends({}, child.props, {
+						key: 'list_' + index,
 						initialData: _this.state.initialData,
 						filteredData: _this.state.filteredData,
 						filterRows: _this._filterRows,
@@ -10366,6 +10367,7 @@ var render = function render() {
 						sortType: _this.state.sortType })));
 				} else {
 					childChildren[childChildren.length - 1] = _react2.default.createElement(_filterList2.default, _extends({}, child.props, {
+						key: 'list_' + index,
 						initialData: _this.state.initialData,
 						filteredData: _this.state.filteredData,
 						filterRows: _this._filterRows,
@@ -10840,12 +10842,12 @@ var FilterList = function (_React$Component) {
 							if (_this3.state.searchEnabled) {
 								var filterKey = filterItem.key.toString().toLowerCase();
 								if (filterKey.indexOf(_this3.searchValue.toLowerCase()) >= 0) {
-									return filterListItemHtml.push(_react2.default.createElement(_filterListItem2.default, { filterClicked: _this3._filterUpdated, index: index, label: filterItem.display, selected: filterItem.selected }));
+									return filterListItemHtml.push(_react2.default.createElement(_filterListItem2.default, { key: "item_" + index, filterClicked: _this3._filterUpdated, index: index, label: filterItem.display, selected: filterItem.selected }));
 								} else {
 									return null;
 								}
 							} else {
-								filterListItemHtml.push(_react2.default.createElement(_filterListItem2.default, { filterClicked: _this3._filterUpdated, index: index, label: filterItem.display, selected: filterItem.selected }));
+								filterListItemHtml.push(_react2.default.createElement(_filterListItem2.default, { key: "item_" + index, filterClicked: _this3._filterUpdated, index: index, label: filterItem.display, selected: filterItem.selected }));
 							}
 						}
 					});

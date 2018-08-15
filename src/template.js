@@ -35,7 +35,7 @@ const render = function(){
 				if(child.props.filterAdded != "true"){
 					childChildren.push(<FilterList
 									{...child.props} 
-							                key={`list+${index}`}
+									key={`list_${index}`}
 									initialData={this.state.initialData} 
 									filteredData={this.state.filteredData} 
 									filterRows={this._filterRows}
@@ -47,7 +47,7 @@ const render = function(){
 				}else{
 					childChildren[childChildren.length - 1] = (<FilterList 
 									{...child.props}
-									key={`list+${index}`}
+									key={`list_${index}`}
 									initialData={this.state.initialData} 
 									filteredData={this.state.filteredData} 
 									filterRows={this._filterRows}
