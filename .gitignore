@@ -4,3 +4,4 @@ logs.log
 *.log
 *.DS_STORE
 *.DS_Store
+package-lock.json
