@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import SampleData from './sampleData.json';
-import TableFilter from '../src/index.js';
+import TableFilter from '../lib/bundle.js';
 import {} from './example.scss';
+import {} from '../lib/styles.css';
 
 class SimpleExample extends Component {
   constructor(props) {
@@ -47,21 +48,24 @@ class SimpleExample extends Component {
           <div className="basic">
             <h3 className="header">Basic Usage</h3>
             <table className="basic-table">
-              <TableFilter
-                rows={episodes}
-                onFilterUpdate={this._filterUpdated}
-                rowComponent={ <tr/> }>
-                <th key="name" filterkey="name" className="cell" showSearch={true}>
-                  Name
-                </th>
-                <th key="season" filterkey="season" className="cell">
-                  Season
-                </th>
-                <th key="number" ilterkey="number" className="cell" alignleft>
-                  Number
-                </th>
-              </TableFilter>
-              { elementsHtml }
+              <thead>
+                <TableFilter
+                  rows={episodes}
+                  onFilterUpdate={this._filterUpdated}>
+                  <th key="name" filterkey="name" className="cell" showSearch={true}>
+                    Name
+                  </th>
+                  <th key="season" filterkey="season" className="cell">
+                    Season
+                  </th>
+                  <th key="number" filterkey="number" className="cell" alignleft>
+                    Number
+                  </th>
+                </TableFilter>
+              </thead>
+              <tbody>
+                { elementsHtml }
+              </tbody>
             </table>
           </div>
 

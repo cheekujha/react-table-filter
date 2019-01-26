@@ -3,6 +3,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+	mode: 'none',
 	entry: './index.js',
 	output: {
 		filename: 'bundle.js',
@@ -16,7 +17,18 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						presets: ['env']
+						"presets": [
+							[
+								"@babel/preset-env",
+								{
+									"modules": "commonjs",
+									"targets": {
+										"node": "current"
+									}
+								}
+							],
+							"@babel/preset-react"
+						]
 					}
 				}
 			},
@@ -25,7 +37,7 @@ module.exports = {
 				use: ExtractTextPlugin.extract({
 					fallback: 'style-loader',
 					use: ['css-loader', 'sass-loader']
-					// use: ['css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'sass-loader'] 
+					// use: ['css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'sass-loader']
 				})
 			},
 			{
@@ -33,7 +45,7 @@ module.exports = {
 				use: ExtractTextPlugin.extract({
 					fallback: 'style-loader',
 					use: ['css-loader']
-					// use: ['css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'sass-loader'] 
+					// use: ['css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'sass-loader']
 				})
 			}
 		]

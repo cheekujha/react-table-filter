@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import Template from './template.js';
 import {
-	isUndefined, 
-	isTypeArray, 
+	isUndefined,
+	isTypeArray,
 	isTypeString
 } from './lib/util';
 import {
@@ -53,7 +53,7 @@ class TableFilter extends Component {
 	_applyInitialFilters(rows=[]){
 		const currentFilters = this.currentFilters;
 		if( !isUndefined(currentFilters) && Object.keys(currentFilters).length > 0 ){
-			
+
 			const filterKeys = Object.keys(currentFilters);
 			let filteredArray;
 			filterKeys.map((currKey) => {
@@ -64,7 +64,7 @@ class TableFilter extends Component {
 						value: currValue
 					};
 				});
-				
+
 				const result = filterActions(rows, filterToApply, true, this._getValueFunctionForKey(currKey));
 				filteredArray = result.filteredArray;
 				rows = result.dataWithFilter;
@@ -133,7 +133,7 @@ class TableFilter extends Component {
 			if(!isUndefined(result)){
 				const filteredArray = result.filteredArray,
 					dataWithFilter = result.dataWithFilter;
-				
+
 				this.setState({
 					filteredData: dataWithFilter
 				});
@@ -142,9 +142,9 @@ class TableFilter extends Component {
 
 		}
 	}
-	
+
 	/**
-	 * [_filterRows Function passed as a prop to FilterList Componenet and called in case a filter is applied 
+	 * [_filterRows Function passed as a prop to FilterList Componenet and called in case a filter is applied
 	 * or removed]
 	 * @param  {[type]}  value     [Filter value]
 	 * @param  {[type]}  key       [Filter key]
@@ -159,7 +159,7 @@ class TableFilter extends Component {
 			if(!isUndefined(result)){
 				const filteredArray = result.filteredArray,
 					dataWithFilter = result.dataWithFilter;
-				
+
 				this.setState({
 					filteredData: dataWithFilter
 				});
@@ -230,7 +230,7 @@ class TableFilter extends Component {
 			if(!isUndefined(result)){
 				const filteredArray = result.filteredArray,
 					dataWithFilter = result.dataWithFilter;
-				
+
 				this.setState({
 					filteredData: dataWithFilter
 				});
@@ -270,7 +270,7 @@ class TableFilter extends Component {
 			this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray, this._getCurrentFilters());
 		}
 	}
-	
+
 	/**
 	 * [reset Function called from parent(main code) to load/reset data of the filters]
 	 * @param  {Array}  rows         [Array of items]
@@ -293,13 +293,14 @@ class TableFilter extends Component {
 	render(){
 		return Template.call(this);
 	}
-} 
+}
 
 TableFilter.propTypes = {
 	rows: PropTypes.array.isRequired, // Filterable Data
 	onFilterUpdate: PropTypes.func.isRequired, // Function to be called with updated data when filters are applied or removed
 	rowClass: PropTypes.string, // Optional class to be attached to row elements
-	initialFilters: PropTypes.array // Initial filter configuration if any(provided as a parameter in onFilterUpdate)
+	initialFilters: PropTypes.array, // Initial filter configuration if any(provided as a parameter in onFilterUpdate)
+	rowComponent: PropTypes.func
 }
 
 export default TableFilter

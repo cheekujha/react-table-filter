@@ -1,8 +1,11 @@
 var path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 var webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
+	mode: 'production',
 	entry: './src/index.js',
 	output: {
 		filename: 'bundle.js',
@@ -32,7 +35,18 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						presets: ['env']
+						"presets": [
+							[
+								"@babel/preset-env",
+								{
+									"modules": "commonjs",
+									"targets": {
+										"node": "current"
+									}
+								}
+							],
+							"@babel/preset-react"
+						]
 					}
 				}
 			},
@@ -40,26 +54,23 @@ module.exports = {
 				test: /\.scss$/,
 				use: ExtractTextPlugin.extract({
 					fallback: 'style-loader',
-					// use: ['css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'sass-loader'] 
-					use: ['css-loader', 'sass-loader'] 
+					// use: ['css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'sass-loader']
+					use: ['css-loader', 'sass-loader']
 				})
 			}
 		]
 	},
 	plugins: [
-		new webpack.DefinePlugin({ // <-- key to reducing React's size
-			'process.env': {
-				'NODE_ENV': JSON.stringify('production')
-			}
-		}),
 		new ExtractTextPlugin({
-			filename: 'styles.css', 
-			disable: false, 
+			filename: 'styles.css',
+			disable: false,
 			allChunks: true
 		}),
-		new webpack.optimize.UglifyJsPlugin({
-			drop_console: true
-		}),
 		new webpack.optimize.AggressiveMergingPlugin()//Merge chunks
-	]
+	],
+	optimization: {
+		minimizer: [
+			new TerserPlugin()
+		]
+	},
 };
