@@ -109,7 +109,7 @@ rows | array | | true | Items for the Filter
 onFilterUpdate | function(updatedData, filterConfiguration) | | true | Function called with filtered data and updated filter configuration
 rowClass | string | | false | Any additional class to be added to table row contaning header columns
 initialFilters | Array | | false | Initial Filter configuration to be applied. Configuration is received as second argument for **onFilterUpdate** function
-rowComponent | Component | <tr></tr> | false | The columns headers will by default be placed inside <tr></tr> (Row Element). If **rowComponent** is passed it will be used. Any react component can be used.
+rowComponent | Component | Table Row Element | false | The columns headers will by default be placed inside Table Row Element. If **rowComponent** is passed it will be used. Any react component can be used.
 
 #### TableFilter Ref Methods
 
