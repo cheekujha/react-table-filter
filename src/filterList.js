@@ -3,7 +3,7 @@ import FilterListItem from './filterListItem';
 import SelectAllItem from './selectAllItem';
 import SearchBar from './searchBar';
 import {
-	isUndefined, 
+	isUndefined,
 	isTypeString,
 	getValForKey
 } from './lib/util';
@@ -24,7 +24,6 @@ class FilterList extends React.Component {
 	constructor(props){
 		super(props);
 
-		this._initMethods();
 		const { filterList, selectState } = this._calculateFilterState(this.props.filteredData);
 		this.appliedSearchFilters = undefined;
 		this.searchValue = undefined;
@@ -37,30 +36,15 @@ class FilterList extends React.Component {
 		};
 	}
 
-	/*Bind functions to react context*/
-	_initMethods(){
-		this._handleOutsideClick = this._handleOutsideClick.bind(this);
-		this._calculateFilterState = this._calculateFilterState.bind(this);
-		this._filterIconClicked = this._filterIconClicked.bind(this);
-		this._displayFilter = this._displayFilter.bind(this);
-		this._hideFilter = this._hideFilter.bind(this);
-		this._filterUpdated = this._filterUpdated.bind(this);
-		this._selectAllClicked = this._selectAllClicked.bind(this);
-		this._filterData = this._filterData.bind(this);
-		this._resetData = this._resetData.bind(this);
-		this._sortClicked = this._sortClicked.bind(this);
-		this._searchChanged = this._searchChanged.bind(this);
-	}
-
 	componentWillUnmount(){
 		/*Remove body click listener*/
-		EventStack.unsub('click', this._handleOutsideClick, document);
+		EventStack.unsub('click', this._handleOutsideClick);
 	}
 
 	/**
-	 * [_handleOutsideClick Function to hide open filter list when click is done anywhere else]
+	 * _handleOutsideClick Function to hide open filter list when click is done anywhere else
 	 */
-	_handleOutsideClick(e){
+	_handleOutsideClick = (e) => {
 		if(!this.filterIconNode.contains(e.target)){
 			this._hideFilter();
 		}
@@ -79,10 +63,10 @@ class FilterList extends React.Component {
 	}
 
 	/**
-	 * [_calculateFilterState Function calculates current filter state to display]
-	 * @param  {Array} dataArray [Data passed from parent on which filter is to be applies]
+	 * _calculateFilterState Function calculates current filter state to display
+	 * @param  {Array} dataArray Data passed from parent on which filter is to be applies
 	 */
-	_calculateFilterState(dataArray){
+	_calculateFilterState = (dataArray) => {
 		let filteredData = dataArray ? [...dataArray] : [];
 		const filterkey = this.props.filterkey;
 		let usedKeys = [];
@@ -113,7 +97,7 @@ class FilterList extends React.Component {
 					orinigalValue = displayName;
 				}
 			}
-			
+
 			if(usedKeys.indexOf(itemKey) === -1){
 				if(!isUndefined(appliedFilters) && Object.keys(appliedFilters).length > 0){
 					if(Object.keys(appliedFilters).length === 1 && Object.keys(appliedFilters)[0] === filterkey){
@@ -174,7 +158,7 @@ class FilterList extends React.Component {
 		};
 	}
 
-	_filterIconClicked(e){
+	_filterIconClicked = (e) => {
 		const filterState = this.state.showFilter;
 		const newState = !filterState;
 
@@ -183,10 +167,10 @@ class FilterList extends React.Component {
 		}else{
 			this._hideFilter();
 		}
-		
+
 	}
 
-	_displayFilter(){
+	_displayFilter = () => {
 		/*Body Click listener added*/
 		EventStack.sub('click', this._handleOutsideClick, document);
 		this.setState({
@@ -194,9 +178,9 @@ class FilterList extends React.Component {
 		});
 	}
 
-	_hideFilter(){
+	_hideFilter = () => {
 		/*Body Click listener removed*/
-		EventStack.unsub('click', this._handleOutsideClick, document);
+		EventStack.unsub('click', this._handleOutsideClick);
 		this.setState({
 			showFilter: false,
 			searchEnabled: false
@@ -207,7 +191,7 @@ class FilterList extends React.Component {
 	 * [_filterUpdated method called when a filter list item is clicked]
 	 * @param  {Number} index [Index of the filter clicked]
 	 */
-	_filterUpdated(index){
+	_filterUpdated = (index) => {
 		let allFilters = this.state.filterList;
 		if(!isUndefined(allFilters[index])){
 			const newFilterState = !allFilters[index]['selected'];
@@ -218,7 +202,7 @@ class FilterList extends React.Component {
 	/**
 	 * [_selectAllClicked method called when a select all item is clicked]
 	 */
-	_selectAllClicked(){
+	_selectAllClicked = () => {
 		const selectAllState = this.state.selectAllFilters;
 		const newSelectAllState = !selectAllState;
 		const searchState = this.state.searchEnabled;
@@ -238,32 +222,31 @@ class FilterList extends React.Component {
 			return filterItem.key;
 		});
 
-		this._resetData(visibleFiltersValues, newSelectAllState);		
+		this._resetData(visibleFiltersValues, newSelectAllState);
 	}
 
 	/**
-	 * [_filterData Method calls parent props filter mehtod when filters are changed]
-	 * @param  {String}  filterValue [Filter value]
-	 * @param  {Boolean} addFilter   [Add/Remove]
+	 * _filterData Method calls parent props filter mehtod when filters are changed
+	 * @param  {String}  filterValue Filter value
+	 * @param  {Boolean} addFilter   Add/Remove
 	 */
-	_filterData(filterValue=undefined, addFilter=true){
+	_filterData = (filterValue=undefined, addFilter=true) => {
 		this.props.filterRows(filterValue, this.props.filterkey, addFilter, this.props.itemDisplayValueFunc);
 	}
 
 	/**
-	 * [_resetData Method calls parent props reset mehtod]
-	 * @param  {Array}   filterValues [Array of filter values]
-	 * @param  {Boolean} selectAll    [Add/Remove]
+	 * _resetData Method calls parent props reset mehtod
+	 * @param  {Array}   filterValues Array of filter values
+	 * @param  {Boolean} selectAll    Add/Remove
 	 */
-	_resetData(filterValues=[], selectAll=true){
+	_resetData = (filterValues=[], selectAll=true) => {
 		this.props.resetRows(filterValues, this.props.filterkey, selectAll, this.props.itemDisplayValueFunc);
 	}
 
 	/**
-	 * [_sortClicked description]
-	 * @return {[type]} [description]
+	 * _sortClicked description
 	 */
-	_sortClicked(){
+	_sortClicked = () => {
 		const currentSortType = this.state.sortType;
 		let newSortType;
 		if(isUndefined(currentSortType) || currentSortType === DSC_VALUE){
@@ -283,11 +266,11 @@ class FilterList extends React.Component {
 	 * [_searchChanged Method called when search is triggered]
 	 * @param  {String} searchValue [Search value]
 	 */
-	_searchChanged(searchValue){
+	_searchChanged = (searchValue) => {
 		let searchState = false;
 		let propKey = this.props.filterkey;
 		this.searchValue = searchValue;
-		
+
 
 		const prevAppliedFilters = this.appliedSearchFilters;
 		if(!isUndefined(searchValue, true)){
@@ -299,7 +282,7 @@ class FilterList extends React.Component {
 			searchValue = searchValue.toLowerCase();
 			let filterList = this.state.filterList;
 			searchState = true;
-			
+
 			const filtersToApply = filterList.filter((filterItem) => {
 				const filterKey = filterItem.key.toString().toLowerCase();
 				if(filterKey.indexOf(searchValue) < 0 && filterItem.visible){
@@ -332,7 +315,6 @@ class FilterList extends React.Component {
 
 		let filterListItemHtml = [],
 			filterListHtml;
-		
 
 		if(this.state.filterList.length > 1){
 			if(filterState){

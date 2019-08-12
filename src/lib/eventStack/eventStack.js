@@ -29,7 +29,6 @@ class EventStack {
 	}
 
 	sub(name, handlers, options = {}){
-
 		const { target = document, pool = 'default' } = options
 		const eventTarget = this._find(target)
 
@@ -37,7 +36,6 @@ class EventStack {
 	}
 
 	unsub(name, handlers, options = {}){
-
 		const { target = document, pool = 'default' } = options
 		const eventTarget = this._find(target, false)
 

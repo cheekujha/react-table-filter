@@ -7,17 +7,9 @@ import PropTypes from 'prop-types';
 class SortIcon extends React.Component{
 	constructor(props){
 		super(props);
-		this.state = {};
-
-		this._initMethods();
 	}
 
-	/*Bind Functions to Context*/
-	_initMethods(){
-		this._sortClicked = this._sortClicked.bind(this);
-	}
-
-	_sortClicked(){
+	_sortClicked = () => {
 		this.props.sort();
 	}
 

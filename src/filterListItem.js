@@ -4,17 +4,9 @@ import PropTypes from 'prop-types';
 class FilterListItem extends React.Component {
 	constructor(props){
 		super(props);
-
-		this._initMethods();
-		this.state = {};
 	}
 
-	/*Bind Functions to Context*/
-	_initMethods(){
-		this._checkBoxClicked = this._checkBoxClicked.bind(this);
-	}
-
-	_checkBoxClicked(){
+	_checkBoxClicked = () => {
 		this.props.filterClicked(this.props.index);
 	}
 

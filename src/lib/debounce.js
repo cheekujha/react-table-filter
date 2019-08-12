@@ -3,7 +3,7 @@ module.exports = (func, wait, immediate) => {
 	if (null == wait) wait = 100;
 
 	function later() {
-	var last = Date.now() - timestamp;
+		var last = Date.now() - timestamp;
 
 		if (last < wait && last >= 0) {
 			timeout = setTimeout(later, wait - last);

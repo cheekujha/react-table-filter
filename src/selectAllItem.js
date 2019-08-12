@@ -4,17 +4,9 @@ import PropTypes from 'prop-types';
 class SelectAllItem extends React.Component{
 	constructor(props){
 		super(props);
-		this.state = {};
-
-		this._initMethods();
 	}
 
-	/*Bind Functions to Context*/
-	_initMethods(){
-		this._selectAllClicked = this._selectAllClicked.bind(this);
-	}
-
-	_selectAllClicked(){
+	_selectAllClicked = () => {
 		this.props.filterClicked();
 	}
 

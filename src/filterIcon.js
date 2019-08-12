@@ -4,17 +4,9 @@ import PropTypes from 'prop-types';
 class FilterIcon extends React.Component {
 	constructor(props){
 		super(props);
-
-		this._initMethods();
-
-		this.state = {};
 	}
 
-	_initMethods(){
-		this._iconClicked = this._iconClicked.bind(this);
-	}
-
-	_iconClicked(){
+	_iconClicked = () => {
 		this.props.iconClicked && this.props.iconClicked();
 	}
 

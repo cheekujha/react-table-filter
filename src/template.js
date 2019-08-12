@@ -15,7 +15,7 @@ const render = function(){
 
 	if(!isUndefined(children) && children.length > 0){
 
-		this.props.children.map((child, index) => {
+		React.Children.map(this.props.children, (child, index) => {
 
 			if(!isUndefined(child) && !isUndefined(child.props.filterkey, true)){
 

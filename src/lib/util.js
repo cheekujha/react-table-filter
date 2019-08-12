@@ -39,7 +39,7 @@ export const getValForKey = (obj, key) => {
 						break;
 					}
 				}
-				
+
 				return finalValue;
 			}
 		}else{
@@ -49,9 +49,36 @@ export const getValForKey = (obj, key) => {
 	return;
 }
 
+export const uniq = (array) => {
+	if ((array != null && array.length)) {
+		let unique = [...new Set(array)];
+		return unique;
+	}
+	return [];
+}
+
+export const without = (array, values=[]) => {
+	let result = [];
+	const valuesLength = values.length;
+
+	if (!array.length) {
+    return result
+  }
+
+	array.forEach((currItem) => {
+		if (values.indexOf(currItem) < 0) {
+			result.push(currItem);
+		}
+	});
+
+	return result;
+}
+
 export default {
 	isUndefined,
 	isTypeArray,
 	isTypeString,
-	getValForKey
+	getValForKey,
+	uniq,
+	without
 }

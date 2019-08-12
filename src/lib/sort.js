@@ -7,13 +7,13 @@ import {
 } from './util';
 
 /**
- * [Function to sort an array (asc or dsc) w.r.t to an filter]
- * @param  {Array}   inputArray            [Array to be sorted]
- * @param  {String}  type                  [asc or dsc]
- * @param  {Function}  options.valueFunc     [Function to calculate value of an item(optional)]
- * @param  {Boolean} options.caseSensitive [Whether case sensitive or not]
- * @param  {String}  options.key           [Filter Key]
- * @return {Array}                        [Sorted array]
+ * Function to sort an array (asc or dsc) w.r.t to an filter
+ * @param  {Array}   inputArray            Array to be sorted
+ * @param  {String}  type                  asc or dsc
+ * @param  {Function}  options.valueFunc     Function to calculate value of an item(optional)
+ * @param  {Boolean} options.caseSensitive Whether case sensitive or not
+ * @param  {String}  options.key           Filter Key
+ * @return {Array}                        Sorted array
  */
 export const sortAction = (inputArray=[], type=undefined, {valueFunc=undefined, caseSensitive=false, key=undefined} ={}) => {
 	if(!isUndefined(type)){
@@ -34,7 +34,7 @@ export const sortAction = (inputArray=[], type=undefined, {valueFunc=undefined, 
 				aValue = valueFunc(aValue);
 				bValue = valueFunc(bValue);
 			}else{
-				if(!isNaN(Number(aValue)) &&  !isNaN(Number(bValue))){
+				if(!isNaN(Number(aValue)) && !isNaN(Number(bValue))){
 					aValue = Number(aValue);
 					bValue = Number(bValue);
 				}
@@ -57,7 +57,7 @@ export const sortAction = (inputArray=[], type=undefined, {valueFunc=undefined, 
 			if(isUndefined(aValue)){
 				aValue = '';
 			}
-			
+
 			if(isUndefined(bValue)){
 				bValue = '';
 			}
@@ -78,7 +78,7 @@ export const sortAction = (inputArray=[], type=undefined, {valueFunc=undefined, 
 		}
 
 		return inputCopy.sort(sortFunc);
-		
+
 	}
 	return inputArray;
 }
