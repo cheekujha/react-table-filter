@@ -1,86 +1,88 @@
-import _ from '../lodash.custom'
+import {
+  uniq,
+  without,
+  isTypeArray,
+} from '../util';
 
 export default class EventTarget {
+  constructor(target) {
+    this.target = target;
+    this._handlers = {};
+    this._pools = {};
+  }
 
-	constructor(target) {
-		this.target = target;
-		this._handlers = {};
-		this._pools = {};
-	}
+  // ------------------------------------
+  // Utils
+  // ------------------------------------
 
-	// ------------------------------------
-	// Utils
-	// ------------------------------------
+  _emit(name) {
+    return (event) => {
+      Object.keys(this._pools).forEach((poolName) => {
+        const handlers = this._pools[poolName];
+        if (!handlers) return;
+        handlers.forEach((handler) => handler(event));
+        return;
+      });
+    };
+  }
 
-	_emit(name){
-		return (event) => {
-			_.forEach(this._pools, (pool, poolName) => {
-				const { [name]: handlers } = pool
+  _normalize(handlers) {
+    return isTypeArray(handlers) ? handlers : [handlers];
+  }
 
-				if (!handlers) return
-				if (poolName === 'default') {
-					_.forEach(handlers, handler => handler(event))
-					return
-				}
-				_.last(handlers)(event)
-			});
-		}
-	}
+  // ------------------------------------
+  // Listeners handling
+  // ------------------------------------
 
-	_normalize(handlers){
-		return (_.isArray(handlers) ? handlers : [handlers])
-	}
+  _listen(name) {
+    if (this._handlers.hasOwnProperty(name)) return;
+    const handler = this._emit(name);
 
-	// ------------------------------------
-	// Listeners handling
-	// ------------------------------------
+    this.target.addEventListener(name, handler);
+    this._handlers[name] = handler;
+  }
 
-	_listen(name){
-		if (_.has(this._handlers, name)) return
-		const handler = this._emit(name)
+  _unlisten(name) {
+    if (this._pools[name]) return;
+    const handler = this._handlers[name];
 
-		this.target.addEventListener(name, handler)
-		this._handlers[name] = handler
-	}
+    this.target.removeEventListener(name, handler);
+    delete this._handlers[name];
+  }
 
-	_unlisten(name){
-		if (_.some(this._pools, name)) return
-		const { [name]: handler } = this._handlers
+  empty() {
+    return (this._handlers && Object.keys(this._handlers).length > 0) ? false : true;
+  }
 
-		this.target.removeEventListener(name, handler)
-		delete this._handlers[name]
-	}
+  // ------------------------------------
+  // Pub/sub
+  // ------------------------------------
 
-	// ------------------------------------
-	// Pub/sub
-	// ------------------------------------
+  sub(name, handlers) {
+    const newHandlers = this._normalize(handlers);
+    const prevHandlers = this._pools[`${name}`] || [];
+    const events = uniq([
+      ...prevHandlers,
+      ...newHandlers,
+    ]);
 
-	empty(){
-		return _.isEmpty(this._handlers);
-	} 
+    this._listen(name);
+    this._pools[`${name}`] = events;
+  }
 
-	sub(name, handlers, pool = 'default'){
-		const events = _.uniq([
-			..._.get(this._pools, `${pool}.${name}`, []),
-			...this._normalize(handlers),
-		])
+  unsub(name, handlers) {
+    const toRemoveHandlers = this._normalize(handlers);
+    const prevHandlers = this._pools[`${name}`] || [];
+    const events = without(
+        prevHandlers,
+        toRemoveHandlers,
+    );
 
-		this._listen(name)
-		_.set(this._pools, `${pool}.${name}`, events)
-	}
-
-	unsub(name, handlers, pool = 'default'){
-		const events = _.without(
-			_.get(this._pools, `${pool}.${name}`, []),
-			...this._normalize(handlers),
-		)
-
-		if (events.length > 0) {
-			_.set(this._pools, `${pool}.${name}`, events)
-			return
-		}
-
-		_.set(this._pools, `${pool}.${name}`, undefined)
-		this._unlisten(name)
-	}
+    if (events.length > 0) {
+      this._pools[`${name}`] = events;
+      return;
+    }
+    this._pools[`${name}`] = undefined;
+    this._unlisten(name);
+  }
 }

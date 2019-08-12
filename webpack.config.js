@@ -3,6 +3,21 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 var webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const analyze = process.env.analyze;
+
+let plugins = [
+	new ExtractTextPlugin({
+		filename: 'styles.css',
+		disable: false,
+		allChunks: true
+	}),
+	new webpack.optimize.AggressiveMergingPlugin()//Merge chunks
+];
+
+if (analyze) {
+	plugins.push(new BundleAnalyzerPlugin())
+}
 
 module.exports = {
 	mode: 'production',
@@ -31,43 +46,20 @@ module.exports = {
 		rules: [
 			{
 				test: /\.js$/,
-				// exclude: /(node_modules|bower_components)/,
 				use: {
-					loader: 'babel-loader',
-					options: {
-						"presets": [
-							[
-								"@babel/preset-env",
-								{
-									"modules": "commonjs",
-									"targets": {
-										"node": "current"
-									}
-								}
-							],
-							"@babel/preset-react"
-						]
-					}
+					loader: 'babel-loader'
 				}
 			},
 			{
 				test: /\.scss$/,
 				use: ExtractTextPlugin.extract({
 					fallback: 'style-loader',
-					// use: ['css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'sass-loader']
 					use: ['css-loader', 'sass-loader']
 				})
 			}
 		]
 	},
-	plugins: [
-		new ExtractTextPlugin({
-			filename: 'styles.css',
-			disable: false,
-			allChunks: true
-		}),
-		new webpack.optimize.AggressiveMergingPlugin()//Merge chunks
-	],
+	plugins: plugins,
 	optimization: {
 		minimizer: [
 			new TerserPlugin()

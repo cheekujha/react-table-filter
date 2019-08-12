@@ -1,53 +1,51 @@
-import EventTarget from './eventTarget'
-import normalizeTarget from './normalizeTarget'
+import EventTarget from './eventTarget';
+import normalizeTarget from './normalizeTarget';
 
 class EventStack {
-	constructor() {
-		this._targets = new Map()
-	}
+  constructor() {
+    this._targets = new Map();
+  }
 
-	// ------------------------------------
-	// Target utils
-	// ------------------------------------
+  // ------------------------------------
+  // Target utils
+  // ------------------------------------
 
-	_find(target, autoCreate = true){
-		const normalized = normalizeTarget(target)
+  _find(target, autoCreate = true) {
+    const normalized = normalizeTarget(target);
 
-		if (this._targets.has(normalized)) return this._targets.get(normalized)
-		if (!autoCreate) return
+    if (this._targets.has(normalized)) return this._targets.get(normalized);
+    if (!autoCreate) return;
 
-		const eventTarget = new EventTarget(normalized)
-		this._targets.set(normalized, eventTarget)
+    const eventTarget = new EventTarget(normalized);
+    this._targets.set(normalized, eventTarget);
 
-		return eventTarget
-	}
+    return eventTarget;
+  }
 
-	_remove(target){
-		const normalized = normalizeTarget(target)
+  _remove(target) {
+    const normalized = normalizeTarget(target);
 
-		this._targets.delete(normalized)
-	}
+    this._targets.delete(normalized);
+  }
 
-	sub(name, handlers, options = {}){
+  sub(name, handlers, options = {}) {
+    const {target = document, pool = 'default'} = options;
+    const eventTarget = this._find(target);
 
-		const { target = document, pool = 'default' } = options
-		const eventTarget = this._find(target)
+    eventTarget.sub(name, handlers, pool);
+  }
 
-		eventTarget.sub(name, handlers, pool)
-	}
+  unsub(name, handlers, options = {}) {
+    const {target = document, pool = 'default'} = options;
+    const eventTarget = this._find(target, false);
 
-	unsub(name, handlers, options = {}){
-
-		const { target = document, pool = 'default' } = options
-		const eventTarget = this._find(target, false)
-
-		if (eventTarget) {
-			eventTarget.unsub(name, handlers, pool)
-			if (eventTarget.empty()) this._remove(target)
-		}
-	}
+    if (eventTarget) {
+      eventTarget.unsub(name, handlers, pool);
+      if (eventTarget.empty()) this._remove(target);
+    }
+  }
 }
 
-const instance = new EventStack()
+const instance = new EventStack();
 
-export default instance
+export default instance;

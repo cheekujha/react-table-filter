@@ -5,9 +5,9 @@
  * @return {HTMLElement|Window} A DOM node.
  */
 const normalizeTarget = (target) => {
-	if (target === 'document') return document
-	if (target === 'window') return window
-	return target || document
-}
+  if (target === 'document') return document;
+  if (target === 'window') return window;
+  return target || document;
+};
 
-export default normalizeTarget
+export default normalizeTarget;
