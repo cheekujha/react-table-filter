@@ -6,6 +6,13 @@ import {
   getValForKey,
 } from './util';
 
+import {
+  sortAction,
+} from './sort';
+import {
+  BLANK_LABEL,
+  ASC_VALUE,
+} from './constants';
 
 export const filterActions = (inputArray=[], filterArray=[], addFilter=true, valueFunc=undefined) => {
   const filteredArray = [];
@@ -197,5 +204,131 @@ export const filtersReset = (inputArray=[], values=[], key=undefined, selectAll=
   return {
     filteredArray,
     dataWithFilter,
+  };
+};
+
+/**
+ * createFiltersFromItems calculate current filter's list items and state
+ * @param  {Array} dataArray            Input Item list
+ * @param  {String} filterkey
+ * @param  {Function} itemDisplayValueFunc
+ * @param  {Function} itemSortValueFunc
+ * @return {Object}
+ */
+export const createFiltersFromItems = (dataArray, filterkey, itemDisplayValueFunc, itemSortValueFunc) => {
+  const filteredData = dataArray ? [...dataArray] : [];
+  const usedKeys = [];
+  let filterList = [];
+
+  let selectState = true;
+
+  filteredData.map((item) => {
+    let itemKey = getValForKey(item, filterkey);
+    let orinigalValue = itemKey;
+
+    if (!isUndefined(itemDisplayValueFunc)) {
+      itemKey = itemDisplayValueFunc(itemKey);
+    }
+
+    const appliedFilters = item.appliedFilters || {};
+    let displayName = itemKey;
+
+    if (isUndefined(itemKey)) {
+      displayName = BLANK_LABEL;
+      itemKey = '';
+      orinigalValue = displayName;
+    } else if ((isTypeString(itemKey))) {
+      itemKey = itemKey.trim();
+      if (itemKey.length === 0) {
+        displayName = BLANK_LABEL;
+        orinigalValue = displayName;
+      }
+    }
+
+    if (usedKeys.indexOf(itemKey) === -1) {
+      if (!isUndefined(appliedFilters) && Object.keys(appliedFilters).length > 0) {
+        if (Object.keys(appliedFilters).length === 1 && Object.keys(appliedFilters)[0] === filterkey) {
+          selectState = false;
+          filterList.push({
+            'key': itemKey,
+            'display': displayName,
+            'selected': false,
+            'visible': true,
+            'orinigalValue': orinigalValue,
+          });
+        } else {
+          filterList.push({
+            'key': itemKey,
+            'display': displayName,
+            'selected': true,
+            'visible': false,
+            'orinigalValue': orinigalValue,
+          });
+        }
+      } else {
+        filterList.push({
+          'key': itemKey,
+          'display': displayName,
+          'selected': true,
+          'visible': true,
+          'orinigalValue': orinigalValue,
+        });
+      }
+
+      usedKeys.push(itemKey);
+    } else {
+      const filterIndex = usedKeys.indexOf(itemKey);
+      let filterItem = filterList[filterIndex];
+      if (Object.keys(appliedFilters).length === 0) {
+        if (!filterItem.selected || !filterItem.visible) {
+          filterItem = Object.assign({}, filterItem, {'selected': true, 'visible': true});
+          filterList[filterIndex] = filterItem;
+        }
+      }
+
+      if (Object.keys(appliedFilters).length === 1 && Object.keys(appliedFilters)[0] === filterkey) {
+        selectState = false;
+        filterItem = Object.assign({}, filterItem, {'selected': false, 'visible': true});
+        filterList[filterIndex] = filterItem;
+      }
+    }
+  });
+
+  filterList = sortAction(filterList, ASC_VALUE, {
+    valueFunc: itemSortValueFunc,
+    key: 'orinigalValue',
+  });
+
+  return {
+    filterList,
+    selectState,
+  };
+};
+
+/**
+ * calculateFilterProps calculate single filterList props from input data and other parameters
+ * @param  {Array} filteredData          input data
+ * @param  {String} filterkey            object key for the current filter
+ * @param  {Function} itemDisplayValueFunc
+ * @param  {Function} itemSortValueFunc
+ * @param  {String} sortKey              current sort key if any
+ * @param  {String} sortType
+ * @return {Object}
+ */
+export const calculateFilterProps = ({
+  filteredData,
+  filterkey,
+  itemDisplayValueFunc,
+  itemSortValueFunc,
+  sortKey,
+  sortType,
+}) => {
+  const {filterList, selectState} = createFiltersFromItems(filteredData, filterkey, itemDisplayValueFunc, itemSortValueFunc);
+  const sortTypeState = (!isUndefined(sortKey) && (sortKey === filterkey) ) ? sortType : undefined;
+
+  return {
+    filterList: filterList,
+    selectAllFilters: selectState,
+    sortType: sortTypeState,
   };
 };

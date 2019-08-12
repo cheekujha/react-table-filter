@@ -125,9 +125,9 @@ Name | Type | Default | Required | Description
 filterkey | string | | false | Key by which the Column should be filtered(Key as present in single Item)
 itemDisplayValueFunc | function(itemValue) | | false | Optional Function that returns the Value that is displayed in the filter list for each item(Default is the item value - Item[key])
 itemSortValueFunc | function(itemValue) | | false | Optional Function that returns the Value that is used while sorting (Default is the item value - Item[key])
-alignleft | boolean | false | false | Decides while side filter list should be aligned w.r.t Column
-caseSensitive | boolean | false | false | Case Sensitivity during sort
-showSearch | boolean | true | false | Display/Hide the search input
+alignleft | string | "false" | false | Decides while side filter list should be aligned w.r.t Column. Allowed "true"/"false"
+casesensitive | string | "false" | false | Case Sensitivity during sort. Allowed "true"/"false"
+showsearch | string | "true" | false | Display/Hide the search input. Allowed "true"/"false"
 
 ## License
 

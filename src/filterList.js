@@ -2,23 +2,17 @@ import React from 'react';
 import FilterListItem from './filterListItem';
 import SelectAllItem from './selectAllItem';
 import SearchBar from './searchBar';
-import {
-  isUndefined,
-  isTypeString,
-  getValForKey,
-} from './lib/util';
 import EventStack from './lib/eventStack';
 import FilterIcon from './filterIcon';
+import SortIcon from './sortIcon';
+import PropTypes from 'prop-types';
 import {
-  sortAction,
-} from './lib/sort';
-import {
-  BLANK_LABEL,
   ASC_VALUE,
   DSC_VALUE,
 } from './lib/constants';
-import SortIcon from './sortIcon';
-import PropTypes from 'prop-types';
+import {
+  isUndefined,
+} from './lib/util';
 
 /**
  * FilterList List of options displayed in the header of the table
@@ -32,14 +26,10 @@ class FilterList extends React.Component {
   constructor(props) {
     super(props);
 
-    const {filterList, selectState} = this._calculateFilterState(this.props.filteredData);
     this.appliedSearchFilters = undefined;
     this.searchValue = undefined;
     this.state = {
-      filterList: filterList,
       showFilter: false,
-      selectAllFilters: selectState,
-      sortType: undefined,
       searchEnabled: false,
     };
   }
@@ -60,118 +50,6 @@ class FilterList extends React.Component {
     if (!this.filterIconNode.contains(e.target)) {
       this._hideFilter();
     }
-  }
-
-  /**
-   * componentWillReceiveProps
-   * @param  {Object} nextProps
-   */
-  componentWillReceiveProps(nextProps) {
-    const {filterList, selectState} = this._calculateFilterState(nextProps.filteredData);
-
-    const sortTypeState = (!isUndefined(nextProps.sortKey) && (nextProps.sortKey === this.props.filterkey) ) ? nextProps.sortType : undefined;
-
-    this.setState({
-      filterList: filterList,
-      selectAllFilters: selectState,
-      sortType: sortTypeState,
-    });
-  }
-
-  /**
-   * _calculateFilterState Function calculates current filter state to display
-   * @param  {Array} dataArray Data passed from parent on which filter is to be applies
-   * @return {Object}
-   */
-  _calculateFilterState = (dataArray) => {
-    const filteredData = dataArray ? [...dataArray] : [];
-    const filterkey = this.props.filterkey;
-    const usedKeys = [];
-    let filterList = [];
-
-    let selectState = true;
-
-    filteredData.map((item) => {
-      let itemKey = getValForKey(item, filterkey);
-      let orinigalValue = itemKey;
-
-      if (!isUndefined(this.props.itemDisplayValueFunc)) {
-        itemKey = this.props.itemDisplayValueFunc(itemKey);
-      }
-
-      const appliedFilters = item.appliedFilters || {};
-      let displayName = itemKey;
-
-      if (isUndefined(itemKey)) {
-        displayName = BLANK_LABEL;
-        itemKey = '';
-        orinigalValue = displayName;
-      } else if ((isTypeString(itemKey))) {
-        itemKey = itemKey.trim();
-        if (itemKey.length === 0) {
-          displayName = BLANK_LABEL;
-          orinigalValue = displayName;
-        }
-      }
-
-      if (usedKeys.indexOf(itemKey) === -1) {
-        if (!isUndefined(appliedFilters) && Object.keys(appliedFilters).length > 0) {
-          if (Object.keys(appliedFilters).length === 1 && Object.keys(appliedFilters)[0] === filterkey) {
-            selectState = false;
-            filterList.push({
-              'key': itemKey,
-              'display': displayName,
-              'selected': false,
-              'visible': true,
-              'orinigalValue': orinigalValue,
-            });
-          } else {
-            filterList.push({
-              'key': itemKey,
-              'display': displayName,
-              'selected': true,
-              'visible': false,
-              'orinigalValue': orinigalValue,
-            });
-          }
-        } else {
-          filterList.push({
-            'key': itemKey,
-            'display': displayName,
-            'selected': true,
-            'visible': true,
-            'orinigalValue': orinigalValue,
-          });
-        }
-
-        usedKeys.push(itemKey);
-      } else {
-        const filterIndex = usedKeys.indexOf(itemKey);
-        let filterItem = filterList[filterIndex];
-        if (Object.keys(appliedFilters).length === 0) {
-          if (!filterItem.selected || !filterItem.visible) {
-            filterItem = Object.assign({}, filterItem, {'selected': true, 'visible': true});
-            filterList[filterIndex] = filterItem;
-          }
-        }
-
-        if (Object.keys(appliedFilters).length === 1 && Object.keys(appliedFilters)[0] === filterkey) {
-          selectState = false;
-          filterItem = Object.assign({}, filterItem, {'selected': false, 'visible': true});
-          filterList[filterIndex] = filterItem;
-        }
-      }
-    });
-
-    filterList = sortAction(filterList, ASC_VALUE, {
-      valueFunc: this.props.itemSortValueFunc,
-      key: 'orinigalValue',
-    });
-
-    return {
-      filterList,
-      selectState,
-    };
   }
 
   /**
@@ -217,7 +95,7 @@ class FilterList extends React.Component {
    * @param  {Number} index Index of the filter clicked
    */
   _filterUpdated = (index) => {
-    const allFilters = this.state.filterList;
+    const allFilters = this.props.filterList;
     if (!isUndefined(allFilters[index])) {
       const newFilterState = !allFilters[index]['selected'];
       this._filterData(allFilters[index]['key'], !newFilterState);
@@ -228,7 +106,7 @@ class FilterList extends React.Component {
    * [=_selectAllClicked method called when a select all item is clicked
    */
   _selectAllClicked = () => {
-    const selectAllState = this.state.selectAllFilters;
+    const selectAllState = this.props.selectAllFilters;
     const newSelectAllState = !selectAllState;
     const searchState = this.state.searchEnabled;
     // const searchValue = this.searchValue;
@@ -237,7 +115,7 @@ class FilterList extends React.Component {
       return;
     }
 
-    const visibleFiltersValues = this.state.filterList.filter((filterItem) => {
+    const visibleFiltersValues = this.props.filterList.filter((filterItem) => {
       if (newSelectAllState) {
         return (filterItem.visible && !filterItem.selected);
       } else {
@@ -272,7 +150,7 @@ class FilterList extends React.Component {
    * _sortClicked description
    */
   _sortClicked = () => {
-    const currentSortType = this.state.sortType;
+    const currentSortType = this.props.sortType;
     let newSortType;
     if (isUndefined(currentSortType) || currentSortType === DSC_VALUE) {
       newSortType = ASC_VALUE;
@@ -282,7 +160,7 @@ class FilterList extends React.Component {
 
     this.props.sortRows(newSortType, {
       itemSortValueFunc: this.props.itemSortValueFunc,
-      caseSensitive: this.props.caseSensitive,
+      caseSensitive: (this.props.casesensitive === 'true') ? true : false,
       key: this.props.filterkey,
     });
   }
@@ -303,7 +181,7 @@ class FilterList extends React.Component {
       });
 
       searchValue = searchValue.toLowerCase();
-      const filterList = this.state.filterList;
+      const filterList = this.props.filterList;
 
       const filtersToApply = filterList.filter((filterItem) => {
         const filterKey = filterItem.key.toString().toLowerCase();
@@ -335,16 +213,16 @@ class FilterList extends React.Component {
    */
   render() {
     const filterState = this.state.showFilter;
-    const showSearch = this.props.showSearch === false ? false : true;
+    const showSearch = this.props.showsearch === 'false' ? false : true;
 
     const filterListItemHtml = [];
     let filterListHtml;
 
-    if (this.state.filterList.length > 1) {
+    if (this.props.filterList.length > 1) {
       if (filterState) {
         const searchBarHtml = showSearch ? <SearchBar searchChanged={ this._searchChanged }/> : null;
 
-        this.state.filterList.map((filterItem, index) => {
+        this.props.filterList.map((filterItem, index) => {
           if (filterItem.visible) {
             if (this.state.searchEnabled) {
               const filterKey = filterItem.key.toString().toLowerCase();
@@ -360,17 +238,17 @@ class FilterList extends React.Component {
         });
 
 
-        const filterListClass = [(this.props.alignleft === true) ? 'align-left ' : '', 'filter-list'].join('');
+        const filterListClass = [(this.props.alignleft === 'true') ? 'align-left ' : '', 'filter-list'].join('');
 
         filterListHtml = (<div className={ filterListClass }>
           { searchBarHtml }
-          <SortIcon sort={ this._sortClicked } sortType={ this.state.sortType }/>
-          <SelectAllItem filterClicked={this._selectAllClicked} selected={this.state.selectAllFilters}/>
+          <SortIcon sort={ this._sortClicked } sortType={ this.props.sortType }/>
+          <SelectAllItem filterClicked={this._selectAllClicked} selected={this.props.selectAllFilters}/>
           { filterListItemHtml }
         </div>);
       }
 
-      const filterActive = !this.state.selectAllFilters || filterState;
+      const filterActive = !this.props.selectAllFilters || filterState;
       return (<div className="table-filter-parent" ref={ (node) => {
         this.filterIconNode = node;
       } }>
@@ -384,20 +262,19 @@ class FilterList extends React.Component {
 }
 
 FilterList.propTypes = {
-  initialData: PropTypes.array.isRequired,
-  filteredData: PropTypes.array.isRequired,
   filterRows: PropTypes.func.isRequired,
   resetRows: PropTypes.func.isRequired,
   sortRows: PropTypes.func.isRequired,
-  sortKey: PropTypes.string,
   sortType: PropTypes.string,
   filterkey: PropTypes.string.isRequired,
   itemDisplayValueFunc: PropTypes.func,
   itemSortValueFunc: PropTypes.func,
-  caseSensitive: PropTypes.boolean,
+  casesensitive: PropTypes.string,
   filterMultipleRows: PropTypes.func.isRequired,
-  showSearch: PropTypes.boolean,
-  alignleft: PropTypes.boolean,
+  showsearch: PropTypes.string,
+  alignleft: PropTypes.string,
+  filterList: PropTypes.array,
+  selectAllFilters: PropTypes.bool,
 };
 
 export default FilterList;
