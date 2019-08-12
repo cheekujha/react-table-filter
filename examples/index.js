@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import SampleData from './sampleData.json';
-import TableFilter from '../src/index.js';
+import TableFilter from '../lib/bundle.js';
 import {} from './example.scss';
 import {} from '../lib/styles.css';
 
