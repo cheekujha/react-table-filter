@@ -97,11 +97,11 @@ var _reactDom = _interopRequireDefault(__webpack_require__(6));
 
 var _sampleData = _interopRequireDefault(__webpack_require__(12));
 
-var _index = _interopRequireDefault(__webpack_require__(13));
+var _bundle = _interopRequireDefault(__webpack_require__(13));
 
-__webpack_require__(34);
+__webpack_require__(14);
 
-__webpack_require__(35);
+__webpack_require__(15);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -116,7 +116,7 @@ class SimpleExample extends _react.Component {
     this._filterUpdated = this._filterUpdated.bind(this);
   }
 
-  _filterUpdated(newData) {
+  _filterUpdated(newData, filtersObject) {
     this.setState({
       'episodes': newData
     });
@@ -147,14 +147,15 @@ class SimpleExample extends _react.Component {
       className: "header"
     }, "Basic Usage"), _react.default.createElement("table", {
       className: "basic-table"
-    }, _react.default.createElement("thead", null, _react.default.createElement(_index.default, {
+    }, _react.default.createElement("thead", null, _react.default.createElement(_bundle.default, {
       rows: episodes,
       onFilterUpdate: this._filterUpdated
     }, _react.default.createElement("th", {
       key: "name",
       filterkey: "name",
       className: "cell",
-      showSearch: true
+      casesensitive: 'true',
+      showsearch: 'true'
     }, "Name"), _react.default.createElement("th", {
       key: "season",
       filterkey: "season",
@@ -163,7 +164,7 @@ class SimpleExample extends _react.Component {
       key: "number",
       filterkey: "number",
       className: "cell",
-      alignleft: true
+      alignleft: 'true'
     }, "Number"))), _react.default.createElement("tbody", null, elementsHtml)))));
   }
 
@@ -8470,2741 +8471,1242 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+!function (e, t) {
+   true ? module.exports = t(__webpack_require__(1)) : undefined;
+}(window, function (e) {
+  return function (e) {
+    var t = {};
 
-var _react = __webpack_require__(1);
+    function i(s) {
+      if (t[s]) return t[s].exports;
+      var r = t[s] = {
+        i: s,
+        l: !1,
+        exports: {}
+      };
+      return e[s].call(r.exports, r, r.exports, i), r.l = !0, r.exports;
+    }
 
-var _template = _interopRequireDefault(__webpack_require__(14));
+    return i.m = e, i.c = t, i.d = function (e, t, s) {
+      i.o(e, t) || Object.defineProperty(e, t, {
+        enumerable: !0,
+        get: s
+      });
+    }, i.r = function (e) {
+      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, {
+        value: "Module"
+      }), Object.defineProperty(e, "__esModule", {
+        value: !0
+      });
+    }, i.t = function (e, t) {
+      if (1 & t && (e = i(e)), 8 & t) return e;
+      if (4 & t && "object" == typeof e && e && e.__esModule) return e;
+      var s = Object.create(null);
+      if (i.r(s), Object.defineProperty(s, "default", {
+        enumerable: !0,
+        value: e
+      }), 2 & t && "string" != typeof e) for (var r in e) i.d(s, r, function (t) {
+        return e[t];
+      }.bind(null, r));
+      return s;
+    }, i.n = function (e) {
+      var t = e && e.__esModule ? function () {
+        return e.default;
+      } : function () {
+        return e;
+      };
+      return i.d(t, "a", t), t;
+    }, i.o = function (e, t) {
+      return Object.prototype.hasOwnProperty.call(e, t);
+    }, i.p = "", i(i.s = 6);
+  }([function (t, i) {
+    t.exports = e;
+  }, function (e, t, i) {
+    e.exports = i(10)();
+  }, function (e, t, i) {
+    "use strict";
 
-var _util = __webpack_require__(23);
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = t.without = t.uniq = t.getValForKey = t.isTypeString = t.isTypeArray = t.isUndefined = void 0;
 
-var _filter = __webpack_require__(33);
+    const s = (e, t) => null == e || "undefined" === e || "null" === e || !(!t || "string" != typeof e || 0 !== e.toString().trim().length);
 
-var _sort = __webpack_require__(29);
+    t.isUndefined = s;
 
-var _propTypes = _interopRequireDefault(__webpack_require__(17));
+    const r = e => "[object Array]" === Object.prototype.toString.call(e);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+    t.isTypeArray = r;
 
-/**
- * TableFilter Main Component
- * @extends Component
- */
-class TableFilter extends _react.Component {
-  /**
-   * constructor
-   * @param {Object} props
-   */
-  constructor(props) {
-    super(props);
+    const l = e => "[object String]" === Object.prototype.toString.call(e);
 
-    this._applyInitialFilters = (rows = []) => {
-      const currentFilters = this.currentFilters;
+    t.isTypeString = l;
 
-      if (!(0, _util.isUndefined)(currentFilters) && Object.keys(currentFilters).length > 0) {
-        const filterKeys = Object.keys(currentFilters);
-        let filteredArray;
-        filterKeys.map(currKey => {
-          const filterValues = currentFilters[currKey];
-          const filterToApply = filterValues.map(currValue => {
-            return {
-              key: currKey,
-              value: currValue
-            };
-          });
-          const result = (0, _filter.filterActions)(rows, filterToApply, true, this._getValueFunctionForKey(currKey));
-          filteredArray = result.filteredArray;
-          rows = result.dataWithFilter;
-        });
-        this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray, currentFilters);
+    const n = (e, t) => {
+      if (!s(t)) {
+        if (l(t)) {
+          const i = t.split(".");
+          if (1 === i.length) return e[t];
+          {
+            let t,
+                r,
+                l = e;
+
+            for (t = 0, r = i.length; t < r; t += 1) {
+              const e = l[i[t]];
+
+              if (s(e)) {
+                l = void 0;
+                break;
+              }
+
+              l = e;
+            }
+
+            return l;
+          }
+        }
+
+        return e[t];
+      }
+    };
+
+    t.getValForKey = n;
+
+    const a = e => {
+      if (null != e && e.length) {
+        return [...new Set(e)];
       }
 
-      return rows;
+      return [];
     };
 
-    this._getValueFunctionForKey = filterKey => {
-      let valueFunc;
-      this.props.children.map((child, index) => {
-        if (!(0, _util.isUndefined)(child) && !(0, _util.isUndefined)(child.props.filterkey, true) && child.props.filterkey === filterKey) {
-          valueFunc = child.props.itemDisplayValueFunc;
+    t.uniq = a;
+
+    const o = (e, t = []) => {
+      const i = [];
+      return e.length ? (e.forEach(e => {
+        t.indexOf(e) < 0 && i.push(e);
+      }), i) : i;
+    };
+
+    t.without = o;
+    var d = {
+      isUndefined: s,
+      isTypeArray: r,
+      isTypeString: l,
+      getValForKey: n,
+      uniq: a,
+      without: o
+    };
+    t.default = d;
+  }, function (e, t, i) {
+    "use strict";
+
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = t.DSC_VALUE = t.ASC_VALUE = t.BLANK_LABEL = void 0;
+    t.BLANK_LABEL = "(blank)";
+    t.ASC_VALUE = "asc";
+    t.DSC_VALUE = "dsc";
+    var s = {
+      BLANK_LABEL: "(blank)",
+      ASC_VALUE: "asc",
+      DSC_VALUE: "dsc"
+    };
+    t.default = s;
+  }, function (e, t, i) {
+    "use strict";
+
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.calculateFilterProps = t.createFiltersFromItems = t.filtersReset = t.filterAction = t.filterActions = void 0;
+    var s = i(2),
+        r = i(5),
+        l = i(3);
+
+    function n() {
+      return (n = Object.assign || function (e) {
+        for (var t = 1; t < arguments.length; t++) {
+          var i = arguments[t];
+
+          for (var s in i) Object.prototype.hasOwnProperty.call(i, s) && (e[s] = i[s]);
         }
-      });
-      return valueFunc;
-    };
 
-    this._createData = (rows = []) => {
-      const initialData = [];
-      const filteredData = [];
-      rows.map(item => {
-        initialData.push(Object.assign({}, item));
-        filteredData.push(Object.assign({}, item));
+        return e;
+      }).apply(this, arguments);
+    }
+
+    t.filterActions = (e = [], t = [], i = !0, r) => {
+      const l = [],
+            a = e.map(e => {
+        const a = n({}, e);
+        let o, d;
+
+        for ((0, s.isUndefined)(a.appliedFilters) && (a.appliedFilters = {}), o = 0, d = t.length; o < d; o += 1) {
+          const l = t[o],
+                n = l.key;
+          let d = l.value;
+          (0, s.isUndefined)(d) && (d = "");
+          let u = (0, s.getValForKey)(e, n);
+          (0, s.isUndefined)(r) || (u = r(u)), (0, s.isUndefined)(u) && (u = ""), (0, s.isTypeString)(u) && (u = u.trim()), i ? u === d && (a.appliedFilters[n] || (a.appliedFilters[n] = 0), a.appliedFilters[n] += 1) : u === d && (a.appliedFilters[n] -= 1, 0 === a.appliedFilters[n] && delete a.appliedFilters[n]);
+        }
+
+        return 0 === Object.keys(a.appliedFilters).length && (delete a.appliedFilters, l.push(n({}, a))), a;
       });
       return {
-        initialData,
-        filteredData
+        filteredArray: l,
+        dataWithFilter: a
       };
     };
 
-    this._filterMulipleRows = (addFilterArray = [], removeFilterArray = [], valueFunc = undefined) => {
-      const filteredData = this.state.filteredData;
+    t.filterAction = (e = [], t = {}, i = !0, r) => {
+      const l = t.key;
+      let a = t.value;
 
-      if (!(0, _util.isUndefined)(addFilterArray)) {
-        removeFilterArray.map(filterItem => {
-          this._updateCurrentFilter(filterItem.value, false, filterItem.key);
+      if ((0, s.isUndefined)(a) && (a = ""), !(0, s.isUndefined)(l)) {
+        const t = [],
+              o = e.map(e => {
+          const o = n({}, e);
+          let d = (0, s.getValForKey)(e, l);
+          return (0, s.isUndefined)(r) || (d = r(d)), (0, s.isUndefined)(d) && (d = ""), (0, s.isUndefined)(o.appliedFilters) && (o.appliedFilters = {}), (0, s.isTypeString)(d) && (d = d.trim()), i ? d === a && (o.appliedFilters[l] || (o.appliedFilters[l] = 0), o.appliedFilters[l] += 1) : d === a && (o.appliedFilters[l] -= 1, 0 === o.appliedFilters[l] && delete o.appliedFilters[l]), 0 === Object.keys(o.appliedFilters).length && (delete o.appliedFilters, t.push(n({}, o))), o;
         });
-        addFilterArray.map(filterItem => {
-          this._updateCurrentFilter(filterItem.value, true, filterItem.key);
-        });
-        let result = (0, _filter.filterActions)(filteredData, removeFilterArray, false, valueFunc);
-        result = (0, _filter.filterActions)(result.dataWithFilter, addFilterArray, true, valueFunc);
-
-        if (!(0, _util.isUndefined)(result)) {
-          const filteredArray = result.filteredArray;
-          const dataWithFilter = result.dataWithFilter;
-          this.setState({
-            filteredData: dataWithFilter
-          });
-          this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray, this._getCurrentFilters());
-        }
+        return {
+          filteredArray: t,
+          dataWithFilter: o
+        };
       }
     };
 
-    this._filterRows = (value = undefined, key = undefined, addFilter = true, valueFunc = undefined) => {
-      const filteredData = this.state.filteredData;
-
-      if (!(0, _util.isUndefined)(value) && !(0, _util.isUndefined)(key)) {
-        this._updateCurrentFilters([value], addFilter, key);
-
-        const result = (0, _filter.filterAction)(filteredData, {
-          key,
-          value
-        }, addFilter, valueFunc);
-
-        if (!(0, _util.isUndefined)(result)) {
-          const filteredArray = result.filteredArray;
-          const dataWithFilter = result.dataWithFilter;
-          this.setState({
-            filteredData: dataWithFilter
-          });
-          this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray, this._getCurrentFilters());
-        }
-      }
+    t.filtersReset = (e = [], t = [], i, r = !0, l) => {
+      const a = [],
+            o = e.map(e => {
+        const o = n({}, e);
+        (0, s.isUndefined)(o.appliedFilters) && (o.appliedFilters = {});
+        let d = (0, s.getValForKey)(o, i);
+        return (0, s.isUndefined)(l) || (d = l(d)), (0, s.isUndefined)(d) && (d = ""), (0, s.isTypeString)(d) && (d = d.trim()), t.indexOf(d) >= 0 && (r ? delete o.appliedFilters[i] : (o.appliedFilters[i] || (o.appliedFilters[i] = 0), o.appliedFilters[i]++)), 0 === Object.keys(o.appliedFilters).length && (delete o.appliedFilters, a.push(n({}, o))), o;
+      });
+      return {
+        filteredArray: a,
+        dataWithFilter: o
+      };
     };
 
-    this._updateCurrentFilter = (filter, add = true, key = undefined) => {
-      if (!(0, _util.isUndefined)(key, true) && !(0, _util.isUndefined)(filter, true)) {
-        if ((0, _util.isUndefined)(this.currentFilters[key])) {
-          this.currentFilters[key] = [];
+    const a = (e, t, i, a) => {
+      const o = e ? [...e] : [],
+            d = [];
+      let u = [],
+          c = !0;
+      return o.map(e => {
+        let r = (0, s.getValForKey)(e, t),
+            a = r;
+        (0, s.isUndefined)(i) || (r = i(r));
+        const o = e.appliedFilters || {};
+        let p = r;
+        if ((0, s.isUndefined)(r) ? (r = "", a = p = l.BLANK_LABEL) : (0, s.isTypeString)(r) && 0 === (r = r.trim()).length && (a = p = l.BLANK_LABEL), -1 === d.indexOf(r)) !(0, s.isUndefined)(o) && Object.keys(o).length > 0 ? 1 === Object.keys(o).length && Object.keys(o)[0] === t ? (c = !1, u.push({
+          key: r,
+          display: p,
+          selected: !1,
+          visible: !0,
+          orinigalValue: a
+        })) : u.push({
+          key: r,
+          display: p,
+          selected: !0,
+          visible: !1,
+          orinigalValue: a
+        }) : u.push({
+          key: r,
+          display: p,
+          selected: !0,
+          visible: !0,
+          orinigalValue: a
+        }), d.push(r);else {
+          const e = d.indexOf(r);
+          let i = u[e];
+          0 === Object.keys(o).length && (i.selected && i.visible || (i = n({}, i, {
+            selected: !0,
+            visible: !0
+          }), u[e] = i)), 1 === Object.keys(o).length && Object.keys(o)[0] === t && (c = !1, i = n({}, i, {
+            selected: !1,
+            visible: !0
+          }), u[e] = i);
+        }
+      }), {
+        filterList: u = (0, r.sortAction)(u, l.ASC_VALUE, {
+          valueFunc: a,
+          key: "orinigalValue"
+        }),
+        selectState: c
+      };
+    };
+
+    t.createFiltersFromItems = a;
+
+    t.calculateFilterProps = ({
+      filteredData: e,
+      filterkey: t,
+      itemDisplayValueFunc: i,
+      itemSortValueFunc: r,
+      sortKey: l,
+      sortType: n
+    }) => {
+      const {
+        filterList: o,
+        selectState: d
+      } = a(e, t, i, r);
+      return {
+        filterList: o,
+        selectAllFilters: d,
+        sortType: (0, s.isUndefined)(l) || l !== t ? void 0 : n
+      };
+    };
+  }, function (e, t, i) {
+    "use strict";
+
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = t.sortAction = void 0;
+    var s = i(2);
+
+    const r = (e = [], t, {
+      valueFunc: i,
+      caseSensitive: r = !1,
+      key: l
+    } = {}) => {
+      if (!(0, s.isUndefined)(t)) {
+        const n = (e, n) => {
+          let a, o;
+          (0, s.isUndefined)(l) ? (a = e, o = n) : (a = (0, s.getValForKey)(e, l), o = (0, s.getValForKey)(n, l)), (0, s.isUndefined)(i) ? (isNaN(Number(a)) || isNaN(Number(o)) || (a = Number(a), o = Number(o)), (0, s.isTypeString)(a) && (a = a.trim(), r || (a = a.toUpperCase())), (0, s.isTypeString)(o) && (o = o.trim(), r || (o = o.toUpperCase()))) : (a = i(a), o = i(o)), (0, s.isUndefined)(a) && (a = ""), (0, s.isUndefined)(o) && (o = "");
+          let d = 0;
+          return d = a < o ? -1 : 1, "asc" === t ? d : -d;
+        };
+
+        return [...e].sort(n);
+      }
+
+      return e;
+    };
+
+    t.sortAction = r;
+    var l = r;
+    t.default = l;
+  }, function (e, t, i) {
+    "use strict";
+
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = void 0;
+    var s = i(0),
+        r = d(i(7)),
+        l = i(2),
+        n = i(4),
+        a = i(5),
+        o = d(i(1));
+
+    function d(e) {
+      return e && e.__esModule ? e : {
+        default: e
+      };
+    }
+
+    function u() {
+      return (u = Object.assign || function (e) {
+        for (var t = 1; t < arguments.length; t++) {
+          var i = arguments[t];
+
+          for (var s in i) Object.prototype.hasOwnProperty.call(i, s) && (e[s] = i[s]);
         }
 
-        if (add) {
-          if (this.currentFilters[key].indexOf(filter) < 0) {
-            this.currentFilters[key].push(filter);
+        return e;
+      }).apply(this, arguments);
+    }
+
+    function c(e, t, i) {
+      return t in e ? Object.defineProperty(e, t, {
+        value: i,
+        enumerable: !0,
+        configurable: !0,
+        writable: !0
+      }) : e[t] = i, e;
+    }
+
+    class p extends s.Component {
+      constructor(e) {
+        super(e), c(this, "_applyInitialFilters", (e = []) => {
+          const t = this.currentFilters;
+
+          if (!(0, l.isUndefined)(t) && Object.keys(t).length > 0) {
+            let i;
+            Object.keys(t).map(s => {
+              const r = t[s].map(e => ({
+                key: s,
+                value: e
+              })),
+                    l = (0, n.filterActions)(e, r, !0, this._getValueFunctionForKey(s));
+              i = l.filteredArray, e = l.dataWithFilter;
+            }), this.props.onFilterUpdate && this.props.onFilterUpdate(i, t);
+          }
+
+          return e;
+        }), c(this, "_getValueFunctionForKey", e => {
+          let t;
+          return this.props.children.map((i, s) => {
+            (0, l.isUndefined)(i) || (0, l.isUndefined)(i.props.filterkey, !0) || i.props.filterkey !== e || (t = i.props.itemDisplayValueFunc);
+          }), t;
+        }), c(this, "_createData", (e = []) => {
+          const t = [],
+                i = [];
+          return e.map(e => {
+            t.push(u({}, e)), i.push(u({}, e));
+          }), {
+            initialData: t,
+            filteredData: i
+          };
+        }), c(this, "_filterMulipleRows", (e = [], t = [], i) => {
+          const s = this.state.filteredData;
+
+          if (!(0, l.isUndefined)(e)) {
+            t.map(e => {
+              this._updateCurrentFilter(e.value, !1, e.key);
+            }), e.map(e => {
+              this._updateCurrentFilter(e.value, !0, e.key);
+            });
+            let r = (0, n.filterActions)(s, t, !1, i);
+
+            if (r = (0, n.filterActions)(r.dataWithFilter, e, !0, i), !(0, l.isUndefined)(r)) {
+              const e = r.filteredArray,
+                    t = r.dataWithFilter;
+              this.setState({
+                filteredData: t
+              }), this.props.onFilterUpdate && this.props.onFilterUpdate(e, this._getCurrentFilters());
+            }
+          }
+        }), c(this, "_filterRows", (e, t, i = !0, s) => {
+          const r = this.state.filteredData;
+
+          if (!(0, l.isUndefined)(e) && !(0, l.isUndefined)(t)) {
+            this._updateCurrentFilters([e], i, t);
+
+            const a = (0, n.filterAction)(r, {
+              key: t,
+              value: e
+            }, i, s);
+
+            if (!(0, l.isUndefined)(a)) {
+              const e = a.filteredArray,
+                    t = a.dataWithFilter;
+              this.setState({
+                filteredData: t
+              }), this.props.onFilterUpdate && this.props.onFilterUpdate(e, this._getCurrentFilters());
+            }
+          }
+        }), c(this, "_updateCurrentFilter", (e, t = !0, i) => {
+          if (!(0, l.isUndefined)(i, !0) && !(0, l.isUndefined)(e, !0)) if ((0, l.isUndefined)(this.currentFilters[i]) && (this.currentFilters[i] = []), t) this.currentFilters[i].indexOf(e) < 0 && this.currentFilters[i].push(e);else if (this.currentFilters[i].indexOf(e) >= 0) {
+            const t = this.currentFilters[i].indexOf(e);
+            this.currentFilters[i] = [...this.currentFilters[i].slice(0, t), ...this.currentFilters[i].slice(t + 1)];
+          }
+        }), c(this, "_updateCurrentFilters", (e = [], t = !0, i) => {
+          (0, l.isUndefined)(e) || (0, l.isUndefined)(i) || e.map(e => {
+            this._updateCurrentFilter(e, t, i);
+          });
+        }), c(this, "_getCurrentFilters", () => this.currentFilters), c(this, "_resetRows", (e = [], t, i = !0, s) => {
+          if (!(0, l.isUndefined)(t)) {
+            const r = this.state.filteredData;
+
+            this._updateCurrentFilters(e, !i, t);
+
+            const a = (0, n.filtersReset)(r, e, t, i, s);
+
+            if (!(0, l.isUndefined)(a)) {
+              const e = a.filteredArray,
+                    t = a.dataWithFilter;
+              this.setState({
+                filteredData: t
+              }), this.props.onFilterUpdate && this.props.onFilterUpdate(e, this._getCurrentFilters());
+            }
+          }
+        }), c(this, "_sortRows", (e, {
+          valueFunc: t,
+          caseSensitive: i = !1,
+          key: s
+        } = {}) => {
+          if (!(0, l.isUndefined)(e)) {
+            const r = this.state.filteredData,
+                  n = (0, a.sortAction)(r, e, {
+              valueFunc: t,
+              caseSensitive: i,
+              key: s
+            }),
+                  o = [];
+            this.setState({
+              filteredData: n,
+              sortKey: s,
+              sortType: e
+            }), n.map(e => {
+              if ((0, l.isUndefined)(e.appliedFilters) || 0 === Object.keys(e.appliedFilters).length) {
+                const t = u({}, e);
+                delete t.appliedFilters, o.push(t);
+              }
+            }), this.props.onFilterUpdate && this.props.onFilterUpdate(o, this._getCurrentFilters());
+          }
+        }), c(this, "reset", (e, t = !0) => {
+          t ? this.currentFilters = {} : e = this._applyInitialFilters(e);
+
+          const i = this._createData(e);
+
+          this.setState({
+            initialData: i.initialData,
+            filteredData: i.filteredData
+          });
+        }), this.currentFilters = this.props.initialFilters || {};
+
+        const t = this._applyInitialFilters(this.props.rows),
+              i = this._createData(t);
+
+        this.state = {
+          initialData: i.initialData,
+          filteredData: i.filteredData,
+          sortKey: void 0
+        };
+      }
+
+      render() {
+        return r.default.call(this);
+      }
+
+    }
+
+    p.propTypes = {
+      rows: o.default.array.isRequired,
+      onFilterUpdate: o.default.func.isRequired,
+      rowClass: o.default.string,
+      initialFilters: o.default.array,
+      rowComponent: o.default.func,
+      children: o.default.any
+    };
+    var f = p;
+    t.default = f;
+  }, function (e, t, i) {
+    "use strict";
+
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = void 0;
+    var s = a(i(0)),
+        r = a(i(8)),
+        l = i(2),
+        n = (a(i(20)), i(4));
+
+    function a(e) {
+      return e && e.__esModule ? e : {
+        default: e
+      };
+    }
+
+    function o() {
+      return (o = Object.assign || function (e) {
+        for (var t = 1; t < arguments.length; t++) {
+          var i = arguments[t];
+
+          for (var s in i) Object.prototype.hasOwnProperty.call(i, s) && (e[s] = i[s]);
+        }
+
+        return e;
+      }).apply(this, arguments);
+    }
+
+    var d = function () {
+      const e = this.props.children,
+            t = [],
+            {
+        filteredData: i,
+        sortType: a,
+        sortKey: d
+      } = this.state;
+      let u;
+      if (!(0, l.isUndefined)(e) && e.length > 0 ? s.default.Children.map(this.props.children, (e, u) => {
+        if ((0, l.isUndefined)(e) || (0, l.isUndefined)(e.props.filterkey, !0)) {
+          if (!(0, l.isUndefined)(e)) {
+            const i = s.default.cloneElement(e);
+            t.push(i);
           }
         } else {
-          if (this.currentFilters[key].indexOf(filter) >= 0) {
-            const index = this.currentFilters[key].indexOf(filter);
-            this.currentFilters[key] = [...this.currentFilters[key].slice(0, index), ...this.currentFilters[key].slice(index + 1)];
-          }
-        }
-      }
-    };
+          let c = e.props.className,
+              p = e.props.children || [];
+          const {
+            filterkey: f,
+            itemDisplayValueFunc: h,
+            itemSortValueFunc: y
+          } = e.props;
+          (0, l.isTypeArray)(p) || (p = [p]), c = (0, l.isUndefined)(c, !0) ? "apply-filter" : [c, " ", "apply-filter"].join("");
 
-    this._updateCurrentFilters = (filters = [], add = true, key) => {
-      if (!(0, _util.isUndefined)(filters) && !(0, _util.isUndefined)(key)) {
-        filters.map(filterItem => {
-          this._updateCurrentFilter(filterItem, add, key);
-        });
-      }
-    };
-
-    this._getCurrentFilters = () => {
-      return this.currentFilters;
-    };
-
-    this._resetRows = (filterValues = [], key = undefined, selectAll = true, valueFunc = undefined) => {
-      if (!(0, _util.isUndefined)(key)) {
-        const filteredData = this.state.filteredData;
-
-        this._updateCurrentFilters(filterValues, !selectAll, key);
-
-        const result = (0, _filter.filtersReset)(filteredData, filterValues, key, selectAll, valueFunc);
-
-        if (!(0, _util.isUndefined)(result)) {
-          const filteredArray = result.filteredArray;
-          const dataWithFilter = result.dataWithFilter;
-          this.setState({
-            filteredData: dataWithFilter
+          const _ = (0, n.calculateFilterProps)({
+            filteredData: i,
+            filterkey: f,
+            itemDisplayValueFunc: h,
+            itemSortValueFunc: y,
+            sortKey: d,
+            sortType: a
           });
-          this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray, this._getCurrentFilters());
+
+          "true" != e.props.filterAdded ? p.push(s.default.createElement(r.default, o({}, e.props, _, {
+            key: `list_${u}`,
+            filterRows: this._filterRows,
+            filterMultipleRows: this._filterMulipleRows,
+            resetRows: this._resetRows,
+            sortRows: this._sortRows
+          }))) : p[p.length - 1] = s.default.createElement(r.default, o({}, e.props, _, {
+            key: `list_${u}`,
+            filterRows: this._filterRows,
+            filterMultipleRows: this._filterMulipleRows,
+            resetRows: this._resetRows,
+            sortRows: this._sortRows
+          }));
+          const m = {
+            className: c,
+            filteradded: "true"
+          },
+                b = s.default.cloneElement(e, m, [...p]);
+          t.push(b);
         }
+      }) : console.error("TableFilter Error: Should contain one or more children"), (0, l.isUndefined)(this.props.rowComponent)) u = s.default.createElement("tr", {
+        className: [this.props.rowClass ? this.props.rowClass + " " : "", "table-filter-row"].join("")
+      }, t);else {
+        const e = this.props.rowComponent,
+              i = {
+          className: [this.props.rowClass ? this.props.rowClass + " " : "", "table-filter-row"].join("")
+        };
+        u = s.default.cloneElement(e, i, [...t]);
       }
+      return u;
     };
 
-    this._sortRows = (sortType = undefined, {
-      valueFunc = undefined,
-      caseSensitive = false,
-      key = undefined
-    } = {}) => {
-      if (!(0, _util.isUndefined)(sortType)) {
-        const filteredData = this.state.filteredData;
-        const result = (0, _sort.sortAction)(filteredData, sortType, {
-          valueFunc,
-          caseSensitive,
-          key
-        });
-        const filteredArray = [];
-        this.setState({
-          filteredData: result,
-          sortKey: key,
-          sortType: sortType
-        });
-        result.map(item => {
-          if ((0, _util.isUndefined)(item.appliedFilters) || Object.keys(item.appliedFilters).length === 0) {
-            const itemCopy = Object.assign({}, item);
-            delete itemCopy['appliedFilters'];
-            filteredArray.push(itemCopy);
+    t.default = d;
+  }, function (e, t, i) {
+    "use strict";
+
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = void 0;
+    var s = f(i(0)),
+        r = f(i(9)),
+        l = f(i(12)),
+        n = f(i(13)),
+        a = f(i(14)),
+        o = f(i(18)),
+        d = f(i(19)),
+        u = f(i(1)),
+        c = i(3),
+        p = i(2);
+
+    function f(e) {
+      return e && e.__esModule ? e : {
+        default: e
+      };
+    }
+
+    function h(e, t, i) {
+      return t in e ? Object.defineProperty(e, t, {
+        value: i,
+        enumerable: !0,
+        configurable: !0,
+        writable: !0
+      }) : e[t] = i, e;
+    }
+
+    class y extends s.default.Component {
+      constructor(e) {
+        super(e), h(this, "_handleOutsideClick", e => {
+          this.filterIconNode.contains(e.target) || this._hideFilter();
+        }), h(this, "_filterIconClicked", e => {
+          !this.state.showFilter ? this._displayFilter() : this._hideFilter();
+        }), h(this, "_displayFilter", () => {
+          a.default.sub("click", this._handleOutsideClick, document), this.setState({
+            showFilter: !0
+          });
+        }), h(this, "_hideFilter", () => {
+          a.default.unsub("click", this._handleOutsideClick), this.setState({
+            showFilter: !1,
+            searchEnabled: !1
+          });
+        }), h(this, "_filterUpdated", e => {
+          const t = this.props.filterList;
+
+          if (!(0, p.isUndefined)(t[e])) {
+            const i = !t[e].selected;
+
+            this._filterData(t[e].key, !i);
+          }
+        }), h(this, "_selectAllClicked", () => {
+          const e = !this.props.selectAllFilters;
+          if (this.state.searchEnabled) return;
+          const t = this.props.filterList.filter(t => e ? t.visible && !t.selected : t.visible && t.selected).map(e => e.key);
+
+          this._resetData(t, e);
+        }), h(this, "_filterData", (e, t = !0) => {
+          this.props.filterRows(e, this.props.filterkey, t, this.props.itemDisplayValueFunc);
+        }), h(this, "_resetData", (e = [], t = !0) => {
+          this.props.resetRows(e, this.props.filterkey, t, this.props.itemDisplayValueFunc);
+        }), h(this, "_sortClicked", () => {
+          const e = this.props.sortType;
+          let t;
+          t = (0, p.isUndefined)(e) || e === c.DSC_VALUE ? c.ASC_VALUE : c.DSC_VALUE, this.props.sortRows(t, {
+            itemSortValueFunc: this.props.itemSortValueFunc,
+            caseSensitive: "true" === this.props.casesensitive,
+            key: this.props.filterkey
+          });
+        }), h(this, "_searchChanged", e => {
+          const t = this.props.filterkey;
+          this.searchValue = e;
+          const i = this.appliedSearchFilters;
+          if ((0, p.isUndefined)(e, !0)) this.setState({
+            searchEnabled: !1
+          }), this.appliedSearchFilters = [], this.props.filterMultipleRows([], i, this.props.itemDisplayValueFunc);else {
+            this.setState({
+              searchEnabled: !0
+            }), e = e.toLowerCase();
+            const s = this.props.filterList.filter(t => {
+              return !!(t.key.toString().toLowerCase().indexOf(e) < 0 && t.visible);
+            }).map(e => ({
+              key: t,
+              value: e.key
+            }));
+            this.appliedSearchFilters = s, this.props.filterMultipleRows(s, i, this.props.itemDisplayValueFunc);
+          }
+        }), this.appliedSearchFilters = void 0, this.searchValue = void 0, this.state = {
+          showFilter: !1,
+          searchEnabled: !1
+        };
+      }
+
+      componentWillUnmount() {
+        a.default.unsub("click", this._handleOutsideClick);
+      }
+
+      render() {
+        const e = this.state.showFilter,
+              t = "false" !== this.props.showsearch,
+              i = [];
+        let a;
+
+        if (this.props.filterList.length > 1) {
+          if (e) {
+            const e = t ? s.default.createElement(n.default, {
+              searchChanged: this._searchChanged
+            }) : null;
+            this.props.filterList.map((e, t) => {
+              if (e.visible) {
+                if (this.state.searchEnabled) {
+                  return e.key.toString().toLowerCase().indexOf(this.searchValue.toLowerCase()) >= 0 ? i.push(s.default.createElement(r.default, {
+                    key: "item_" + t,
+                    filterClicked: this._filterUpdated,
+                    index: t,
+                    label: e.display,
+                    selected: e.selected
+                  })) : null;
+                }
+
+                i.push(s.default.createElement(r.default, {
+                  key: "item_" + t,
+                  filterClicked: this._filterUpdated,
+                  index: t,
+                  label: e.display,
+                  selected: e.selected
+                }));
+              }
+            });
+            const o = ["true" === this.props.alignleft ? "align-left " : "", "filter-list"].join("");
+            a = s.default.createElement("div", {
+              className: o
+            }, e, s.default.createElement(d.default, {
+              sort: this._sortClicked,
+              sortType: this.props.sortType
+            }), s.default.createElement(l.default, {
+              filterClicked: this._selectAllClicked,
+              selected: this.props.selectAllFilters
+            }), i);
+          }
+
+          const u = !this.props.selectAllFilters || e;
+          return s.default.createElement("div", {
+            className: "table-filter-parent",
+            ref: e => {
+              this.filterIconNode = e;
+            }
+          }, s.default.createElement(o.default, {
+            iconClicked: this._filterIconClicked,
+            selected: u
+          }), a);
+        }
+
+        return s.default.createElement("div", {
+          style: {
+            display: "none"
           }
         });
-        this.props.onFilterUpdate && this.props.onFilterUpdate(filteredArray, this._getCurrentFilters());
-      }
-    };
-
-    this.reset = (rows, resetFilters = true) => {
-      if (!resetFilters) {
-        rows = this._applyInitialFilters(rows);
-      } else {
-        this.currentFilters = {};
       }
 
-      const stateData = this._createData(rows);
+    }
 
-      this.setState({
-        initialData: stateData.initialData,
-        filteredData: stateData.filteredData
-      });
+    y.propTypes = {
+      filterRows: u.default.func.isRequired,
+      resetRows: u.default.func.isRequired,
+      sortRows: u.default.func.isRequired,
+      sortType: u.default.string,
+      filterkey: u.default.string.isRequired,
+      itemDisplayValueFunc: u.default.func,
+      itemSortValueFunc: u.default.func,
+      casesensitive: u.default.string,
+      filterMultipleRows: u.default.func.isRequired,
+      showsearch: u.default.string,
+      alignleft: u.default.string,
+      filterList: u.default.array,
+      selectAllFilters: u.default.bool
     };
+    var _ = y;
+    t.default = _;
+  }, function (e, t, i) {
+    "use strict";
 
-    this.currentFilters = this.props.initialFilters || {};
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = void 0;
+    var s = l(i(0)),
+        r = l(i(1));
 
-    const _rows = this._applyInitialFilters(this.props.rows);
+    function l(e) {
+      return e && e.__esModule ? e : {
+        default: e
+      };
+    }
 
-    const _stateData = this._createData(_rows);
+    class n extends s.default.Component {
+      constructor(e) {
+        var t, i, s;
+        super(e), s = () => {
+          this.props.filterClicked(this.props.index);
+        }, (i = "_checkBoxClicked") in (t = this) ? Object.defineProperty(t, i, {
+          value: s,
+          enumerable: !0,
+          configurable: !0,
+          writable: !0
+        }) : t[i] = s;
+      }
 
-    this.state = {
-      initialData: _stateData.initialData,
-      filteredData: _stateData.filteredData,
-      sortKey: undefined
+      render() {
+        const e = [this.props.selected ? "selected " : "", "filter-check-box"].join("");
+        return s.default.createElement("div", {
+          className: "filter-list-item ripple",
+          onClick: this._checkBoxClicked
+        }, s.default.createElement("div", {
+          className: e
+        }), s.default.createElement("div", {
+          className: "filter-label"
+        }, this.props.label));
+      }
+
+    }
+
+    n.propTypes = {
+      filterClicked: r.default.func.isRequired,
+      index: r.default.number.isRequired,
+      label: r.default.any.isRequired,
+      selected: r.default.bool.isRequired
     };
-  }
-  /**
-   * _applyInitialFilters If initial filters are provided we apply the filters to given data to maintain filter state
-   * @param  {Array}  rows Data on which filters will be applied
-   * @return {Array}       Data with filter props applied
-   */
+    var a = n;
+    t.default = a;
+  }, function (e, t, i) {
+    "use strict";
 
+    var s = i(11);
 
-  /**
-   * render
-   * @return {JSX}
-   */
-  render() {
-    return _template.default.call(this);
-  }
+    function r() {}
 
-}
+    function l() {}
 
-TableFilter.propTypes = {
-  rows: _propTypes.default.array.isRequired,
-  // Filterable Data
-  onFilterUpdate: _propTypes.default.func.isRequired,
-  // Function to be called with updated data when filters are applied or removed
-  rowClass: _propTypes.default.string,
-  // Optional class to be attached to row elements
-  initialFilters: _propTypes.default.array,
-  // Initial filter configuration if any(provided as a parameter in onFilterUpdate)
-  rowComponent: _propTypes.default.func,
-  children: _propTypes.default.any
-};
-var _default = TableFilter;
-exports.default = _default;
+    l.resetWarningCache = r, e.exports = function () {
+      function e(e, t, i, r, l, n) {
+        if (n !== s) {
+          var a = new Error("Calling PropTypes validators directly is not supported by the `prop-types` package. Use PropTypes.checkPropTypes() to call them. Read more at http://fb.me/use-check-prop-types");
+          throw a.name = "Invariant Violation", a;
+        }
+      }
+
+      function t() {
+        return e;
+      }
+
+      e.isRequired = e;
+      var i = {
+        array: e,
+        bool: e,
+        func: e,
+        number: e,
+        object: e,
+        string: e,
+        symbol: e,
+        any: e,
+        arrayOf: t,
+        element: e,
+        elementType: e,
+        instanceOf: t,
+        node: e,
+        objectOf: t,
+        oneOf: t,
+        oneOfType: t,
+        shape: t,
+        exact: t,
+        checkPropTypes: l,
+        resetWarningCache: r
+      };
+      return i.PropTypes = i, i;
+    };
+  }, function (e, t, i) {
+    "use strict";
+
+    e.exports = "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED";
+  }, function (e, t, i) {
+    "use strict";
+
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = void 0;
+    var s = l(i(0)),
+        r = l(i(1));
+
+    function l(e) {
+      return e && e.__esModule ? e : {
+        default: e
+      };
+    }
+
+    class n extends s.default.Component {
+      constructor(e) {
+        var t, i, s;
+        super(e), s = () => {
+          this.props.filterClicked();
+        }, (i = "_selectAllClicked") in (t = this) ? Object.defineProperty(t, i, {
+          value: s,
+          enumerable: !0,
+          configurable: !0,
+          writable: !0
+        }) : t[i] = s;
+      }
+
+      render() {
+        const e = [this.props.selected ? "selected " : "", "filter-check-box"].join("");
+        return s.default.createElement("div", {
+          className: "filter-list-item",
+          onClick: this._selectAllClicked
+        }, s.default.createElement("div", {
+          className: e
+        }), s.default.createElement("div", {
+          className: "filter-label select-all-label"
+        }, "Select All"));
+      }
+
+    }
+
+    n.propTypes = {
+      filterClicked: r.default.func.isRequired,
+      selected: r.default.bool.isRequired
+    };
+    var a = n;
+    t.default = a;
+  }, function (e, t, i) {
+    "use strict";
+
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = void 0;
+    var s = l(i(0)),
+        r = l(i(1));
+
+    function l(e) {
+      return e && e.__esModule ? e : {
+        default: e
+      };
+    }
+
+    function n(e, t, i) {
+      return t in e ? Object.defineProperty(e, t, {
+        value: i,
+        enumerable: !0,
+        configurable: !0,
+        writable: !0
+      }) : e[t] = i, e;
+    }
+
+    class a extends s.default.Component {
+      constructor(e) {
+        super(e), n(this, "_searchInputChanged", e => {
+          const t = e.target.value;
+
+          this._callSearchChanged(t);
+        }), n(this, "_callSearchChanged", e => {
+          this.props.searchChanged && this.props.searchChanged(e);
+        });
+      }
+
+      render() {
+        return s.default.createElement("div", {
+          className: "search-parent filter-list-item"
+        }, s.default.createElement("input", {
+          className: "search-input",
+          type: "text",
+          placeholder: "search",
+          onChange: this._searchInputChanged
+        }));
+      }
+
+    }
+
+    a.propTypes = {
+      searchChanged: r.default.func.isRequired
+    };
+    var o = a;
+    t.default = o;
+  }, function (e, t, i) {
+    "use strict";
+
+    var s;
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = void 0;
+    var r = ((s = i(15)) && s.__esModule ? s : {
+      default: s
+    }).default;
+    t.default = r;
+  }, function (e, t, i) {
+    "use strict";
+
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = void 0;
+    var s = l(i(16)),
+        r = l(i(17));
+
+    function l(e) {
+      return e && e.__esModule ? e : {
+        default: e
+      };
+    }
+
+    var n = new class {
+      constructor() {
+        this._targets = new Map();
+      }
+
+      _find(e, t = !0) {
+        const i = (0, r.default)(e);
+        if (this._targets.has(i)) return this._targets.get(i);
+        if (!t) return;
+        const l = new s.default(i);
+        return this._targets.set(i, l), l;
+      }
+
+      _remove(e) {
+        const t = (0, r.default)(e);
+
+        this._targets.delete(t);
+      }
+
+      sub(e, t, i = {}) {
+        const {
+          target: s = document,
+          pool: r = "default"
+        } = i;
+
+        this._find(s).sub(e, t, r);
+      }
+
+      unsub(e, t, i = {}) {
+        const {
+          target: s = document,
+          pool: r = "default"
+        } = i,
+              l = this._find(s, !1);
+
+        l && (l.unsub(e, t, r), l.empty() && this._remove(s));
+      }
+
+    }();
+    t.default = n;
+  }, function (e, t, i) {
+    "use strict";
+
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = void 0;
+    var s = i(2);
+    t.default = class {
+      constructor(e) {
+        this.target = e, this._handlers = {}, this._pools = {};
+      }
+
+      _emit(e) {
+        return e => {
+          Object.keys(this._pools).forEach(t => {
+            const i = this._pools[t];
+            i && i.forEach(t => t(e));
+          });
+        };
+      }
+
+      _normalize(e) {
+        return (0, s.isTypeArray)(e) ? e : [e];
+      }
+
+      _listen(e) {
+        if (this._handlers.hasOwnProperty(e)) return;
+
+        const t = this._emit(e);
+
+        this.target.addEventListener(e, t), this._handlers[e] = t;
+      }
+
+      _unlisten(e) {
+        if (this._pools[e]) return;
+        const t = this._handlers[e];
+        this.target.removeEventListener(e, t), delete this._handlers[e];
+      }
+
+      empty() {
+        return !(this._handlers && Object.keys(this._handlers).length > 0);
+      }
+
+      sub(e, t) {
+        const i = this._normalize(t),
+              r = this._pools[`${e}`] || [],
+              l = (0, s.uniq)([...r, ...i]);
+
+        this._listen(e), this._pools[`${e}`] = l;
+      }
+
+      unsub(e, t) {
+        const i = this._normalize(t),
+              r = this._pools[`${e}`] || [],
+              l = (0, s.without)(r, i);
+
+        l.length > 0 ? this._pools[`${e}`] = l : (this._pools[`${e}`] = void 0, this._unlisten(e));
+      }
+
+    };
+  }, function (e, t, i) {
+    "use strict";
+
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = void 0;
+
+    var s = e => "document" === e ? document : "window" === e ? window : e || document;
+
+    t.default = s;
+  }, function (e, t, i) {
+    "use strict";
+
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = void 0;
+    var s = l(i(0)),
+        r = l(i(1));
+
+    function l(e) {
+      return e && e.__esModule ? e : {
+        default: e
+      };
+    }
+
+    class n extends s.default.Component {
+      constructor(e) {
+        var t, i, s;
+        super(e), s = () => {
+          this.props.iconClicked && this.props.iconClicked();
+        }, (i = "_iconClicked") in (t = this) ? Object.defineProperty(t, i, {
+          value: s,
+          enumerable: !0,
+          configurable: !0,
+          writable: !0
+        }) : t[i] = s;
+      }
+
+      render() {
+        const e = [this.props.selected ? "selected " : "", "table-filter-icon"].join("");
+        return s.default.createElement("div", {
+          onClick: this._iconClicked,
+          className: e
+        });
+      }
+
+    }
+
+    n.propTypes = {
+      iconClicked: r.default.func.isRequired,
+      selected: r.default.bool
+    };
+    var a = n;
+    t.default = a;
+  }, function (e, t, i) {
+    "use strict";
+
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = void 0;
+    var s = n(i(0)),
+        r = i(2),
+        l = n(i(1));
+
+    function n(e) {
+      return e && e.__esModule ? e : {
+        default: e
+      };
+    }
+
+    class a extends s.default.Component {
+      constructor(e) {
+        var t, i, s;
+        super(e), s = () => {
+          this.props.sort();
+        }, (i = "_sortClicked") in (t = this) ? Object.defineProperty(t, i, {
+          value: s,
+          enumerable: !0,
+          configurable: !0,
+          writable: !0
+        }) : t[i] = s;
+      }
+
+      render() {
+        const e = (0, r.isUndefined)(this.props.sortType) ? "" : " " + this.props.sortType;
+        return s.default.createElement("div", {
+          className: ["sort-parent clear-fix", e].join(""),
+          onClick: this._sortClicked
+        }, s.default.createElement("div", {
+          className: "dsc table-filter-arrow"
+        }), s.default.createElement("div", {
+          className: "asc table-filter-arrow"
+        }));
+      }
+
+    }
+
+    a.propTypes = {
+      sort: l.default.func.isRequired,
+      sortType: l.default.string
+    };
+    var o = a;
+    t.default = o;
+  }, function (e, t) {}]);
+});
 
 /***/ }),
 /* 14 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(__webpack_require__(1));
-
-var _filterList = _interopRequireDefault(__webpack_require__(15));
-
-var _util = __webpack_require__(23);
-
-var _tableFilter = _interopRequireDefault(__webpack_require__(32));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-/**
- * render Main render function of the TableFilter
- */
-const render = function () {
-  const children = this.props.children;
-  const finalChildren = [];
-
-  if (!(0, _util.isUndefined)(children) && children.length > 0) {
-    _react.default.Children.map(this.props.children, (child, index) => {
-      if (!(0, _util.isUndefined)(child) && !(0, _util.isUndefined)(child.props.filterkey, true)) {
-        let childClass = child.props.className;
-        let childChildren = child.props.children || [];
-
-        if (!(0, _util.isTypeArray)(childChildren)) {
-          childChildren = [childChildren];
-        }
-
-        if ((0, _util.isUndefined)(childClass, true)) {
-          childClass = 'apply-filter';
-        } else {
-          childClass = [childClass, ' ', 'apply-filter'].join('');
-        }
-
-        if (child.props.filterAdded != 'true') {
-          childChildren.push(_react.default.createElement(_filterList.default, _extends({}, child.props, {
-            key: `list_${index}`,
-            initialData: this.state.initialData,
-            filteredData: this.state.filteredData,
-            filterRows: this._filterRows,
-            filterMultipleRows: this._filterMulipleRows,
-            resetRows: this._resetRows,
-            sortRows: this._sortRows,
-            sortKey: this.state.sortKey,
-            sortType: this.state.sortType
-          })));
-        } else {
-          childChildren[childChildren.length - 1] = _react.default.createElement(_filterList.default, _extends({}, child.props, {
-            key: `list_${index}`,
-            initialData: this.state.initialData,
-            filteredData: this.state.filteredData,
-            filterRows: this._filterRows,
-            filterMultipleRows: this._filterMulipleRows,
-            resetRows: this._resetRows,
-            sortRows: this._sortRows,
-            sortKey: this.state.sortKey,
-            sortType: this.state.sortType
-          }));
-        }
-
-        const newProps = {
-          className: childClass,
-          filteradded: 'true'
-        };
-
-        const clonedChild = _react.default.cloneElement(child, newProps, [...childChildren]);
-
-        finalChildren.push(clonedChild);
-      } else {
-        if (!(0, _util.isUndefined)(child)) {
-          const clonedChild = _react.default.cloneElement(child);
-
-          finalChildren.push(clonedChild);
-        }
-      }
-    });
-  } else {
-    console.error('TableFilter Error: Should contain one or more children');
-  }
-
-  let rowHtml; // The child columns will by default be placed inside <tr></tr> component. If 'rowComponent' is
-  // passed in via props it will be used
-
-  if (!(0, _util.isUndefined)(this.props.rowComponent)) {
-    const rowComponent = this.props.rowComponent;
-    const newProps = {
-      className: [this.props.rowClass ? this.props.rowClass + ' ' : '', 'table-filter-row'].join('')
-    };
-
-    const clonedRowComponent = _react.default.cloneElement(rowComponent, newProps, [...finalChildren]);
-
-    rowHtml = clonedRowComponent;
-  } else {
-    rowHtml = _react.default.createElement("tr", {
-      className: [this.props.rowClass ? this.props.rowClass + ' ' : '', 'table-filter-row'].join('')
-    }, finalChildren);
-  }
-
-  return rowHtml;
-};
-
-var _default = render;
-exports.default = _default;
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(__webpack_require__(1));
-
-var _filterListItem = _interopRequireDefault(__webpack_require__(16));
-
-var _selectAllItem = _interopRequireDefault(__webpack_require__(21));
-
-var _searchBar = _interopRequireDefault(__webpack_require__(22));
-
-var _util = __webpack_require__(23);
-
-var _eventStack = _interopRequireDefault(__webpack_require__(24));
-
-var _filterIcon = _interopRequireDefault(__webpack_require__(28));
-
-var _sort = __webpack_require__(29);
-
-var _constants = __webpack_require__(30);
-
-var _sortIcon = _interopRequireDefault(__webpack_require__(31));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(17));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * FilterList List of options displayed in the header of the table
- * @extends React
- */
-class FilterList extends _react.default.Component {
-  /**
-   * constructor
-   * @param {Object} props
-   */
-  constructor(props) {
-    super(props); // const {filterList, selectState} = this._calculateFilterState(this.props.filteredData);
-
-    this._handleOutsideClick = e => {
-      if (!this.filterIconNode.contains(e.target)) {
-        this._hideFilter();
-      }
-    };
-
-    this._calculateFilterState = dataArray => {
-      const filteredData = dataArray ? [...dataArray] : [];
-      const filterkey = this.props.filterkey;
-      const usedKeys = [];
-      let filterList = [];
-      let selectState = true;
-      filteredData.map(item => {
-        let itemKey = (0, _util.getValForKey)(item, filterkey);
-        let orinigalValue = itemKey;
-
-        if (!(0, _util.isUndefined)(this.props.itemDisplayValueFunc)) {
-          itemKey = this.props.itemDisplayValueFunc(itemKey);
-        }
-
-        const appliedFilters = item.appliedFilters || {};
-        let displayName = itemKey;
-
-        if ((0, _util.isUndefined)(itemKey)) {
-          displayName = _constants.BLANK_LABEL;
-          itemKey = '';
-          orinigalValue = displayName;
-        } else if ((0, _util.isTypeString)(itemKey)) {
-          itemKey = itemKey.trim();
-
-          if (itemKey.length === 0) {
-            displayName = _constants.BLANK_LABEL;
-            orinigalValue = displayName;
-          }
-        }
-
-        if (usedKeys.indexOf(itemKey) === -1) {
-          if (!(0, _util.isUndefined)(appliedFilters) && Object.keys(appliedFilters).length > 0) {
-            if (Object.keys(appliedFilters).length === 1 && Object.keys(appliedFilters)[0] === filterkey) {
-              selectState = false;
-              filterList.push({
-                'key': itemKey,
-                'display': displayName,
-                'selected': false,
-                'visible': true,
-                'orinigalValue': orinigalValue
-              });
-            } else {
-              filterList.push({
-                'key': itemKey,
-                'display': displayName,
-                'selected': true,
-                'visible': false,
-                'orinigalValue': orinigalValue
-              });
-            }
-          } else {
-            filterList.push({
-              'key': itemKey,
-              'display': displayName,
-              'selected': true,
-              'visible': true,
-              'orinigalValue': orinigalValue
-            });
-          }
-
-          usedKeys.push(itemKey);
-        } else {
-          const filterIndex = usedKeys.indexOf(itemKey);
-          let filterItem = filterList[filterIndex];
-
-          if (Object.keys(appliedFilters).length === 0) {
-            if (!filterItem.selected || !filterItem.visible) {
-              filterItem = Object.assign({}, filterItem, {
-                'selected': true,
-                'visible': true
-              });
-              filterList[filterIndex] = filterItem;
-            }
-          }
-
-          if (Object.keys(appliedFilters).length === 1 && Object.keys(appliedFilters)[0] === filterkey) {
-            selectState = false;
-            filterItem = Object.assign({}, filterItem, {
-              'selected': false,
-              'visible': true
-            });
-            filterList[filterIndex] = filterItem;
-          }
-        }
-      });
-      filterList = (0, _sort.sortAction)(filterList, _constants.ASC_VALUE, {
-        valueFunc: this.props.itemSortValueFunc,
-        key: 'orinigalValue'
-      });
-      return {
-        filterList,
-        selectState
-      };
-    };
-
-    this._filterIconClicked = e => {
-      const filterState = this.state.showFilter;
-      const newState = !filterState;
-
-      if (newState) {
-        this._displayFilter();
-      } else {
-        this._hideFilter();
-      }
-    };
-
-    this._displayFilter = () => {
-      /* Body Click listener added*/
-      _eventStack.default.sub('click', this._handleOutsideClick, document);
-
-      this.setState({
-        showFilter: true
-      });
-    };
-
-    this._hideFilter = () => {
-      /* Body Click listener removed*/
-      _eventStack.default.unsub('click', this._handleOutsideClick);
-
-      this.setState({
-        showFilter: false,
-        searchEnabled: false
-      });
-    };
-
-    this._filterUpdated = index => {
-      const allFilters = this.state.filterList;
-
-      if (!(0, _util.isUndefined)(allFilters[index])) {
-        const newFilterState = !allFilters[index]['selected'];
-
-        this._filterData(allFilters[index]['key'], !newFilterState);
-      }
-    };
-
-    this._selectAllClicked = () => {
-      const selectAllState = this.state.selectAllFilters;
-      const newSelectAllState = !selectAllState;
-      const searchState = this.state.searchEnabled; // const searchValue = this.searchValue;
-
-      if (searchState) {
-        return;
-      }
-
-      const visibleFiltersValues = this.state.filterList.filter(filterItem => {
-        if (newSelectAllState) {
-          return filterItem.visible && !filterItem.selected;
-        } else {
-          return filterItem.visible && filterItem.selected;
-        }
-      }).map(filterItem => {
-        return filterItem.key;
-      });
-
-      this._resetData(visibleFiltersValues, newSelectAllState);
-    };
-
-    this._filterData = (filterValue = undefined, addFilter = true) => {
-      this.props.filterRows(filterValue, this.props.filterkey, addFilter, this.props.itemDisplayValueFunc);
-    };
-
-    this._resetData = (filterValues = [], selectAll = true) => {
-      this.props.resetRows(filterValues, this.props.filterkey, selectAll, this.props.itemDisplayValueFunc);
-    };
-
-    this._sortClicked = () => {
-      const currentSortType = this.state.sortType;
-      let newSortType;
-
-      if ((0, _util.isUndefined)(currentSortType) || currentSortType === _constants.DSC_VALUE) {
-        newSortType = _constants.ASC_VALUE;
-      } else {
-        newSortType = _constants.DSC_VALUE;
-      }
-
-      this.props.sortRows(newSortType, {
-        itemSortValueFunc: this.props.itemSortValueFunc,
-        caseSensitive: this.props.caseSensitive,
-        key: this.props.filterkey
-      });
-    };
-
-    this._searchChanged = searchValue => {
-      const propKey = this.props.filterkey;
-      this.searchValue = searchValue;
-      const prevAppliedFilters = this.appliedSearchFilters;
-
-      if (!(0, _util.isUndefined)(searchValue, true)) {
-        this.setState({
-          searchEnabled: true
-        });
-        searchValue = searchValue.toLowerCase();
-        const filterList = this.state.filterList;
-        const filtersToApply = filterList.filter(filterItem => {
-          const filterKey = filterItem.key.toString().toLowerCase();
-
-          if (filterKey.indexOf(searchValue) < 0 && filterItem.visible) {
-            return true;
-          }
-
-          return false;
-        }).map(filterItem => {
-          return {
-            key: propKey,
-            value: filterItem.key
-          };
-        });
-        this.appliedSearchFilters = filtersToApply;
-        this.props.filterMultipleRows(filtersToApply, prevAppliedFilters, this.props.itemDisplayValueFunc);
-      } else {
-        this.setState({
-          searchEnabled: false
-        });
-        this.appliedSearchFilters = [];
-        this.props.filterMultipleRows([], prevAppliedFilters, this.props.itemDisplayValueFunc);
-      }
-    };
-
-    this.appliedSearchFilters = undefined;
-    this.searchValue = undefined;
-    this.state = {
-      // filterList: filterList,
-      showFilter: false,
-      // selectAllFilters: selectState,
-      sortType: undefined,
-      searchEnabled: false
-    };
-  }
-  /**
-   * componentWillUnmount
-   */
-
-
-  componentWillUnmount() {
-    /* Remove body click listener*/
-    _eventStack.default.unsub('click', this._handleOutsideClick);
-  }
-  /**
-   * _handleOutsideClick Function to hide open filter list when click is done anywhere else
-   * @param  {Event} e
-   */
-
-
-  static getDerivedStateFromProps(props, prevState) {
-    const {
-      filterList,
-      selectState
-    } = this._calculateFilterState(props.filteredData);
-
-    const sortTypeState = !(0, _util.isUndefined)(props.sortKey) && props.sortKey === props.filterkey ? props.sortType : undefined;
-    return {
-      filterList: filterList,
-      selectAllFilters: selectState,
-      sortType: sortTypeState
-    };
-  }
-  /**
-   * componentWillReceiveProps
-   * @param  {Object} nextProps
-   */
-  // componentWillReceiveProps(nextProps) {
-  //   const {filterList, selectState} = this._calculateFilterState(nextProps.filteredData);
-  //
-  //   const sortTypeState = (!isUndefined(nextProps.sortKey) && (nextProps.sortKey === this.props.filterkey) ) ? nextProps.sortType : undefined;
-  //
-  //   this.setState({
-  //     filterList: filterList,
-  //     selectAllFilters: selectState,
-  //     sortType: sortTypeState,
-  //   });
-  // }
-
-  /**
-   * _calculateFilterState Function calculates current filter state to display
-   * @param  {Array} dataArray Data passed from parent on which filter is to be applies
-   * @return {Object}
-   */
-
-
-  /**
-   * render
-   * @return {JSX}
-   */
-  render() {
-    const filterState = this.state.showFilter;
-    const showSearch = this.props.showSearch === false ? false : true;
-    const filterListItemHtml = [];
-    let filterListHtml;
-
-    if (this.state.filterList.length > 1) {
-      if (filterState) {
-        const searchBarHtml = showSearch ? _react.default.createElement(_searchBar.default, {
-          searchChanged: this._searchChanged
-        }) : null;
-        this.state.filterList.map((filterItem, index) => {
-          if (filterItem.visible) {
-            if (this.state.searchEnabled) {
-              const filterKey = filterItem.key.toString().toLowerCase();
-
-              if (filterKey.indexOf(this.searchValue.toLowerCase()) >= 0) {
-                return filterListItemHtml.push(_react.default.createElement(_filterListItem.default, {
-                  key: 'item_' + index,
-                  filterClicked: this._filterUpdated,
-                  index: index,
-                  label: filterItem.display,
-                  selected: filterItem.selected
-                }));
-              } else {
-                return null;
-              }
-            } else {
-              filterListItemHtml.push(_react.default.createElement(_filterListItem.default, {
-                key: 'item_' + index,
-                filterClicked: this._filterUpdated,
-                index: index,
-                label: filterItem.display,
-                selected: filterItem.selected
-              }));
-            }
-          }
-        });
-        const filterListClass = [this.props.alignleft === true ? 'align-left ' : '', 'filter-list'].join('');
-        filterListHtml = _react.default.createElement("div", {
-          className: filterListClass
-        }, searchBarHtml, _react.default.createElement(_sortIcon.default, {
-          sort: this._sortClicked,
-          sortType: this.state.sortType
-        }), _react.default.createElement(_selectAllItem.default, {
-          filterClicked: this._selectAllClicked,
-          selected: this.state.selectAllFilters
-        }), filterListItemHtml);
-      }
-
-      const filterActive = !this.state.selectAllFilters || filterState;
-      return _react.default.createElement("div", {
-        className: "table-filter-parent",
-        ref: node => {
-          this.filterIconNode = node;
-        }
-      }, _react.default.createElement(_filterIcon.default, {
-        iconClicked: this._filterIconClicked,
-        selected: filterActive
-      }), filterListHtml);
-    } else {
-      return _react.default.createElement("div", {
-        style: {
-          display: 'none'
-        }
-      });
-    }
-  }
-
-}
-
-FilterList.propTypes = {
-  initialData: _propTypes.default.array.isRequired,
-  filteredData: _propTypes.default.array.isRequired,
-  filterRows: _propTypes.default.func.isRequired,
-  resetRows: _propTypes.default.func.isRequired,
-  sortRows: _propTypes.default.func.isRequired,
-  sortKey: _propTypes.default.string,
-  sortType: _propTypes.default.string,
-  filterkey: _propTypes.default.string.isRequired,
-  itemDisplayValueFunc: _propTypes.default.func,
-  itemSortValueFunc: _propTypes.default.func,
-  caseSensitive: _propTypes.default.boolean,
-  filterMultipleRows: _propTypes.default.func.isRequired,
-  showSearch: _propTypes.default.boolean,
-  alignleft: _propTypes.default.boolean
-};
-var _default = FilterList;
-exports.default = _default;
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(__webpack_require__(1));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(17));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * FilterListItem
- * @extends React
- */
-class FilterListItem extends _react.default.Component {
-  /**
-   * constructor
-   * @param {Object} props
-   */
-  constructor(props) {
-    super(props);
-
-    this._checkBoxClicked = () => {
-      this.props.filterClicked(this.props.index);
-    };
-  }
-  /**
-   * _checkBoxClicked function called when list item is clicked
-   */
-
-
-  /**
-   * render
-   * @return {JSX}
-   */
-  render() {
-    const checkBoxClass = [this.props.selected ? 'selected ' : '', 'filter-check-box'].join('');
-    return _react.default.createElement("div", {
-      className: "filter-list-item ripple",
-      onClick: this._checkBoxClicked
-    }, _react.default.createElement("div", {
-      className: checkBoxClass
-    }), _react.default.createElement("div", {
-      className: "filter-label"
-    }, this.props.label));
-  }
-
-}
-
-FilterListItem.propTypes = {
-  filterClicked: _propTypes.default.func.isRequired,
-  index: _propTypes.default.number.isRequired,
-  label: _propTypes.default.any.isRequired,
-  selected: _propTypes.default.bool.isRequired
-};
-var _default = FilterListItem;
-exports.default = _default;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-if (true) {
-  var ReactIs = __webpack_require__(18); // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-
-
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(20)(ReactIs.isElement, throwOnDirectAccess);
-} else {}
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-if (false) {} else {
-  module.exports = __webpack_require__(19);
-}
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/** @license React v16.9.0
- * react-is.development.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-if (true) {
-  (function () {
-    'use strict';
-
-    Object.defineProperty(exports, '__esModule', {
-      value: true
-    }); // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
-    // nor polyfill, then a plain number is used for performance.
-
-    var hasSymbol = typeof Symbol === 'function' && Symbol.for;
-    var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for('react.element') : 0xeac7;
-    var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for('react.portal') : 0xeaca;
-    var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for('react.fragment') : 0xeacb;
-    var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for('react.strict_mode') : 0xeacc;
-    var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for('react.profiler') : 0xead2;
-    var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for('react.provider') : 0xeacd;
-    var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for('react.context') : 0xeace; // TODO: We don't use AsyncMode or ConcurrentMode anymore. They were temporary
-    // (unstable) APIs that have been removed. Can we remove the symbols?
-
-    var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for('react.async_mode') : 0xeacf;
-    var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for('react.concurrent_mode') : 0xeacf;
-    var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for('react.forward_ref') : 0xead0;
-    var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for('react.suspense') : 0xead1;
-    var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? Symbol.for('react.suspense_list') : 0xead8;
-    var REACT_MEMO_TYPE = hasSymbol ? Symbol.for('react.memo') : 0xead3;
-    var REACT_LAZY_TYPE = hasSymbol ? Symbol.for('react.lazy') : 0xead4;
-    var REACT_FUNDAMENTAL_TYPE = hasSymbol ? Symbol.for('react.fundamental') : 0xead5;
-    var REACT_RESPONDER_TYPE = hasSymbol ? Symbol.for('react.responder') : 0xead6;
-
-    function isValidElementType(type) {
-      return typeof type === 'string' || typeof type === 'function' || // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
-      type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE);
-    }
-    /**
-     * Forked from fbjs/warning:
-     * https://github.com/facebook/fbjs/blob/e66ba20ad5be433eb54423f2b097d829324d9de6/packages/fbjs/src/__forks__/warning.js
-     *
-     * Only change is we use console.warn instead of console.error,
-     * and do nothing when 'console' is not supported.
-     * This really simplifies the code.
-     * ---
-     * Similar to invariant but only logs a warning if the condition is not met.
-     * This can be used to log issues in development environments in critical
-     * paths. Removing the logging code for production environments will keep the
-     * same logic and follow the same code paths.
-     */
-
-
-    var lowPriorityWarning = function () {};
-
-    {
-      var printWarning = function (format) {
-        for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-          args[_key - 1] = arguments[_key];
-        }
-
-        var argIndex = 0;
-        var message = 'Warning: ' + format.replace(/%s/g, function () {
-          return args[argIndex++];
-        });
-
-        if (typeof console !== 'undefined') {
-          console.warn(message);
-        }
-
-        try {
-          // --- Welcome to debugging React ---
-          // This error was thrown as a convenience so that you can use this stack
-          // to find the callsite that caused this warning to fire.
-          throw new Error(message);
-        } catch (x) {}
-      };
-
-      lowPriorityWarning = function (condition, format) {
-        if (format === undefined) {
-          throw new Error('`lowPriorityWarning(condition, format, ...args)` requires a warning ' + 'message argument');
-        }
-
-        if (!condition) {
-          for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-            args[_key2 - 2] = arguments[_key2];
-          }
-
-          printWarning.apply(undefined, [format].concat(args));
-        }
-      };
-    }
-    var lowPriorityWarning$1 = lowPriorityWarning;
-
-    function typeOf(object) {
-      if (typeof object === 'object' && object !== null) {
-        var $$typeof = object.$$typeof;
-
-        switch ($$typeof) {
-          case REACT_ELEMENT_TYPE:
-            var type = object.type;
-
-            switch (type) {
-              case REACT_ASYNC_MODE_TYPE:
-              case REACT_CONCURRENT_MODE_TYPE:
-              case REACT_FRAGMENT_TYPE:
-              case REACT_PROFILER_TYPE:
-              case REACT_STRICT_MODE_TYPE:
-              case REACT_SUSPENSE_TYPE:
-                return type;
-
-              default:
-                var $$typeofType = type && type.$$typeof;
-
-                switch ($$typeofType) {
-                  case REACT_CONTEXT_TYPE:
-                  case REACT_FORWARD_REF_TYPE:
-                  case REACT_PROVIDER_TYPE:
-                    return $$typeofType;
-
-                  default:
-                    return $$typeof;
-                }
-
-            }
-
-          case REACT_LAZY_TYPE:
-          case REACT_MEMO_TYPE:
-          case REACT_PORTAL_TYPE:
-            return $$typeof;
-        }
-      }
-
-      return undefined;
-    } // AsyncMode is deprecated along with isAsyncMode
-
-
-    var AsyncMode = REACT_ASYNC_MODE_TYPE;
-    var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
-    var ContextConsumer = REACT_CONTEXT_TYPE;
-    var ContextProvider = REACT_PROVIDER_TYPE;
-    var Element = REACT_ELEMENT_TYPE;
-    var ForwardRef = REACT_FORWARD_REF_TYPE;
-    var Fragment = REACT_FRAGMENT_TYPE;
-    var Lazy = REACT_LAZY_TYPE;
-    var Memo = REACT_MEMO_TYPE;
-    var Portal = REACT_PORTAL_TYPE;
-    var Profiler = REACT_PROFILER_TYPE;
-    var StrictMode = REACT_STRICT_MODE_TYPE;
-    var Suspense = REACT_SUSPENSE_TYPE;
-    var hasWarnedAboutDeprecatedIsAsyncMode = false; // AsyncMode should be deprecated
-
-    function isAsyncMode(object) {
-      {
-        if (!hasWarnedAboutDeprecatedIsAsyncMode) {
-          hasWarnedAboutDeprecatedIsAsyncMode = true;
-          lowPriorityWarning$1(false, 'The ReactIs.isAsyncMode() alias has been deprecated, ' + 'and will be removed in React 17+. Update your code to use ' + 'ReactIs.isConcurrentMode() instead. It has the exact same API.');
-        }
-      }
-      return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
-    }
-
-    function isConcurrentMode(object) {
-      return typeOf(object) === REACT_CONCURRENT_MODE_TYPE;
-    }
-
-    function isContextConsumer(object) {
-      return typeOf(object) === REACT_CONTEXT_TYPE;
-    }
-
-    function isContextProvider(object) {
-      return typeOf(object) === REACT_PROVIDER_TYPE;
-    }
-
-    function isElement(object) {
-      return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-    }
-
-    function isForwardRef(object) {
-      return typeOf(object) === REACT_FORWARD_REF_TYPE;
-    }
-
-    function isFragment(object) {
-      return typeOf(object) === REACT_FRAGMENT_TYPE;
-    }
-
-    function isLazy(object) {
-      return typeOf(object) === REACT_LAZY_TYPE;
-    }
-
-    function isMemo(object) {
-      return typeOf(object) === REACT_MEMO_TYPE;
-    }
-
-    function isPortal(object) {
-      return typeOf(object) === REACT_PORTAL_TYPE;
-    }
-
-    function isProfiler(object) {
-      return typeOf(object) === REACT_PROFILER_TYPE;
-    }
-
-    function isStrictMode(object) {
-      return typeOf(object) === REACT_STRICT_MODE_TYPE;
-    }
-
-    function isSuspense(object) {
-      return typeOf(object) === REACT_SUSPENSE_TYPE;
-    }
-
-    exports.typeOf = typeOf;
-    exports.AsyncMode = AsyncMode;
-    exports.ConcurrentMode = ConcurrentMode;
-    exports.ContextConsumer = ContextConsumer;
-    exports.ContextProvider = ContextProvider;
-    exports.Element = Element;
-    exports.ForwardRef = ForwardRef;
-    exports.Fragment = Fragment;
-    exports.Lazy = Lazy;
-    exports.Memo = Memo;
-    exports.Portal = Portal;
-    exports.Profiler = Profiler;
-    exports.StrictMode = StrictMode;
-    exports.Suspense = Suspense;
-    exports.isValidElementType = isValidElementType;
-    exports.isAsyncMode = isAsyncMode;
-    exports.isConcurrentMode = isConcurrentMode;
-    exports.isContextConsumer = isContextConsumer;
-    exports.isContextProvider = isContextProvider;
-    exports.isElement = isElement;
-    exports.isForwardRef = isForwardRef;
-    exports.isFragment = isFragment;
-    exports.isLazy = isLazy;
-    exports.isMemo = isMemo;
-    exports.isPortal = isPortal;
-    exports.isProfiler = isProfiler;
-    exports.isStrictMode = isStrictMode;
-    exports.isSuspense = isSuspense;
-  })();
-}
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-var ReactIs = __webpack_require__(18);
-
-var assign = __webpack_require__(3);
-
-var ReactPropTypesSecret = __webpack_require__(5);
-
-var checkPropTypes = __webpack_require__(4);
-
-var has = Function.call.bind(Object.prototype.hasOwnProperty);
-
-var printWarning = function () {};
-
-if (true) {
-  printWarning = function (text) {
-    var message = 'Warning: ' + text;
-
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  };
-}
-
-function emptyFunctionThatReturnsNull() {
-  return null;
-}
-
-module.exports = function (isValidElement, throwOnDirectAccess) {
-  /* global Symbol */
-  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
-  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
-
-  /**
-   * Returns the iterator method function contained on the iterable object.
-   *
-   * Be sure to invoke the function with the iterable as context:
-   *
-   *     var iteratorFn = getIteratorFn(myIterable);
-   *     if (iteratorFn) {
-   *       var iterator = iteratorFn.call(myIterable);
-   *       ...
-   *     }
-   *
-   * @param {?object} maybeIterable
-   * @return {?function}
-   */
-
-  function getIteratorFn(maybeIterable) {
-    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
-
-    if (typeof iteratorFn === 'function') {
-      return iteratorFn;
-    }
-  }
-  /**
-   * Collection of methods that allow declaration and validation of props that are
-   * supplied to React components. Example usage:
-   *
-   *   var Props = require('ReactPropTypes');
-   *   var MyArticle = React.createClass({
-   *     propTypes: {
-   *       // An optional string prop named "description".
-   *       description: Props.string,
-   *
-   *       // A required enum prop named "category".
-   *       category: Props.oneOf(['News','Photos']).isRequired,
-   *
-   *       // A prop named "dialog" that requires an instance of Dialog.
-   *       dialog: Props.instanceOf(Dialog).isRequired
-   *     },
-   *     render: function() { ... }
-   *   });
-   *
-   * A more formal specification of how these methods are used:
-   *
-   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
-   *   decl := ReactPropTypes.{type}(.isRequired)?
-   *
-   * Each and every declaration produces a function with the same signature. This
-   * allows the creation of custom validation functions. For example:
-   *
-   *  var MyLink = React.createClass({
-   *    propTypes: {
-   *      // An optional string or URI prop named "href".
-   *      href: function(props, propName, componentName) {
-   *        var propValue = props[propName];
-   *        if (propValue != null && typeof propValue !== 'string' &&
-   *            !(propValue instanceof URI)) {
-   *          return new Error(
-   *            'Expected a string or an URI for ' + propName + ' in ' +
-   *            componentName
-   *          );
-   *        }
-   *      }
-   *    },
-   *    render: function() {...}
-   *  });
-   *
-   * @internal
-   */
-
-
-  var ANONYMOUS = '<<anonymous>>'; // Important!
-  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
-
-  var ReactPropTypes = {
-    array: createPrimitiveTypeChecker('array'),
-    bool: createPrimitiveTypeChecker('boolean'),
-    func: createPrimitiveTypeChecker('function'),
-    number: createPrimitiveTypeChecker('number'),
-    object: createPrimitiveTypeChecker('object'),
-    string: createPrimitiveTypeChecker('string'),
-    symbol: createPrimitiveTypeChecker('symbol'),
-    any: createAnyTypeChecker(),
-    arrayOf: createArrayOfTypeChecker,
-    element: createElementTypeChecker(),
-    elementType: createElementTypeTypeChecker(),
-    instanceOf: createInstanceTypeChecker,
-    node: createNodeChecker(),
-    objectOf: createObjectOfTypeChecker,
-    oneOf: createEnumTypeChecker,
-    oneOfType: createUnionTypeChecker,
-    shape: createShapeTypeChecker,
-    exact: createStrictShapeTypeChecker
-  };
-  /**
-   * inlined Object.is polyfill to avoid requiring consumers ship their own
-   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-   */
-
-  /*eslint-disable no-self-compare*/
-
-  function is(x, y) {
-    // SameValue algorithm
-    if (x === y) {
-      // Steps 1-5, 7-10
-      // Steps 6.b-6.e: +0 != -0
-      return x !== 0 || 1 / x === 1 / y;
-    } else {
-      // Step 6.a: NaN == NaN
-      return x !== x && y !== y;
-    }
-  }
-  /*eslint-enable no-self-compare*/
-
-  /**
-   * We use an Error-like object for backward compatibility as people may call
-   * PropTypes directly and inspect their output. However, we don't use real
-   * Errors anymore. We don't inspect their stack anyway, and creating them
-   * is prohibitively expensive if they are created too often, such as what
-   * happens in oneOfType() for any type before the one that matched.
-   */
-
-
-  function PropTypeError(message) {
-    this.message = message;
-    this.stack = '';
-  } // Make `instanceof Error` still work for returned errors.
-
-
-  PropTypeError.prototype = Error.prototype;
-
-  function createChainableTypeChecker(validate) {
-    if (true) {
-      var manualPropTypeCallCache = {};
-      var manualPropTypeWarningCount = 0;
-    }
-
-    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
-      componentName = componentName || ANONYMOUS;
-      propFullName = propFullName || propName;
-
-      if (secret !== ReactPropTypesSecret) {
-        if (throwOnDirectAccess) {
-          // New behavior only for users of `prop-types` package
-          var err = new Error('Calling PropTypes validators directly is not supported by the `prop-types` package. ' + 'Use `PropTypes.checkPropTypes()` to call them. ' + 'Read more at http://fb.me/use-check-prop-types');
-          err.name = 'Invariant Violation';
-          throw err;
-        } else if ( true && typeof console !== 'undefined') {
-          // Old behavior for people using React.PropTypes
-          var cacheKey = componentName + ':' + propName;
-
-          if (!manualPropTypeCallCache[cacheKey] && // Avoid spamming the console because they are often not actionable except for lib authors
-          manualPropTypeWarningCount < 3) {
-            printWarning('You are manually calling a React.PropTypes validation ' + 'function for the `' + propFullName + '` prop on `' + componentName + '`. This is deprecated ' + 'and will throw in the standalone `prop-types` package. ' + 'You may be seeing this warning due to a third-party PropTypes ' + 'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.');
-            manualPropTypeCallCache[cacheKey] = true;
-            manualPropTypeWarningCount++;
-          }
-        }
-      }
-
-      if (props[propName] == null) {
-        if (isRequired) {
-          if (props[propName] === null) {
-            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
-          }
-
-          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
-        }
-
-        return null;
-      } else {
-        return validate(props, propName, componentName, location, propFullName);
-      }
-    }
-
-    var chainedCheckType = checkType.bind(null, false);
-    chainedCheckType.isRequired = checkType.bind(null, true);
-    return chainedCheckType;
-  }
-
-  function createPrimitiveTypeChecker(expectedType) {
-    function validate(props, propName, componentName, location, propFullName, secret) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-
-      if (propType !== expectedType) {
-        // `propValue` being instance of, say, date/regexp, pass the 'object'
-        // check, but we can offer a more precise error message here rather than
-        // 'of type `object`'.
-        var preciseType = getPreciseType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
-      }
-
-      return null;
-    }
-
-    return createChainableTypeChecker(validate);
-  }
-
-  function createAnyTypeChecker() {
-    return createChainableTypeChecker(emptyFunctionThatReturnsNull);
-  }
-
-  function createArrayOfTypeChecker(typeChecker) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (typeof typeChecker !== 'function') {
-        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
-      }
-
-      var propValue = props[propName];
-
-      if (!Array.isArray(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
-      }
-
-      for (var i = 0; i < propValue.length; i++) {
-        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
-
-        if (error instanceof Error) {
-          return error;
-        }
-      }
-
-      return null;
-    }
-
-    return createChainableTypeChecker(validate);
-  }
-
-  function createElementTypeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-
-      if (!isValidElement(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
-      }
-
-      return null;
-    }
-
-    return createChainableTypeChecker(validate);
-  }
-
-  function createElementTypeTypeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-
-      if (!ReactIs.isValidElementType(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement type.'));
-      }
-
-      return null;
-    }
-
-    return createChainableTypeChecker(validate);
-  }
-
-  function createInstanceTypeChecker(expectedClass) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (!(props[propName] instanceof expectedClass)) {
-        var expectedClassName = expectedClass.name || ANONYMOUS;
-        var actualClassName = getClassName(props[propName]);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
-      }
-
-      return null;
-    }
-
-    return createChainableTypeChecker(validate);
-  }
-
-  function createEnumTypeChecker(expectedValues) {
-    if (!Array.isArray(expectedValues)) {
-      if (true) {
-        if (arguments.length > 1) {
-          printWarning('Invalid arguments supplied to oneOf, expected an array, got ' + arguments.length + ' arguments. ' + 'A common mistake is to write oneOf(x, y, z) instead of oneOf([x, y, z]).');
-        } else {
-          printWarning('Invalid argument supplied to oneOf, expected an array.');
-        }
-      }
-
-      return emptyFunctionThatReturnsNull;
-    }
-
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-
-      for (var i = 0; i < expectedValues.length; i++) {
-        if (is(propValue, expectedValues[i])) {
-          return null;
-        }
-      }
-
-      var valuesString = JSON.stringify(expectedValues, function replacer(key, value) {
-        var type = getPreciseType(value);
-
-        if (type === 'symbol') {
-          return String(value);
-        }
-
-        return value;
-      });
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + String(propValue) + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
-    }
-
-    return createChainableTypeChecker(validate);
-  }
-
-  function createObjectOfTypeChecker(typeChecker) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (typeof typeChecker !== 'function') {
-        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
-      }
-
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
-      }
-
-      for (var key in propValue) {
-        if (has(propValue, key)) {
-          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-
-          if (error instanceof Error) {
-            return error;
-          }
-        }
-      }
-
-      return null;
-    }
-
-    return createChainableTypeChecker(validate);
-  }
-
-  function createUnionTypeChecker(arrayOfTypeCheckers) {
-    if (!Array.isArray(arrayOfTypeCheckers)) {
-       true ? printWarning('Invalid argument supplied to oneOfType, expected an instance of array.') : undefined;
-      return emptyFunctionThatReturnsNull;
-    }
-
-    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
-      var checker = arrayOfTypeCheckers[i];
-
-      if (typeof checker !== 'function') {
-        printWarning('Invalid argument supplied to oneOfType. Expected an array of check functions, but ' + 'received ' + getPostfixForTypeWarning(checker) + ' at index ' + i + '.');
-        return emptyFunctionThatReturnsNull;
-      }
-    }
-
-    function validate(props, propName, componentName, location, propFullName) {
-      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
-        var checker = arrayOfTypeCheckers[i];
-
-        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret) == null) {
-          return null;
-        }
-      }
-
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
-    }
-
-    return createChainableTypeChecker(validate);
-  }
-
-  function createNodeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (!isNode(props[propName])) {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
-      }
-
-      return null;
-    }
-
-    return createChainableTypeChecker(validate);
-  }
-
-  function createShapeTypeChecker(shapeTypes) {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
-      }
-
-      for (var key in shapeTypes) {
-        var checker = shapeTypes[key];
-
-        if (!checker) {
-          continue;
-        }
-
-        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-
-        if (error) {
-          return error;
-        }
-      }
-
-      return null;
-    }
-
-    return createChainableTypeChecker(validate);
-  }
-
-  function createStrictShapeTypeChecker(shapeTypes) {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
-      } // We need to check all keys in case some are required but missing from
-      // props.
-
-
-      var allKeys = assign({}, props[propName], shapeTypes);
-
-      for (var key in allKeys) {
-        var checker = shapeTypes[key];
-
-        if (!checker) {
-          return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' + '\nBad object: ' + JSON.stringify(props[propName], null, '  ') + '\nValid keys: ' + JSON.stringify(Object.keys(shapeTypes), null, '  '));
-        }
-
-        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-
-        if (error) {
-          return error;
-        }
-      }
-
-      return null;
-    }
-
-    return createChainableTypeChecker(validate);
-  }
-
-  function isNode(propValue) {
-    switch (typeof propValue) {
-      case 'number':
-      case 'string':
-      case 'undefined':
-        return true;
-
-      case 'boolean':
-        return !propValue;
-
-      case 'object':
-        if (Array.isArray(propValue)) {
-          return propValue.every(isNode);
-        }
-
-        if (propValue === null || isValidElement(propValue)) {
-          return true;
-        }
-
-        var iteratorFn = getIteratorFn(propValue);
-
-        if (iteratorFn) {
-          var iterator = iteratorFn.call(propValue);
-          var step;
-
-          if (iteratorFn !== propValue.entries) {
-            while (!(step = iterator.next()).done) {
-              if (!isNode(step.value)) {
-                return false;
-              }
-            }
-          } else {
-            // Iterator will provide entry [k,v] tuples rather than values.
-            while (!(step = iterator.next()).done) {
-              var entry = step.value;
-
-              if (entry) {
-                if (!isNode(entry[1])) {
-                  return false;
-                }
-              }
-            }
-          }
-        } else {
-          return false;
-        }
-
-        return true;
-
-      default:
-        return false;
-    }
-  }
-
-  function isSymbol(propType, propValue) {
-    // Native Symbol.
-    if (propType === 'symbol') {
-      return true;
-    } // falsy value can't be a Symbol
-
-
-    if (!propValue) {
-      return false;
-    } // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
-
-
-    if (propValue['@@toStringTag'] === 'Symbol') {
-      return true;
-    } // Fallback for non-spec compliant Symbols which are polyfilled.
-
-
-    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
-      return true;
-    }
-
-    return false;
-  } // Equivalent of `typeof` but with special handling for array and regexp.
-
-
-  function getPropType(propValue) {
-    var propType = typeof propValue;
-
-    if (Array.isArray(propValue)) {
-      return 'array';
-    }
-
-    if (propValue instanceof RegExp) {
-      // Old webkits (at least until Android 4.0) return 'function' rather than
-      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
-      // passes PropTypes.object.
-      return 'object';
-    }
-
-    if (isSymbol(propType, propValue)) {
-      return 'symbol';
-    }
-
-    return propType;
-  } // This handles more types than `getPropType`. Only used for error messages.
-  // See `createPrimitiveTypeChecker`.
-
-
-  function getPreciseType(propValue) {
-    if (typeof propValue === 'undefined' || propValue === null) {
-      return '' + propValue;
-    }
-
-    var propType = getPropType(propValue);
-
-    if (propType === 'object') {
-      if (propValue instanceof Date) {
-        return 'date';
-      } else if (propValue instanceof RegExp) {
-        return 'regexp';
-      }
-    }
-
-    return propType;
-  } // Returns a string that is postfixed to a warning about an invalid type.
-  // For example, "undefined" or "of type array"
-
-
-  function getPostfixForTypeWarning(value) {
-    var type = getPreciseType(value);
-
-    switch (type) {
-      case 'array':
-      case 'object':
-        return 'an ' + type;
-
-      case 'boolean':
-      case 'date':
-      case 'regexp':
-        return 'a ' + type;
-
-      default:
-        return type;
-    }
-  } // Returns class name of the object, if any.
-
-
-  function getClassName(propValue) {
-    if (!propValue.constructor || !propValue.constructor.name) {
-      return ANONYMOUS;
-    }
-
-    return propValue.constructor.name;
-  }
-
-  ReactPropTypes.checkPropTypes = checkPropTypes;
-  ReactPropTypes.resetWarningCache = checkPropTypes.resetWarningCache;
-  ReactPropTypes.PropTypes = ReactPropTypes;
-  return ReactPropTypes;
-};
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(__webpack_require__(1));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(17));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * SelectAllItem Select all list item
- * @extends React
- */
-class SelectAllItem extends _react.default.Component {
-  /**
-   * constructor
-   * @param {Object} props
-   */
-  constructor(props) {
-    super(props);
-
-    this._selectAllClicked = () => {
-      this.props.filterClicked();
-    };
-  }
-  /**
-   * _selectAllClicked
-   */
-
-
-  /**
-   * render
-   * @return {JSX}
-   */
-  render() {
-    const checkBoxClass = [this.props.selected ? 'selected ' : '', 'filter-check-box'].join('');
-    return _react.default.createElement("div", {
-      className: "filter-list-item",
-      onClick: this._selectAllClicked
-    }, _react.default.createElement("div", {
-      className: checkBoxClass
-    }), _react.default.createElement("div", {
-      className: "filter-label select-all-label"
-    }, "Select All"));
-  }
-
-}
-
-SelectAllItem.propTypes = {
-  filterClicked: _propTypes.default.func.isRequired,
-  selected: _propTypes.default.bool.isRequired
-};
-var _default = SelectAllItem;
-exports.default = _default;
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(__webpack_require__(1));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(17));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * SearchBar search input component
- * @extends React
- */
-class SearchBar extends _react.default.Component {
-  /**
-   * constructor
-   * @param {Object} props
-   */
-  constructor(props) {
-    super(props);
-
-    this._searchInputChanged = e => {
-      const newValue = e.target.value;
-
-      this._callSearchChanged(newValue);
-    };
-
-    this._callSearchChanged = val => {
-      this.props.searchChanged && this.props.searchChanged(val);
-    };
-  }
-  /**
-   * _searchInputChanged
-   * @param  {Event} e
-   */
-
-
-  /**
-   * render
-   * @return {JSX}
-   */
-  render() {
-    return _react.default.createElement("div", {
-      className: "search-parent filter-list-item"
-    }, _react.default.createElement("input", {
-      className: "search-input",
-      type: "text",
-      placeholder: "search",
-      onChange: this._searchInputChanged
-    }));
-  }
-
-}
-
-SearchBar.propTypes = {
-  searchChanged: _propTypes.default.func.isRequired
-};
-var _default = SearchBar;
-exports.default = _default;
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.without = exports.uniq = exports.getValForKey = exports.isTypeString = exports.isTypeArray = exports.isUndefined = void 0;
-
-const isUndefined = (str, emptyStringCheck) => {
-  if (typeof str === 'undefined' || str === null || str === 'undefined' || str === 'null') {
-    return true;
-  }
-
-  if (emptyStringCheck && typeof str === 'string' && str.toString().trim().length === 0) {
-    return true;
-  }
-
-  return false;
-};
-
-exports.isUndefined = isUndefined;
-
-const isTypeArray = val => {
-  return Object.prototype.toString.call(val) === '[object Array]' ? true : false;
-};
-
-exports.isTypeArray = isTypeArray;
-
-const isTypeString = val => {
-  return Object.prototype.toString.call(val) === '[object String]' ? true : false;
-};
-
-exports.isTypeString = isTypeString;
-
-const getValForKey = (obj, key) => {
-  if (!isUndefined(key)) {
-    if (isTypeString(key)) {
-      const keyArray = key.split('.');
-
-      if (keyArray.length === 1) {
-        return obj[key];
-      } else {
-        let finalValue = obj;
-        let i;
-        let l;
-
-        for (i = 0, l = keyArray.length; i < l; i = i + 1) {
-          const currKey = keyArray[i];
-          const currValue = finalValue[currKey];
-
-          if (!isUndefined(currValue)) {
-            finalValue = currValue;
-          } else {
-            finalValue = undefined;
-            break;
-          }
-        }
-
-        return finalValue;
-      }
-    } else {
-      return obj[key];
-    }
-  }
-
-  return;
-};
-
-exports.getValForKey = getValForKey;
-
-const uniq = array => {
-  if (array != null && array.length) {
-    const unique = [...new Set(array)];
-    return unique;
-  }
-
-  return [];
-};
-
-exports.uniq = uniq;
-
-const without = (array, values = []) => {
-  const result = [];
-
-  if (!array.length) {
-    return result;
-  }
-
-  array.forEach(currItem => {
-    if (values.indexOf(currItem) < 0) {
-      result.push(currItem);
-    }
-  });
-  return result;
-};
-
-exports.without = without;
-var _default = {
-  isUndefined,
-  isTypeArray,
-  isTypeString,
-  getValForKey,
-  uniq,
-  without
-};
-exports.default = _default;
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _eventStack = _interopRequireDefault(__webpack_require__(25));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _default = _eventStack.default;
-exports.default = _default;
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _eventTarget = _interopRequireDefault(__webpack_require__(26));
-
-var _normalizeTarget = _interopRequireDefault(__webpack_require__(27));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-class EventStack {
-  constructor() {
-    this._targets = new Map();
-  } // ------------------------------------
-  // Target utils
-  // ------------------------------------
-
-
-  _find(target, autoCreate = true) {
-    const normalized = (0, _normalizeTarget.default)(target);
-    if (this._targets.has(normalized)) return this._targets.get(normalized);
-    if (!autoCreate) return;
-    const eventTarget = new _eventTarget.default(normalized);
-
-    this._targets.set(normalized, eventTarget);
-
-    return eventTarget;
-  }
-
-  _remove(target) {
-    const normalized = (0, _normalizeTarget.default)(target);
-
-    this._targets.delete(normalized);
-  }
-
-  sub(name, handlers, options = {}) {
-    const {
-      target = document,
-      pool = 'default'
-    } = options;
-
-    const eventTarget = this._find(target);
-
-    eventTarget.sub(name, handlers, pool);
-  }
-
-  unsub(name, handlers, options = {}) {
-    const {
-      target = document,
-      pool = 'default'
-    } = options;
-
-    const eventTarget = this._find(target, false);
-
-    if (eventTarget) {
-      eventTarget.unsub(name, handlers, pool);
-      if (eventTarget.empty()) this._remove(target);
-    }
-  }
-
-}
-
-const instance = new EventStack();
-var _default = instance;
-exports.default = _default;
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _util = __webpack_require__(23);
-
-class EventTarget {
-  constructor(target) {
-    this.target = target;
-    this._handlers = {};
-    this._pools = {};
-  } // ------------------------------------
-  // Utils
-  // ------------------------------------
-
-
-  _emit(name) {
-    return event => {
-      Object.keys(this._pools).forEach(poolName => {
-        const handlers = this._pools[poolName];
-        if (!handlers) return;
-        handlers.forEach(handler => handler(event));
-        return;
-      });
-    };
-  }
-
-  _normalize(handlers) {
-    return (0, _util.isTypeArray)(handlers) ? handlers : [handlers];
-  } // ------------------------------------
-  // Listeners handling
-  // ------------------------------------
-
-
-  _listen(name) {
-    if (this._handlers.hasOwnProperty(name)) return;
-
-    const handler = this._emit(name);
-
-    this.target.addEventListener(name, handler);
-    this._handlers[name] = handler;
-  }
-
-  _unlisten(name) {
-    if (this._pools[name]) return;
-    const handler = this._handlers[name];
-    this.target.removeEventListener(name, handler);
-    delete this._handlers[name];
-  }
-
-  empty() {
-    return this._handlers && Object.keys(this._handlers).length > 0 ? false : true;
-  } // ------------------------------------
-  // Pub/sub
-  // ------------------------------------
-
-
-  sub(name, handlers) {
-    const newHandlers = this._normalize(handlers);
-
-    const prevHandlers = this._pools[`${name}`] || [];
-    const events = (0, _util.uniq)([...prevHandlers, ...newHandlers]);
-
-    this._listen(name);
-
-    this._pools[`${name}`] = events;
-  }
-
-  unsub(name, handlers) {
-    const toRemoveHandlers = this._normalize(handlers);
-
-    const prevHandlers = this._pools[`${name}`] || [];
-    const events = (0, _util.without)(prevHandlers, toRemoveHandlers);
-
-    if (events.length > 0) {
-      this._pools[`${name}`] = events;
-      return;
-    }
-
-    this._pools[`${name}`] = undefined;
-
-    this._unlisten(name);
-  }
-
-}
-
-exports.default = EventTarget;
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-/**
- * Normalizes `target` for EventStack, because `target` can be passed as `boolean` or `string`.
- *
- * @param {boolean|string|HTMLElement|Window} target Value for normalization.
- * @return {HTMLElement|Window} A DOM node.
- */
-const normalizeTarget = target => {
-  if (target === 'document') return document;
-  if (target === 'window') return window;
-  return target || document;
-};
-
-var _default = normalizeTarget;
-exports.default = _default;
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(__webpack_require__(1));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(17));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * FilterIcon
- * @extends React
- */
-class FilterIcon extends _react.default.Component {
-  /**
-   * constructor
-   * @param {Object} props
-   */
-  constructor(props) {
-    super(props);
-
-    this._iconClicked = () => {
-      this.props.iconClicked && this.props.iconClicked();
-    };
-  }
-  /**
-   * _iconClicked filter icon clicked
-   */
-
-
-  /**
-   * render
-   * @return {JSX}
-   */
-  render() {
-    const className = [this.props.selected ? 'selected ' : '', 'table-filter-icon'].join('');
-    return _react.default.createElement("div", {
-      onClick: this._iconClicked,
-      className: className
-    });
-  }
-
-}
-
-FilterIcon.propTypes = {
-  iconClicked: _propTypes.default.func.isRequired,
-  // Function to be called when filter icon is clicked
-  selected: _propTypes.default.bool
-};
-var _default = FilterIcon;
-exports.default = _default;
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.sortAction = void 0;
-
-var _util = __webpack_require__(23);
-
-/**
- * Function to sort an array (asc or dsc) w.r.t to an filter
- * @param  {Array}   inputArray            Array to be sorted
- * @param  {String}  type                  asc or dsc
- * @param  {Function}  options.valueFunc     Function to calculate value of an item(optional)
- * @param  {Boolean} options.caseSensitive Whether case sensitive or not
- * @param  {String}  options.key           Filter Key
- * @return {Array}                        Sorted array
- */
-const sortAction = (inputArray = [], type = undefined, {
-  valueFunc = undefined,
-  caseSensitive = false,
-  key = undefined
-} = {}) => {
-  if (!(0, _util.isUndefined)(type)) {
-    const inputCopy = [...inputArray];
-
-    const sortFunc = (a, b) => {
-      let aValue;
-      let bValue;
-
-      if (!(0, _util.isUndefined)(key)) {
-        aValue = (0, _util.getValForKey)(a, key);
-        bValue = (0, _util.getValForKey)(b, key);
-      } else {
-        aValue = a;
-        bValue = b;
-      }
-
-      if (!(0, _util.isUndefined)(valueFunc)) {
-        aValue = valueFunc(aValue);
-        bValue = valueFunc(bValue);
-      } else {
-        if (!isNaN(Number(aValue)) && !isNaN(Number(bValue))) {
-          aValue = Number(aValue);
-          bValue = Number(bValue);
-        }
-
-        if ((0, _util.isTypeString)(aValue)) {
-          aValue = aValue.trim();
-
-          if (!caseSensitive) {
-            aValue = aValue.toUpperCase();
-          }
-        }
-
-        if ((0, _util.isTypeString)(bValue)) {
-          bValue = bValue.trim();
-
-          if (!caseSensitive) {
-            bValue = bValue.toUpperCase();
-          }
-        }
-      }
-
-      if ((0, _util.isUndefined)(aValue)) {
-        aValue = '';
-      }
-
-      if ((0, _util.isUndefined)(bValue)) {
-        bValue = '';
-      }
-
-      let result = 0;
-
-      if (aValue < bValue) {
-        result = -1;
-      } else {
-        result = 1;
-      }
-
-      if (type === 'asc') {
-        return result;
-      } else {
-        return -result;
-      }
-    };
-
-    return inputCopy.sort(sortFunc);
-  }
-
-  return inputArray;
-};
-
-exports.sortAction = sortAction;
-var _default = sortAction;
-exports.default = _default;
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.DSC_VALUE = exports.ASC_VALUE = exports.BLANK_LABEL = void 0;
-const BLANK_LABEL = '(blank)';
-exports.BLANK_LABEL = BLANK_LABEL;
-const ASC_VALUE = 'asc';
-exports.ASC_VALUE = ASC_VALUE;
-const DSC_VALUE = 'dsc';
-exports.DSC_VALUE = DSC_VALUE;
-var _default = {
-  BLANK_LABEL,
-  ASC_VALUE,
-  DSC_VALUE
-};
-exports.default = _default;
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(__webpack_require__(1));
-
-var _util = __webpack_require__(23);
-
-var _propTypes = _interopRequireDefault(__webpack_require__(17));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-class SortIcon extends _react.default.Component {
-  constructor(props) {
-    super(props);
-
-    this._sortClicked = () => {
-      this.props.sort();
-    };
-  }
-
-  render() {
-    const sortClass = !(0, _util.isUndefined)(this.props.sortType) ? ' ' + this.props.sortType : '';
-    return _react.default.createElement("div", {
-      className: ['sort-parent clear-fix', sortClass].join(''),
-      onClick: this._sortClicked
-    }, _react.default.createElement("div", {
-      className: "dsc table-filter-arrow"
-    }), _react.default.createElement("div", {
-      className: "asc table-filter-arrow"
-    }));
-  }
-
-}
-
-SortIcon.propTypes = {
-  sort: _propTypes.default.func.isRequired,
-  sortType: _propTypes.default.string
-};
-var _default = SortIcon;
-exports.default = _default;
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.filtersReset = exports.filterAction = exports.filterActions = void 0;
-
-var _util = __webpack_require__(23);
-
-const filterActions = (inputArray = [], filterArray = [], addFilter = true, valueFunc = undefined) => {
-  const filteredArray = [];
-  const dataWithFilter = inputArray.map(item => {
-    const itemCopy = Object.assign({}, item);
-    let i;
-    let l;
-
-    if ((0, _util.isUndefined)(itemCopy.appliedFilters)) {
-      itemCopy.appliedFilters = {};
-    }
-
-    for (i = 0, l = filterArray.length; i < l; i = i + 1) {
-      const filterItem = filterArray[i];
-      const key = filterItem.key;
-      let value = filterItem.value;
-
-      if ((0, _util.isUndefined)(value)) {
-        value = '';
-      }
-
-      let itemValue = (0, _util.getValForKey)(item, key);
-
-      if (!(0, _util.isUndefined)(valueFunc)) {
-        itemValue = valueFunc(itemValue);
-      }
-
-      if ((0, _util.isUndefined)(itemValue)) {
-        itemValue = '';
-      }
-
-      if ((0, _util.isTypeString)(itemValue)) {
-        itemValue = itemValue.trim();
-      }
-
-      if (addFilter) {
-        if (itemValue === value) {
-          if (!itemCopy.appliedFilters[key]) {
-            itemCopy.appliedFilters[key] = 0;
-          }
-
-          itemCopy.appliedFilters[key] += 1;
-        }
-      } else {
-        if (itemValue === value) {
-          itemCopy.appliedFilters[key] -= 1;
-
-          if (itemCopy.appliedFilters[key] === 0) {
-            delete itemCopy.appliedFilters[key];
-          }
-        }
-      }
-    }
-
-    if (Object.keys(itemCopy.appliedFilters).length === 0) {
-      delete itemCopy['appliedFilters'];
-      filteredArray.push(Object.assign({}, itemCopy));
-    }
-
-    return itemCopy;
-  });
-  return {
-    filteredArray,
-    dataWithFilter
-  };
-};
-/**
- * [Function to apply a filter to an Array]
- * @param  {Array}   inputArray [Array to be filtered]
- * @param  {Object}  filter     [{key, value} filter key and value]
- * @param  {Boolean} addFilter
- * @param  {Function}  valueFunc  [Function to calculate value of the property(optional)]
- * @return {Object}
- *         filteredArray [Filtered items after appying filter]
- *         dataWithFilter [inputArray along with modification due to applied filters]
- */
-
-
-exports.filterActions = filterActions;
-
-const filterAction = (inputArray = [], filter = {}, addFilter = true, valueFunc = undefined) => {
-  const key = filter.key;
-  let value = filter.value;
-
-  if ((0, _util.isUndefined)(value)) {
-    value = '';
-  }
-
-  if (!(0, _util.isUndefined)(key)) {
-    const filteredArray = [];
-    const dataWithFilter = inputArray.map(item => {
-      const itemCopy = Object.assign({}, item);
-      let itemValue = (0, _util.getValForKey)(item, key);
-
-      if (!(0, _util.isUndefined)(valueFunc)) {
-        itemValue = valueFunc(itemValue);
-      }
-
-      if ((0, _util.isUndefined)(itemValue)) {
-        itemValue = '';
-      }
-
-      if ((0, _util.isUndefined)(itemCopy.appliedFilters)) {
-        itemCopy.appliedFilters = {};
-      }
-
-      if ((0, _util.isTypeString)(itemValue)) {
-        itemValue = itemValue.trim();
-      }
-
-      if (addFilter) {
-        if (itemValue === value) {
-          if (!itemCopy.appliedFilters[key]) {
-            itemCopy.appliedFilters[key] = 0;
-          }
-
-          itemCopy.appliedFilters[key] += 1;
-        }
-      } else {
-        if (itemValue === value) {
-          itemCopy.appliedFilters[key] -= 1;
-
-          if (itemCopy.appliedFilters[key] === 0) {
-            delete itemCopy.appliedFilters[key];
-          }
-        }
-      }
-
-      if (Object.keys(itemCopy.appliedFilters).length === 0) {
-        delete itemCopy['appliedFilters'];
-        filteredArray.push(Object.assign({}, itemCopy));
-      }
-
-      return itemCopy;
-    });
-    return {
-      filteredArray,
-      dataWithFilter
-    };
-  }
-
-  return;
-};
-/**
- * [Function to reset certain values for a filter]
- * @param  {Array}   inputArray [Array to be filtered]
- * @param  {Array}   values     [Filter values to reset]
- * @param  {[type]}  key        [Filter key]
- * @param  {Boolean} selectAll
- * @param  {Function}  valueFunc  [Function to calculate value of the property(optional)]
- * @return {[type]}
- */
-
-
-exports.filterAction = filterAction;
-
-const filtersReset = (inputArray = [], values = [], key = undefined, selectAll = true, valueFunc = undefined) => {
-  const filteredArray = [];
-  const dataWithFilter = inputArray.map(item => {
-    const itemCopy = Object.assign({}, item);
-
-    if ((0, _util.isUndefined)(itemCopy.appliedFilters)) {
-      itemCopy.appliedFilters = {};
-    }
-
-    let itemValue = (0, _util.getValForKey)(itemCopy, key);
-
-    if (!(0, _util.isUndefined)(valueFunc)) {
-      itemValue = valueFunc(itemValue);
-    }
-
-    if ((0, _util.isUndefined)(itemValue)) {
-      itemValue = '';
-    }
-
-    if ((0, _util.isTypeString)(itemValue)) {
-      itemValue = itemValue.trim();
-    }
-
-    if (values.indexOf(itemValue) >= 0) {
-      if (selectAll) {
-        delete itemCopy.appliedFilters[key];
-      } else {
-        if (!itemCopy.appliedFilters[key]) {
-          itemCopy.appliedFilters[key] = 0;
-        }
-
-        itemCopy.appliedFilters[key]++;
-      }
-    }
-
-    if (Object.keys(itemCopy.appliedFilters).length === 0) {
-      delete itemCopy['appliedFilters'];
-      filteredArray.push(Object.assign({}, itemCopy));
-    }
-
-    return itemCopy;
-  });
-  return {
-    filteredArray,
-    dataWithFilter
-  };
-};
-
-exports.filtersReset = filtersReset;
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 35 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

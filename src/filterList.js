@@ -72,7 +72,7 @@ class FilterList extends React.Component {
    */
   _displayFilter = () => {
     /* Body Click listener added*/
-    EventStack.sub('click', this._handleOutsideClick, document);
+    EventStack.sub('click', this._handleOutsideClick);
     this.setState({
       showFilter: true,
     });
