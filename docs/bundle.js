@@ -116,7 +116,7 @@ class SimpleExample extends _react.Component {
     this._filterUpdated = this._filterUpdated.bind(this);
   }
 
-  _filterUpdated(newData) {
+  _filterUpdated(newData, filtersObject) {
     this.setState({
       'episodes': newData
     });
@@ -149,15 +149,13 @@ class SimpleExample extends _react.Component {
       className: "basic-table"
     }, _react.default.createElement("thead", null, _react.default.createElement(_bundle.default, {
       rows: episodes,
-      onFilterUpdate: this._filterUpdated,
-      ref: node => {
-        this.check = node;
-      }
+      onFilterUpdate: this._filterUpdated
     }, _react.default.createElement("th", {
       key: "name",
       filterkey: "name",
       className: "cell",
-      showSearch: true
+      casesensitive: 'true',
+      showsearch: 'true'
     }, "Name"), _react.default.createElement("th", {
       key: "season",
       filterkey: "season",
@@ -166,7 +164,7 @@ class SimpleExample extends _react.Component {
       key: "number",
       filterkey: "number",
       className: "cell",
-      alignleft: true
+      alignleft: 'true'
     }, "Number"))), _react.default.createElement("tbody", null, elementsHtml)))));
   }
 
@@ -8520,11 +8518,11 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
       return i.d(t, "a", t), t;
     }, i.o = function (e, t) {
       return Object.prototype.hasOwnProperty.call(e, t);
-    }, i.p = "", i(i.s = 4);
+    }, i.p = "", i(i.s = 6);
   }([function (t, i) {
     t.exports = e;
   }, function (e, t, i) {
-    e.exports = i(8)();
+    e.exports = i(10)();
   }, function (e, t, i) {
     "use strict";
 
@@ -8586,8 +8584,7 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
     t.uniq = a;
 
     const o = (e, t = []) => {
-      let i = [];
-      t.length;
+      const i = [];
       return e.length ? (e.forEach(e => {
         t.indexOf(e) < 0 && i.push(e);
       }), i) : i;
@@ -8603,6 +8600,167 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
       without: o
     };
     t.default = d;
+  }, function (e, t, i) {
+    "use strict";
+
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.default = t.DSC_VALUE = t.ASC_VALUE = t.BLANK_LABEL = void 0;
+    t.BLANK_LABEL = "(blank)";
+    t.ASC_VALUE = "asc";
+    t.DSC_VALUE = "dsc";
+    var s = {
+      BLANK_LABEL: "(blank)",
+      ASC_VALUE: "asc",
+      DSC_VALUE: "dsc"
+    };
+    t.default = s;
+  }, function (e, t, i) {
+    "use strict";
+
+    Object.defineProperty(t, "__esModule", {
+      value: !0
+    }), t.calculateFilterProps = t.createFiltersFromItems = t.filtersReset = t.filterAction = t.filterActions = void 0;
+    var s = i(2),
+        r = i(5),
+        l = i(3);
+
+    function n() {
+      return (n = Object.assign || function (e) {
+        for (var t = 1; t < arguments.length; t++) {
+          var i = arguments[t];
+
+          for (var s in i) Object.prototype.hasOwnProperty.call(i, s) && (e[s] = i[s]);
+        }
+
+        return e;
+      }).apply(this, arguments);
+    }
+
+    t.filterActions = (e = [], t = [], i = !0, r) => {
+      const l = [],
+            a = e.map(e => {
+        const a = n({}, e);
+        let o, d;
+
+        for ((0, s.isUndefined)(a.appliedFilters) && (a.appliedFilters = {}), o = 0, d = t.length; o < d; o += 1) {
+          const l = t[o],
+                n = l.key;
+          let d = l.value;
+          (0, s.isUndefined)(d) && (d = "");
+          let u = (0, s.getValForKey)(e, n);
+          (0, s.isUndefined)(r) || (u = r(u)), (0, s.isUndefined)(u) && (u = ""), (0, s.isTypeString)(u) && (u = u.trim()), i ? u === d && (a.appliedFilters[n] || (a.appliedFilters[n] = 0), a.appliedFilters[n] += 1) : u === d && (a.appliedFilters[n] -= 1, 0 === a.appliedFilters[n] && delete a.appliedFilters[n]);
+        }
+
+        return 0 === Object.keys(a.appliedFilters).length && (delete a.appliedFilters, l.push(n({}, a))), a;
+      });
+      return {
+        filteredArray: l,
+        dataWithFilter: a
+      };
+    };
+
+    t.filterAction = (e = [], t = {}, i = !0, r) => {
+      const l = t.key;
+      let a = t.value;
+
+      if ((0, s.isUndefined)(a) && (a = ""), !(0, s.isUndefined)(l)) {
+        const t = [],
+              o = e.map(e => {
+          const o = n({}, e);
+          let d = (0, s.getValForKey)(e, l);
+          return (0, s.isUndefined)(r) || (d = r(d)), (0, s.isUndefined)(d) && (d = ""), (0, s.isUndefined)(o.appliedFilters) && (o.appliedFilters = {}), (0, s.isTypeString)(d) && (d = d.trim()), i ? d === a && (o.appliedFilters[l] || (o.appliedFilters[l] = 0), o.appliedFilters[l] += 1) : d === a && (o.appliedFilters[l] -= 1, 0 === o.appliedFilters[l] && delete o.appliedFilters[l]), 0 === Object.keys(o.appliedFilters).length && (delete o.appliedFilters, t.push(n({}, o))), o;
+        });
+        return {
+          filteredArray: t,
+          dataWithFilter: o
+        };
+      }
+    };
+
+    t.filtersReset = (e = [], t = [], i, r = !0, l) => {
+      const a = [],
+            o = e.map(e => {
+        const o = n({}, e);
+        (0, s.isUndefined)(o.appliedFilters) && (o.appliedFilters = {});
+        let d = (0, s.getValForKey)(o, i);
+        return (0, s.isUndefined)(l) || (d = l(d)), (0, s.isUndefined)(d) && (d = ""), (0, s.isTypeString)(d) && (d = d.trim()), t.indexOf(d) >= 0 && (r ? delete o.appliedFilters[i] : (o.appliedFilters[i] || (o.appliedFilters[i] = 0), o.appliedFilters[i]++)), 0 === Object.keys(o.appliedFilters).length && (delete o.appliedFilters, a.push(n({}, o))), o;
+      });
+      return {
+        filteredArray: a,
+        dataWithFilter: o
+      };
+    };
+
+    const a = (e, t, i, a) => {
+      const o = e ? [...e] : [],
+            d = [];
+      let u = [],
+          c = !0;
+      return o.map(e => {
+        let r = (0, s.getValForKey)(e, t),
+            a = r;
+        (0, s.isUndefined)(i) || (r = i(r));
+        const o = e.appliedFilters || {};
+        let p = r;
+        if ((0, s.isUndefined)(r) ? (r = "", a = p = l.BLANK_LABEL) : (0, s.isTypeString)(r) && 0 === (r = r.trim()).length && (a = p = l.BLANK_LABEL), -1 === d.indexOf(r)) !(0, s.isUndefined)(o) && Object.keys(o).length > 0 ? 1 === Object.keys(o).length && Object.keys(o)[0] === t ? (c = !1, u.push({
+          key: r,
+          display: p,
+          selected: !1,
+          visible: !0,
+          orinigalValue: a
+        })) : u.push({
+          key: r,
+          display: p,
+          selected: !0,
+          visible: !1,
+          orinigalValue: a
+        }) : u.push({
+          key: r,
+          display: p,
+          selected: !0,
+          visible: !0,
+          orinigalValue: a
+        }), d.push(r);else {
+          const e = d.indexOf(r);
+          let i = u[e];
+          0 === Object.keys(o).length && (i.selected && i.visible || (i = n({}, i, {
+            selected: !0,
+            visible: !0
+          }), u[e] = i)), 1 === Object.keys(o).length && Object.keys(o)[0] === t && (c = !1, i = n({}, i, {
+            selected: !1,
+            visible: !0
+          }), u[e] = i);
+        }
+      }), {
+        filterList: u = (0, r.sortAction)(u, l.ASC_VALUE, {
+          valueFunc: a,
+          key: "orinigalValue"
+        }),
+        selectState: c
+      };
+    };
+
+    t.createFiltersFromItems = a;
+
+    t.calculateFilterProps = ({
+      filteredData: e,
+      filterkey: t,
+      itemDisplayValueFunc: i,
+      itemSortValueFunc: r,
+      sortKey: l,
+      sortType: n
+    }) => {
+      const {
+        filterList: o,
+        selectState: d
+      } = a(e, t, i, r);
+      return {
+        filterList: o,
+        selectAllFilters: d,
+        sortType: (0, s.isUndefined)(l) || l !== t ? void 0 : n
+      };
+    };
   }, function (e, t, i) {
     "use strict";
 
@@ -8640,10 +8798,10 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
       value: !0
     }), t.default = void 0;
     var s = i(0),
-        r = d(i(5)),
+        r = d(i(7)),
         l = i(2),
-        n = i(21),
-        a = i(3),
+        n = i(4),
+        a = i(5),
         o = d(i(1));
 
     function d(e) {
@@ -8681,11 +8839,11 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
           if (!(0, l.isUndefined)(t) && Object.keys(t).length > 0) {
             let i;
             Object.keys(t).map(s => {
-              let r = t[s].map(e => ({
+              const r = t[s].map(e => ({
                 key: s,
                 value: e
-              }));
-              const l = (0, n.filterActions)(e, r, !0, this._getValueFunctionForKey(s));
+              })),
+                    l = (0, n.filterActions)(e, r, !0, this._getValueFunctionForKey(s));
               i = l.filteredArray, e = l.dataWithFilter;
             }), this.props.onFilterUpdate && this.props.onFilterUpdate(i, t);
           }
@@ -8697,8 +8855,8 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
             (0, l.isUndefined)(i) || (0, l.isUndefined)(i.props.filterkey, !0) || i.props.filterkey !== e || (t = i.props.itemDisplayValueFunc);
           }), t;
         }), c(this, "_createData", (e = []) => {
-          let t = [],
-              i = [];
+          const t = [],
+                i = [];
           return e.map(e => {
             t.push(u({}, e)), i.push(u({}, e));
           }), {
@@ -8706,7 +8864,7 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
             filteredData: i
           };
         }), c(this, "_filterMulipleRows", (e = [], t = [], i) => {
-          let s = this.state.filteredData;
+          const s = this.state.filteredData;
 
           if (!(0, l.isUndefined)(e)) {
             t.map(e => {
@@ -8725,7 +8883,7 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
             }
           }
         }), c(this, "_filterRows", (e, t, i = !0, s) => {
-          let r = this.state.filteredData;
+          const r = this.state.filteredData;
 
           if (!(0, l.isUndefined)(e) && !(0, l.isUndefined)(t)) {
             this._updateCurrentFilters([e], i, t);
@@ -8754,7 +8912,7 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
           });
         }), c(this, "_getCurrentFilters", () => this.currentFilters), c(this, "_resetRows", (e = [], t, i = !0, s) => {
           if (!(0, l.isUndefined)(t)) {
-            let r = this.state.filteredData;
+            const r = this.state.filteredData;
 
             this._updateCurrentFilters(e, !i, t);
 
@@ -8774,20 +8932,20 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
           key: s
         } = {}) => {
           if (!(0, l.isUndefined)(e)) {
-            let r = this.state.filteredData;
-            const n = (0, a.sortAction)(r, e, {
+            const r = this.state.filteredData,
+                  n = (0, a.sortAction)(r, e, {
               valueFunc: t,
               caseSensitive: i,
               key: s
-            });
-            let o = [];
+            }),
+                  o = [];
             this.setState({
               filteredData: n,
               sortKey: s,
               sortType: e
             }), n.map(e => {
               if ((0, l.isUndefined)(e.appliedFilters) || 0 === Object.keys(e.appliedFilters).length) {
-                let t = u({}, e);
+                const t = u({}, e);
                 delete t.appliedFilters, o.push(t);
               }
             }), this.props.onFilterUpdate && this.props.onFilterUpdate(o, this._getCurrentFilters());
@@ -8795,7 +8953,7 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
         }), c(this, "reset", (e, t = !0) => {
           t ? this.currentFilters = {} : e = this._applyInitialFilters(e);
 
-          let i = this._createData(e);
+          const i = this._createData(e);
 
           this.setState({
             initialData: i.initialData,
@@ -8803,8 +8961,8 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
           });
         }), this.currentFilters = this.props.initialFilters || {};
 
-        let t = this._applyInitialFilters(this.props.rows),
-            i = this._createData(t);
+        const t = this._applyInitialFilters(this.props.rows),
+              i = this._createData(t);
 
         this.state = {
           initialData: i.initialData,
@@ -8812,8 +8970,6 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
           sortKey: void 0
         };
       }
-
-      _initMethods() {}
 
       render() {
         return r.default.call(this);
@@ -8826,7 +8982,8 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
       onFilterUpdate: o.default.func.isRequired,
       rowClass: o.default.string,
       initialFilters: o.default.array,
-      rowComponent: o.default.func
+      rowComponent: o.default.func,
+      children: o.default.any
     };
     var f = p;
     t.default = f;
@@ -8836,19 +8993,19 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
     Object.defineProperty(t, "__esModule", {
       value: !0
     }), t.default = void 0;
-    var s = n(i(0)),
-        r = n(i(6)),
-        l = i(2);
-    n(i(20));
+    var s = a(i(0)),
+        r = a(i(8)),
+        l = i(2),
+        n = (a(i(20)), i(4));
 
-    function n(e) {
+    function a(e) {
       return e && e.__esModule ? e : {
         default: e
       };
     }
 
-    function a() {
-      return (a = Object.assign || function (e) {
+    function o() {
+      return (o = Object.assign || function (e) {
         for (var t = 1; t < arguments.length; t++) {
           var i = arguments[t];
 
@@ -8859,97 +9016,97 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
       }).apply(this, arguments);
     }
 
-    var o = function () {
+    var d = function () {
       const e = this.props.children,
-            t = [];
-      let i;
-      if (!(0, l.isUndefined)(e) && e.length > 0 ? s.default.Children.map(this.props.children, (e, i) => {
+            t = [],
+            {
+        filteredData: i,
+        sortType: a,
+        sortKey: d
+      } = this.state;
+      let u;
+      if (!(0, l.isUndefined)(e) && e.length > 0 ? s.default.Children.map(this.props.children, (e, u) => {
         if ((0, l.isUndefined)(e) || (0, l.isUndefined)(e.props.filterkey, !0)) {
           if (!(0, l.isUndefined)(e)) {
             const i = s.default.cloneElement(e);
             t.push(i);
           }
         } else {
-          let n = e.props.className,
-              o = e.props.children || [];
-          (0, l.isTypeArray)(o) || (o = [o]), n = (0, l.isUndefined)(n, !0) ? "apply-filter" : [n, " ", "apply-filter"].join(""), "true" != e.props.filterAdded ? o.push(s.default.createElement(r.default, a({}, e.props, {
-            key: `list_${i}`,
-            initialData: this.state.initialData,
-            filteredData: this.state.filteredData,
+          let c = e.props.className,
+              p = e.props.children || [];
+          const {
+            filterkey: f,
+            itemDisplayValueFunc: h,
+            itemSortValueFunc: y
+          } = e.props;
+          (0, l.isTypeArray)(p) || (p = [p]), c = (0, l.isUndefined)(c, !0) ? "apply-filter" : [c, " ", "apply-filter"].join("");
+
+          const _ = (0, n.calculateFilterProps)({
+            filteredData: i,
+            filterkey: f,
+            itemDisplayValueFunc: h,
+            itemSortValueFunc: y,
+            sortKey: d,
+            sortType: a
+          });
+
+          "true" != e.props.filterAdded ? p.push(s.default.createElement(r.default, o({}, e.props, _, {
+            key: `list_${u}`,
             filterRows: this._filterRows,
             filterMultipleRows: this._filterMulipleRows,
             resetRows: this._resetRows,
-            sortRows: this._sortRows,
-            sortKey: this.state.sortKey,
-            sortType: this.state.sortType
-          }))) : o[o.length - 1] = s.default.createElement(r.default, a({}, e.props, {
-            key: `list_${i}`,
-            initialData: this.state.initialData,
-            filteredData: this.state.filteredData,
+            sortRows: this._sortRows
+          }))) : p[p.length - 1] = s.default.createElement(r.default, o({}, e.props, _, {
+            key: `list_${u}`,
             filterRows: this._filterRows,
             filterMultipleRows: this._filterMulipleRows,
             resetRows: this._resetRows,
-            sortRows: this._sortRows,
-            sortKey: this.state.sortKey,
-            sortType: this.state.sortType
+            sortRows: this._sortRows
           }));
-          let d = {
-            className: n,
+          const m = {
+            className: c,
             filteradded: "true"
-          };
-          const u = s.default.cloneElement(e, d, [...o]);
-          t.push(u);
+          },
+                b = s.default.cloneElement(e, m, [...p]);
+          t.push(b);
         }
-      }) : console.error("TableFilter Error: Should contain one or more children"), (0, l.isUndefined)(this.props.rowComponent)) i = s.default.createElement("tr", {
+      }) : console.error("TableFilter Error: Should contain one or more children"), (0, l.isUndefined)(this.props.rowComponent)) u = s.default.createElement("tr", {
         className: [this.props.rowClass ? this.props.rowClass + " " : "", "table-filter-row"].join("")
       }, t);else {
         const e = this.props.rowComponent,
-              r = {
+              i = {
           className: [this.props.rowClass ? this.props.rowClass + " " : "", "table-filter-row"].join("")
         };
-        i = s.default.cloneElement(e, r, [...t]);
+        u = s.default.cloneElement(e, i, [...t]);
       }
-      return i;
+      return u;
     };
 
-    t.default = o;
+    t.default = d;
   }, function (e, t, i) {
     "use strict";
 
     Object.defineProperty(t, "__esModule", {
       value: !0
     }), t.default = void 0;
-    var s = h(i(0)),
-        r = h(i(7)),
-        l = h(i(10)),
-        n = h(i(11)),
-        a = i(2),
-        o = h(i(13)),
-        d = h(i(17)),
-        u = i(3),
-        c = i(18),
-        p = h(i(19)),
-        f = h(i(1));
+    var s = f(i(0)),
+        r = f(i(9)),
+        l = f(i(12)),
+        n = f(i(13)),
+        a = f(i(14)),
+        o = f(i(18)),
+        d = f(i(19)),
+        u = f(i(1)),
+        c = i(3),
+        p = i(2);
 
-    function h(e) {
+    function f(e) {
       return e && e.__esModule ? e : {
         default: e
       };
     }
 
-    function y() {
-      return (y = Object.assign || function (e) {
-        for (var t = 1; t < arguments.length; t++) {
-          var i = arguments[t];
-
-          for (var s in i) Object.prototype.hasOwnProperty.call(i, s) && (e[s] = i[s]);
-        }
-
-        return e;
-      }).apply(this, arguments);
-    }
-
-    function _(e, t, i) {
+    function h(e, t, i) {
       return t in e ? Object.defineProperty(e, t, {
         value: i,
         enumerable: !0,
@@ -8958,163 +9115,90 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
       }) : e[t] = i, e;
     }
 
-    class v extends s.default.Component {
+    class y extends s.default.Component {
       constructor(e) {
-        super(e), _(this, "_handleOutsideClick", e => {
+        super(e), h(this, "_handleOutsideClick", e => {
           this.filterIconNode.contains(e.target) || this._hideFilter();
-        }), _(this, "_calculateFilterState", e => {
-          let t = e ? [...e] : [];
-          const i = this.props.filterkey;
-          let s = [],
-              r = [],
-              l = !0;
-          return t.map(e => {
-            let t = (0, a.getValForKey)(e, i),
-                n = t;
-            (0, a.isUndefined)(this.props.itemDisplayValueFunc) || (t = this.props.itemDisplayValueFunc(t));
-            const o = e.appliedFilters || {};
-            let d = t;
-            if ((0, a.isUndefined)(t) ? (t = "", n = d = c.BLANK_LABEL) : (0, a.isTypeString)(t) && 0 === (t = t.trim()).length && (n = d = c.BLANK_LABEL), -1 === s.indexOf(t)) !(0, a.isUndefined)(o) && Object.keys(o).length > 0 ? 1 === Object.keys(o).length && Object.keys(o)[0] === i ? (l = !1, r.push({
-              key: t,
-              display: d,
-              selected: !1,
-              visible: !0,
-              orinigalValue: n
-            })) : r.push({
-              key: t,
-              display: d,
-              selected: !0,
-              visible: !1,
-              orinigalValue: n
-            }) : r.push({
-              key: t,
-              display: d,
-              selected: !0,
-              visible: !0,
-              orinigalValue: n
-            }), s.push(t);else {
-              const e = s.indexOf(t);
-              let n = r[e];
-              0 === Object.keys(o).length && (n.selected && n.visible || (n = y({}, n, {
-                selected: !0,
-                visible: !0
-              }), r[e] = n)), 1 === Object.keys(o).length && Object.keys(o)[0] === i && (l = !1, n = y({}, n, {
-                selected: !1,
-                visible: !0
-              }), r[e] = n);
-            }
-          }), {
-            filterList: r = (0, u.sortAction)(r, c.ASC_VALUE, {
-              valueFunc: this.props.itemSortValueFunc,
-              key: "orinigalValue"
-            }),
-            selectState: l
-          };
-        }), _(this, "_filterIconClicked", e => {
+        }), h(this, "_filterIconClicked", e => {
           !this.state.showFilter ? this._displayFilter() : this._hideFilter();
-        }), _(this, "_displayFilter", () => {
-          o.default.sub("click", this._handleOutsideClick, document), this.setState({
+        }), h(this, "_displayFilter", () => {
+          a.default.sub("click", this._handleOutsideClick, document), this.setState({
             showFilter: !0
           });
-        }), _(this, "_hideFilter", () => {
-          o.default.unsub("click", this._handleOutsideClick), this.setState({
+        }), h(this, "_hideFilter", () => {
+          a.default.unsub("click", this._handleOutsideClick), this.setState({
             showFilter: !1,
             searchEnabled: !1
           });
-        }), _(this, "_filterUpdated", e => {
-          let t = this.state.filterList;
+        }), h(this, "_filterUpdated", e => {
+          const t = this.props.filterList;
 
-          if (!(0, a.isUndefined)(t[e])) {
+          if (!(0, p.isUndefined)(t[e])) {
             const i = !t[e].selected;
 
             this._filterData(t[e].key, !i);
           }
-        }), _(this, "_selectAllClicked", () => {
-          const e = !this.state.selectAllFilters;
+        }), h(this, "_selectAllClicked", () => {
+          const e = !this.props.selectAllFilters;
           if (this.state.searchEnabled) return;
-          const t = this.state.filterList.filter(t => e ? t.visible && !t.selected : t.visible && t.selected).map(e => e.key);
+          const t = this.props.filterList.filter(t => e ? t.visible && !t.selected : t.visible && t.selected).map(e => e.key);
 
           this._resetData(t, e);
-        }), _(this, "_filterData", (e, t = !0) => {
+        }), h(this, "_filterData", (e, t = !0) => {
           this.props.filterRows(e, this.props.filterkey, t, this.props.itemDisplayValueFunc);
-        }), _(this, "_resetData", (e = [], t = !0) => {
+        }), h(this, "_resetData", (e = [], t = !0) => {
           this.props.resetRows(e, this.props.filterkey, t, this.props.itemDisplayValueFunc);
-        }), _(this, "_sortClicked", () => {
-          const e = this.state.sortType;
+        }), h(this, "_sortClicked", () => {
+          const e = this.props.sortType;
           let t;
-          t = (0, a.isUndefined)(e) || e === c.DSC_VALUE ? c.ASC_VALUE : c.DSC_VALUE, this.props.sortRows(t, {
+          t = (0, p.isUndefined)(e) || e === c.DSC_VALUE ? c.ASC_VALUE : c.DSC_VALUE, this.props.sortRows(t, {
             itemSortValueFunc: this.props.itemSortValueFunc,
-            caseSensitive: this.props.caseSensitive,
+            caseSensitive: "true" === this.props.casesensitive,
             key: this.props.filterkey
           });
-        }), _(this, "_searchChanged", e => {
-          let t = !1,
-              i = this.props.filterkey;
+        }), h(this, "_searchChanged", e => {
+          const t = this.props.filterkey;
           this.searchValue = e;
-          const s = this.appliedSearchFilters;
-          if ((0, a.isUndefined)(e, !0)) this.setState({
+          const i = this.appliedSearchFilters;
+          if ((0, p.isUndefined)(e, !0)) this.setState({
             searchEnabled: !1
-          }), this.appliedSearchFilters = [], this.props.filterMultipleRows([], s, this.props.itemDisplayValueFunc);else {
+          }), this.appliedSearchFilters = [], this.props.filterMultipleRows([], i, this.props.itemDisplayValueFunc);else {
             this.setState({
               searchEnabled: !0
-            }), e = e.toLowerCase(), t = !0;
-            const r = this.state.filterList.filter(t => {
+            }), e = e.toLowerCase();
+            const s = this.props.filterList.filter(t => {
               return !!(t.key.toString().toLowerCase().indexOf(e) < 0 && t.visible);
             }).map(e => ({
-              key: i,
+              key: t,
               value: e.key
             }));
-            this.appliedSearchFilters = r, this.props.filterMultipleRows(r, s, this.props.itemDisplayValueFunc);
+            this.appliedSearchFilters = s, this.props.filterMultipleRows(s, i, this.props.itemDisplayValueFunc);
           }
-        });
-
-        const {
-          filterList: t,
-          selectState: i
-        } = this._calculateFilterState(this.props.filteredData);
-
-        this.appliedSearchFilters = void 0, this.searchValue = void 0, this.state = {
-          filterList: t,
+        }), this.appliedSearchFilters = void 0, this.searchValue = void 0, this.state = {
           showFilter: !1,
-          selectAllFilters: i,
-          sortType: void 0,
           searchEnabled: !1
         };
       }
 
       componentWillUnmount() {
-        o.default.unsub("click", this._handleOutsideClick);
-      }
-
-      componentWillReceiveProps(e) {
-        const {
-          filterList: t,
-          selectState: i
-        } = this._calculateFilterState(e.filteredData),
-              s = (0, a.isUndefined)(e.sortKey) || e.sortKey !== this.props.filterkey ? void 0 : e.sortType;
-
-        this.setState({
-          filterList: t,
-          selectAllFilters: i,
-          sortType: s
-        });
+        a.default.unsub("click", this._handleOutsideClick);
       }
 
       render() {
         const e = this.state.showFilter,
-              t = (this.props.filterkey, !1 !== this.props.showSearch);
-        let i,
-            a = [];
+              t = "false" !== this.props.showsearch,
+              i = [];
+        let a;
 
-        if (this.state.filterList.length > 1) {
+        if (this.props.filterList.length > 1) {
           if (e) {
             const e = t ? s.default.createElement(n.default, {
               searchChanged: this._searchChanged
             }) : null;
-            this.state.filterList.map((e, t) => {
+            this.props.filterList.map((e, t) => {
               if (e.visible) {
                 if (this.state.searchEnabled) {
-                  return e.key.toString().toLowerCase().indexOf(this.searchValue.toLowerCase()) >= 0 ? a.push(s.default.createElement(r.default, {
+                  return e.key.toString().toLowerCase().indexOf(this.searchValue.toLowerCase()) >= 0 ? i.push(s.default.createElement(r.default, {
                     key: "item_" + t,
                     filterClicked: this._filterUpdated,
                     index: t,
@@ -9123,7 +9207,7 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
                   })) : null;
                 }
 
-                a.push(s.default.createElement(r.default, {
+                i.push(s.default.createElement(r.default, {
                   key: "item_" + t,
                   filterClicked: this._filterUpdated,
                   index: t,
@@ -9132,28 +9216,28 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
                 }));
               }
             });
-            const o = [!0 === this.props.alignleft ? "align-left " : "", "filter-list"].join("");
-            i = s.default.createElement("div", {
+            const o = ["true" === this.props.alignleft ? "align-left " : "", "filter-list"].join("");
+            a = s.default.createElement("div", {
               className: o
-            }, e, s.default.createElement(p.default, {
+            }, e, s.default.createElement(d.default, {
               sort: this._sortClicked,
-              sortType: this.state.sortType
+              sortType: this.props.sortType
             }), s.default.createElement(l.default, {
               filterClicked: this._selectAllClicked,
-              selected: this.state.selectAllFilters
-            }), a);
+              selected: this.props.selectAllFilters
+            }), i);
           }
 
-          const o = !this.state.selectAllFilters || e;
+          const u = !this.props.selectAllFilters || e;
           return s.default.createElement("div", {
             className: "table-filter-parent",
             ref: e => {
               this.filterIconNode = e;
             }
-          }, s.default.createElement(d.default, {
+          }, s.default.createElement(o.default, {
             iconClicked: this._filterIconClicked,
-            selected: o
-          }), i);
+            selected: u
+          }), a);
         }
 
         return s.default.createElement("div", {
@@ -9165,17 +9249,23 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
 
     }
 
-    v.propTypes = {
-      initialData: f.default.array.isRequired,
-      filteredData: f.default.array.isRequired,
-      filterRows: f.default.func.isRequired,
-      resetRows: f.default.func.isRequired,
-      sortRows: f.default.func.isRequired,
-      sortKey: f.default.string,
-      sortType: f.default.string
+    y.propTypes = {
+      filterRows: u.default.func.isRequired,
+      resetRows: u.default.func.isRequired,
+      sortRows: u.default.func.isRequired,
+      sortType: u.default.string,
+      filterkey: u.default.string.isRequired,
+      itemDisplayValueFunc: u.default.func,
+      itemSortValueFunc: u.default.func,
+      casesensitive: u.default.string,
+      filterMultipleRows: u.default.func.isRequired,
+      showsearch: u.default.string,
+      alignleft: u.default.string,
+      filterList: u.default.array,
+      selectAllFilters: u.default.bool
     };
-    var m = v;
-    t.default = m;
+    var _ = y;
+    t.default = _;
   }, function (e, t, i) {
     "use strict";
 
@@ -9229,7 +9319,7 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
   }, function (e, t, i) {
     "use strict";
 
-    var s = i(9);
+    var s = i(11);
 
     function r() {}
 
@@ -9293,15 +9383,15 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
 
     class n extends s.default.Component {
       constructor(e) {
-        super(e), this.state = {}, this._initMethods();
-      }
-
-      _initMethods() {
-        this._selectAllClicked = this._selectAllClicked.bind(this);
-      }
-
-      _selectAllClicked() {
-        this.props.filterClicked();
+        var t, i, s;
+        super(e), s = () => {
+          this.props.filterClicked();
+        }, (i = "_selectAllClicked") in (t = this) ? Object.defineProperty(t, i, {
+          value: s,
+          enumerable: !0,
+          configurable: !0,
+          writable: !0
+        }) : t[i] = s;
       }
 
       render() {
@@ -9330,33 +9420,33 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
     Object.defineProperty(t, "__esModule", {
       value: !0
     }), t.default = void 0;
-    var s = n(i(0)),
-        r = n(i(12)),
-        l = n(i(1));
+    var s = l(i(0)),
+        r = l(i(1));
 
-    function n(e) {
+    function l(e) {
       return e && e.__esModule ? e : {
         default: e
       };
     }
 
+    function n(e, t, i) {
+      return t in e ? Object.defineProperty(e, t, {
+        value: i,
+        enumerable: !0,
+        configurable: !0,
+        writable: !0
+      }) : e[t] = i, e;
+    }
+
     class a extends s.default.Component {
       constructor(e) {
-        super(e), this._initMethods();
-      }
+        super(e), n(this, "_searchInputChanged", e => {
+          const t = e.target.value;
 
-      _initMethods() {
-        this._searchInputChanged = this._searchInputChanged.bind(this), this._callSearchChanged = (0, r.default)(this._callSearchChanged.bind(this), 300);
-      }
-
-      _searchInputChanged(e) {
-        const t = e.target.value;
-
-        this._callSearchChanged(t);
-      }
-
-      _callSearchChanged(e) {
-        this.props.searchChanged && this.props.searchChanged(e);
+          this._callSearchChanged(t);
+        }), n(this, "_callSearchChanged", e => {
+          this.props.searchChanged && this.props.searchChanged(e);
+        });
       }
 
       render() {
@@ -9373,35 +9463,10 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
     }
 
     a.propTypes = {
-      searchChanged: l.default.func.isRequired
+      searchChanged: r.default.func.isRequired
     };
     var o = a;
     t.default = o;
-  }, function (e, t, i) {
-    "use strict";
-
-    e.exports = (e, t, i) => {
-      var s, r, l, n, a;
-
-      function o() {
-        var d = Date.now() - n;
-        d < t && d >= 0 ? s = setTimeout(o, t - d) : (s = null, i || (a = e.apply(l, r), l = r = null));
-      }
-
-      null == t && (t = 100);
-
-      var d = function () {
-        l = this, r = arguments, n = Date.now();
-        var d = i && !s;
-        return s || (s = setTimeout(o, t)), d && (a = e.apply(l, r), l = r = null), a;
-      };
-
-      return d.clear = function () {
-        s && (clearTimeout(s), s = null);
-      }, d.flush = function () {
-        s && (a = e.apply(l, r), l = r = null, clearTimeout(s), s = null);
-      }, d;
-    };
   }, function (e, t, i) {
     "use strict";
 
@@ -9409,7 +9474,7 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
     Object.defineProperty(t, "__esModule", {
       value: !0
     }), t.default = void 0;
-    var r = ((s = i(14)) && s.__esModule ? s : {
+    var r = ((s = i(15)) && s.__esModule ? s : {
       default: s
     }).default;
     t.default = r;
@@ -9419,8 +9484,8 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
     Object.defineProperty(t, "__esModule", {
       value: !0
     }), t.default = void 0;
-    var s = l(i(15)),
-        r = l(i(16));
+    var s = l(i(16)),
+        r = l(i(17));
 
     function l(e) {
       return e && e.__esModule ? e : {
@@ -9563,7 +9628,7 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
           enumerable: !0,
           configurable: !0,
           writable: !0
-        }) : t[i] = s, this.state = {};
+        }) : t[i] = s;
       }
 
       render() {
@@ -9587,21 +9652,6 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
 
     Object.defineProperty(t, "__esModule", {
       value: !0
-    }), t.default = t.DSC_VALUE = t.ASC_VALUE = t.BLANK_LABEL = void 0;
-    t.BLANK_LABEL = "(blank)";
-    t.ASC_VALUE = "asc";
-    t.DSC_VALUE = "dsc";
-    var s = {
-      BLANK_LABEL: "(blank)",
-      ASC_VALUE: "asc",
-      DSC_VALUE: "dsc"
-    };
-    t.default = s;
-  }, function (e, t, i) {
-    "use strict";
-
-    Object.defineProperty(t, "__esModule", {
-      value: !0
     }), t.default = void 0;
     var s = n(i(0)),
         r = i(2),
@@ -9615,15 +9665,15 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
 
     class a extends s.default.Component {
       constructor(e) {
-        super(e), this.state = {}, this._initMethods();
-      }
-
-      _initMethods() {
-        this._sortClicked = this._sortClicked.bind(this);
-      }
-
-      _sortClicked() {
-        this.props.sort();
+        var t, i, s;
+        super(e), s = () => {
+          this.props.sort();
+        }, (i = "_sortClicked") in (t = this) ? Object.defineProperty(t, i, {
+          value: s,
+          enumerable: !0,
+          configurable: !0,
+          writable: !0
+        }) : t[i] = s;
       }
 
       render() {
@@ -9646,82 +9696,7 @@ module.exports = JSON.parse("{\"id\":82,\"url\":\"http://www.tvmaze.com/shows/82
     };
     var o = a;
     t.default = o;
-  }, function (e, t) {}, function (e, t, i) {
-    "use strict";
-
-    Object.defineProperty(t, "__esModule", {
-      value: !0
-    }), t.filtersReset = t.filterAction = t.filterActions = void 0;
-    var s = i(2);
-
-    function r() {
-      return (r = Object.assign || function (e) {
-        for (var t = 1; t < arguments.length; t++) {
-          var i = arguments[t];
-
-          for (var s in i) Object.prototype.hasOwnProperty.call(i, s) && (e[s] = i[s]);
-        }
-
-        return e;
-      }).apply(this, arguments);
-    }
-
-    t.filterActions = (e = [], t = [], i = !0, l) => {
-      let n = [],
-          a = e.map(e => {
-        let a,
-            o,
-            d = r({}, e);
-
-        for ((0, s.isUndefined)(d.appliedFilters) && (d.appliedFilters = {}), a = 0, o = t.length; a < o; a += 1) {
-          const r = t[a];
-          let n = r.key,
-              o = r.value;
-          (0, s.isUndefined)(o) && (o = "");
-          let u = (0, s.getValForKey)(e, n);
-          (0, s.isUndefined)(l) || (u = l(u)), (0, s.isUndefined)(u) && (u = ""), (0, s.isTypeString)(u) && (u = u.trim()), i ? u === o && (d.appliedFilters[n] || (d.appliedFilters[n] = 0), d.appliedFilters[n] += 1) : u === o && (d.appliedFilters[n] -= 1, 0 === d.appliedFilters[n] && delete d.appliedFilters[n]);
-        }
-
-        return 0 === Object.keys(d.appliedFilters).length && (delete d.appliedFilters, n.push(r({}, d))), d;
-      });
-      return {
-        filteredArray: n,
-        dataWithFilter: a
-      };
-    };
-
-    t.filterAction = (e = [], t = {}, i = !0, l) => {
-      let n = t.key,
-          a = t.value;
-
-      if ((0, s.isUndefined)(a) && (a = ""), !(0, s.isUndefined)(n)) {
-        let t = [],
-            o = e.map(e => {
-          let o = r({}, e),
-              d = (0, s.getValForKey)(e, n);
-          return (0, s.isUndefined)(l) || (d = l(d)), (0, s.isUndefined)(d) && (d = ""), (0, s.isUndefined)(o.appliedFilters) && (o.appliedFilters = {}), (0, s.isTypeString)(d) && (d = d.trim()), i ? d === a && (o.appliedFilters[n] || (o.appliedFilters[n] = 0), o.appliedFilters[n] += 1) : d === a && (o.appliedFilters[n] -= 1, 0 === o.appliedFilters[n] && delete o.appliedFilters[n]), 0 === Object.keys(o.appliedFilters).length && (delete o.appliedFilters, t.push(r({}, o))), o;
-        });
-        return {
-          filteredArray: t,
-          dataWithFilter: o
-        };
-      }
-    };
-
-    t.filtersReset = (e = [], t = [], i, l = !0, n) => {
-      let a = [],
-          o = e.map(e => {
-        let o = r({}, e);
-        (0, s.isUndefined)(o.appliedFilters) && (o.appliedFilters = {});
-        let d = (0, s.getValForKey)(o, i);
-        return (0, s.isUndefined)(n) || (d = n(d)), (0, s.isUndefined)(d) && (d = ""), (0, s.isTypeString)(d) && (d = d.trim()), t.indexOf(d) >= 0 && (l ? delete o.appliedFilters[i] : (o.appliedFilters[i] || (o.appliedFilters[i] = 0), o.appliedFilters[i]++)), 0 === Object.keys(o.appliedFilters).length && (delete o.appliedFilters, a.push(r({}, o))), o;
-      });
-      return {
-        filteredArray: a,
-        dataWithFilter: o
-      };
-    };
-  }]);
+  }, function (e, t) {}]);
 });
 
 /***/ }),

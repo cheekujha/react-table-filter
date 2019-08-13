@@ -14,7 +14,7 @@ class SimpleExample extends Component {
     this._filterUpdated = this._filterUpdated.bind(this);
   }
 
-  _filterUpdated(newData) {
+  _filterUpdated(newData, filtersObject) {
     this.setState({
       'episodes': newData,
     });
@@ -41,7 +41,7 @@ class SimpleExample extends Component {
       <div>
         <div className="nav-bar">
           <div className="container">
-						React Table Filters
+            React Table Filters
           </div>
         </div>
         <div className="examples">
@@ -52,13 +52,13 @@ class SimpleExample extends Component {
                 <TableFilter
                   rows={episodes}
                   onFilterUpdate={this._filterUpdated}>
-                  <th key="name" filterkey="name" className="cell" showSearch={true}>
+                  <th key="name" filterkey="name" className="cell" casesensitive={'true'} showsearch={'true'}>
                     Name
                   </th>
                   <th key="season" filterkey="season" className="cell">
                     Season
                   </th>
-                  <th key="number" filterkey="number" className="cell" alignleft>
+                  <th key="number" filterkey="number" className="cell" alignleft={'true'}>
                     Number
                   </th>
                 </TableFilter>
@@ -76,6 +76,6 @@ class SimpleExample extends Component {
 }
 
 ReactDOM.render(
-  <SimpleExample/>,
-  document.getElementById('mainContainer')
+    <SimpleExample/>,
+    document.getElementById('mainContainer')
 );
