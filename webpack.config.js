@@ -1,7 +1,6 @@
 var path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 var webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const analyze = process.env.analyze;
